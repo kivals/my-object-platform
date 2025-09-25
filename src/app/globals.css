@@ -1,51 +1,39 @@
 @import "tailwindcss";
 
-/* Светлая тема по умолчанию */
 :root {
   --color-primary: #6B54FF;
-  --color-danger: #FF5454;
-  --color-warning: #FFC32C;
-  --color-success: #27EC00;
-
-  --color-background: #F4F4F4;
-  --color-surface: #FFFFFF;
-  --color-muted: #FCFBFF;
+  --color-background: #FCFBFF;
   --color-text: #000000;
 }
 
-/* Тёмная тема */
 [data-theme="dark"] {
   --color-primary: #6B54FF;
-  --color-danger: #FF5454;
-  --color-warning: #FFC32C;
-  --color-success: #27EC00;
-
-  --color-background: #7B7B7B;
-  --color-surface: #3A3A3A;
-  --color-muted: #2A2A2A;
+  --color-background: #2A2A2A;
   --color-text: #FFFFFF;
 }
 
 @theme inline {
-  --font-jura: var(--font-jura);   /* даёт утилиту font-jura */
+  --font-jura: var(--font-jura);
   --font-sans: var(--font-jura), ui-sans-serif, system-ui;
 
+  --page-max: 1728px;
+  --page-px: clamp(20px, 4vw, 46px);
+
   --text-h1: 4rem;         /* 64px */
+  --text-logo: 2.36rem;    /* 38px */
   --text-h2: 2rem;         /* 32px */
   --text-h3: 1.5rem;       /* 24px */
   --text-body: 1.25rem;    /* 20px */
-
   /* Основные цвета */
   --color-primary: var(--color-primary);
-  --color-danger: var(--color-danger);
-  --color-warning: var(--color-warning);
-  --color-success: var(--color-success);
   --color-text: var(--color-text);
-
-  /* Нейтральные */
   --color-background: var(--color-background);
-  --color-surface: var(--color-surface);
-  --color-muted: var(--color-muted);
+}
+
+@utility container {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-px);
 }
 
 * {
@@ -54,5 +42,4 @@
 
 body {
   font-family: var(--font-jura), ui-sans-serif, system-ui;
-  color: var(--color-text);
 }

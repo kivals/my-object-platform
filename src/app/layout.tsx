@@ -6,8 +6,8 @@ import './globals.css';
 const jura = Jura({
 	variable: '--font-jura',
 	subsets: ['latin', 'cyrillic'],
-	weight: ['400','500','600','700'],
-	display: 'swap',
+	weight: ['400', '500', '600', '700'],
+	display: 'swap'
 });
 
 export const metadata: Metadata = {
@@ -22,7 +22,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${jura.variable} font-jura antialiased text-body`}>{children}</body>
+			<body
+				className={`${jura.variable} font-jura antialiased text-body text-text bg-background leading-none`}
+			>
+				{children}
+			</body>
 		</html>
 	);
 }
