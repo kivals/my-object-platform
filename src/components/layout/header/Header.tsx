@@ -7,7 +7,7 @@ import { LogIn } from '@/components/layout/header/LogIn';
 import { Logo } from '@/components/layout/header/Logo';
 
 export function Header() {
-	const [isLoggedIn, setIsLoggedIn] = useState(true);
+	const [isLoggedIn] = useState(false);
 	return (
 		<header className='flex justify-between items-center pl-4 py-5'>
 			<Logo />
