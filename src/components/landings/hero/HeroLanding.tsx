@@ -1,7 +1,7 @@
-import { HeroChecklist } from '@/components/landings/HeroLanding/HeroChecklist';
-import { HeroHeading } from '@/components/landings/HeroLanding/HeroHeading';
-import { PropertyCard } from '@/components/landings/HeroLanding/PropertyCard';
-import { CheckListData, propertyData } from '@/components/landings/HeroLanding/data';
+import { HeroChecklist } from '@/components/landings/hero/HeroChecklist';
+import { HeroHeading } from '@/components/landings/hero/HeroHeading';
+import { PropertyCard } from '@/components/landings/hero/PropertyCard';
+import { CheckListData, propertyData } from '@/components/landings/hero/data';
 
 import { Button } from '@/ui/Button';
 
@@ -11,7 +11,7 @@ import type { IClassNames } from '@/types/components/classname.types';
 
 export function HeroLanding({ classNames }: IClassNames) {
 	return (
-		<section className={cn('flex items-center gap-y-7 gap-x-22', classNames)}>
+		<section className={cn('flex items-center gap-y-7 gap-x-10', classNames)}>
 			<div className='basis-1/2 flex flex-col gap-y-7'>
 				<HeroHeading>Контролируйте сдачу Ваших объектов онлайн</HeroHeading>
 				<HeroChecklist items={CheckListData} />

@@ -1,0 +1,69 @@
+import { ChevronLeft } from 'lucide-react';
+import { type FormEvent, useState } from 'react';
+
+import { LoginInput } from '@/components/landings/auth/forms/inputs/LoginInput';
+import { PasswordInput } from '@/components/landings/auth/forms/inputs/PasswordInput';
+import { registerSchema } from '@/components/landings/auth/forms/verify-shemas';
+
+import { Button } from '@/ui/Button';
+
+interface IPasswordFormProps {
+	onNextStep: () => void;
+	goBack: () => void;
+}
+
+export function RegisterForm({ onNextStep, goBack }: IPasswordFormProps) {
+	const [login, setLogin] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirm, setConfirm] = useState('');
+	const [error, setError] = useState<string | null>(null);
+
+	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setError(null);
+
+		const resultVerify = registerSchema.safeParse({
+			login: { login },
+			password: { password },
+			confirm
+		});
+		if (!resultVerify.success) return setError(resultVerify.error.issues[0].message);
+
+		//TODO запрос на пароль
+		const response = false;
+
+		if (response) {
+			onNextStep();
+		}
+	};
+
+	return (
+		<form onSubmit={onSubmit} className='w-[600px]'>
+			<h1 className='flex items-center gap-x-12 text-h2 font-bold mb-8'>
+				<div
+					onClick={goBack}
+					className='cursor-pointer hover:opacity-60 transition-opacity flex justify-center items-center size-12 bg-[#f2f2f2] rounded-full'
+				>
+					<ChevronLeft className='text-[#868686]' size={32} />
+				</div>
+				<span>Пройдите регистрацию</span>
+			</h1>
+
+			<LoginInput classNames='mb-7' error={error} value={login} onChange={setLogin} />
+			<PasswordInput classNames='mb-7' error={error} onChange={setPassword} value={password} />
+			<PasswordInput
+				label='Повторите пароль'
+				classNames='mb-7'
+				error={error}
+				onChange={setConfirm}
+				value={confirm}
+				placeHolder='Повторно введите пароль'
+			/>
+
+			<div className='flex flex-col gap-y-7'>
+				<Button>Зарегистрироваться</Button>
+				<Button variant='transparent'>Служба поддержки</Button>
+			</div>
+		</form>
+	);
+}

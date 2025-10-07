@@ -1,4 +1,4 @@
-import { HeroLanding } from '@/components/landings/HeroLanding/HeroLanding';
+import { HeroLanding } from '@/components/landings/hero/HeroLanding';
 import { Header } from '@/components/layout/header/Header';
 
 export default function PublicPage() {
