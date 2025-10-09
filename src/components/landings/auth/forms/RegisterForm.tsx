@@ -1,5 +1,6 @@
 import { ChevronLeft } from 'lucide-react';
 import { type FormEvent, useState } from 'react';
+import { z } from 'zod';
 
 import { LoginInput } from '@/components/landings/auth/forms/inputs/LoginInput';
 import { PasswordInput } from '@/components/landings/auth/forms/inputs/PasswordInput';
@@ -12,22 +13,43 @@ interface IPasswordFormProps {
 	goBack: () => void;
 }
 
+type TFormErrors = {
+	login: string | null;
+	password: string | null;
+	confirm: string | null;
+};
+
+const defaultErrors: TFormErrors = {
+	login: null,
+	password: null,
+	confirm: null
+};
+
 export function RegisterForm({ onNextStep, goBack }: IPasswordFormProps) {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirm, setConfirm] = useState('');
-	const [error, setError] = useState<string | null>(null);
+	const [errors, setErrors] = useState<TFormErrors>(defaultErrors);
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setError(null);
+		setErrors(defaultErrors);
 
 		const resultVerify = registerSchema.safeParse({
-			login: { login },
-			password: { password },
+			login,
+			password,
 			confirm
 		});
-		if (!resultVerify.success) return setError(resultVerify.error.issues[0].message);
+		if (!resultVerify.success) {
+			const { fieldErrors } = z.flattenError(resultVerify.error);
+			setErrors({
+				login: fieldErrors.login?.[0] ?? null,
+				password: fieldErrors.password?.[0] ?? null,
+				confirm: fieldErrors.confirm?.[0] ?? null // сюда попадёт и супер-рефайн
+			});
+
+			return;
+		}
 
 		//TODO запрос на пароль
 		const response = false;
@@ -49,12 +71,17 @@ export function RegisterForm({ onNextStep, goBack }: IPasswordFormProps) {
 				<span>Пройдите регистрацию</span>
 			</h1>
 
-			<LoginInput classNames='mb-7' error={error} value={login} onChange={setLogin} />
-			<PasswordInput classNames='mb-7' error={error} onChange={setPassword} value={password} />
+			<LoginInput classNames='mb-7' error={errors.login} value={login} onChange={setLogin} />
+			<PasswordInput
+				classNames='mb-7'
+				error={errors.password}
+				onChange={setPassword}
+				value={password}
+			/>
 			<PasswordInput
 				label='Повторите пароль'
 				classNames='mb-7'
-				error={error}
+				error={errors.confirm}
 				onChange={setConfirm}
 				value={confirm}
 				placeHolder='Повторно введите пароль'

@@ -19,7 +19,7 @@ export function PasswordForm({ onNextStep, goBack }: IPasswordFormProps) {
 		e.preventDefault();
 		setError(null);
 
-		const resultVerify = passwordSchema.safeParse({ password });
+		const resultVerify = passwordSchema.safeParse(password);
 		if (!resultVerify.success) return setError(resultVerify.error.issues[0].message);
 
 		//TODO запрос на пароль

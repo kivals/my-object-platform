@@ -19,7 +19,7 @@ export function PasswordInput({
 	value,
 	onChange,
 	label = 'Пароль',
-	placeHolder = 'Введите пароль повторно'
+	placeHolder = 'Введите пароль'
 }: IPasswordInputProps) {
 	return (
 		<div className={classNames}>
@@ -31,6 +31,7 @@ export function PasswordInput({
 				value={value}
 				onChange={e => onChange(e.target.value)}
 				type='password'
+				required
 				min={PASSWORD_MIN_CHARACTERS}
 				placeholder={placeHolder}
 			/>
