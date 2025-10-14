@@ -10,7 +10,7 @@ interface ILogoProps extends IClassNames {
 
 export function Logo({ classNames, iconSize = 28 }: ILogoProps) {
 	return (
-		<div className={cn('text-logo flex gap-x-3 items-center leading-none', classNames)}>
+		<div className={cn('text-logo select-none flex gap-x-3 items-center leading-none', classNames)}>
 			<Building2 className='text-primary' size={iconSize} />
 			<p className='font-semibold'>
 				Мой <span className='text-primary'>Объект</span>
