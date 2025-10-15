@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { Badge } from '@/ui/Badge';
 import { Card } from '@/ui/Card';
 
+import { cn } from '@/utils/cn';
+
 interface IPropertyCardProps {
 	address: string;
 	status: string;
@@ -11,6 +13,7 @@ interface IPropertyCardProps {
 	income: string;
 	nextPayment: string;
 	imageUrl: string;
+	size?: 'xs' | 'lg';
 }
 
 export function PropertyCard({
@@ -19,7 +22,8 @@ export function PropertyCard({
 	area,
 	income,
 	nextPayment,
-	imageUrl
+	imageUrl,
+	size = 'lg'
 }: IPropertyCardProps) {
 	return (
 		<Card variant='xl' className='px-8 py-7 drop-shadow-lg'>
@@ -36,17 +40,24 @@ export function PropertyCard({
 
 					<div>
 						<p className='mb-1'>Доход за месяц</p>
-						<p className='text-[46px] font-bold'>{income} руб.</p>
+						<p className={cn('font-bold', size === 'xs' ? 'text-h2' : 'text-[46px] ')}>
+							{income} руб.
+						</p>
 					</div>
 
 					<div>
 						<p className='mb-1'>Ближайший платеж</p>
-						<p className='text-[46px] font-bold'>{nextPayment}</p>
+						<p className={cn('font-bold', size === 'xs' ? 'text-h2' : 'text-[46px] ')}>
+							{nextPayment}
+						</p>
 					</div>
 				</div>
 				<div className='basis-1/2 relative'>
 					<Image
-						className='absolute -right-18 bottom-0 w-[414px] h-[401px]'
+						className={cn('', {
+							'absolute -right-18 bottom-0 w-[414px] h-[401px]': size === 'lg',
+							'object-contain': size === 'xs'
+						})}
 						src={imageUrl}
 						width={350}
 						height={350}

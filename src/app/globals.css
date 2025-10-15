@@ -4,6 +4,9 @@
   --color-primary: #6B54FF;
   --color-background: #FCFBFF;
   --color-text: #000000;
+  --height-header: 5rem;
+  --page-max: 1728px;
+  --page-px: clamp(20px, 4vw, 46px);
 }
 
 [data-theme="dark"] {
@@ -16,18 +19,20 @@
   --font-jura: var(--font-jura);
   --font-sans: var(--font-jura), ui-sans-serif, system-ui;
 
-  --page-max: 1728px;
-  --page-px: clamp(20px, 4vw, 46px);
-
+  /* TODO вынести размеры в css переменные */
   --text-h1: 4rem;         /* 64px */
   --text-logo: 2.36rem;    /* 38px */
   --text-h2: 2rem;         /* 32px */
   --text-h3: 1.5rem;       /* 24px */
   --text-body: 1.25rem;    /* 20px */
+
   /* Основные цвета */
   --color-primary: var(--color-primary);
   --color-text: var(--color-text);
   --color-background: var(--color-background);
+
+  /* Размеры */
+  --height-header: var(--height-header) /* 80px */
 }
 
 @utility container {

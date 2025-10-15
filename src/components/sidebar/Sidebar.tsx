@@ -13,7 +13,7 @@ export function Sidebar() {
 	return (
 		<aside
 			className={cn(
-				'w-[400px] bg-white p-9 rounded-[40px] shadow-lg overflow-hidden transition-all duration-250',
+				'sticky top-[var(--height-header)] max-h-[calc(100dvh-var(--height-header))] overflow-y-auto w-[400px] bg-white p-9 rounded-[40px] shadow-lg overflow-hidden transition-all duration-250',
 				!isExtended && 'w-[95px]'
 			)}
 		>

@@ -8,9 +8,9 @@ export default function DashboardLayout({
 	children: ReactNode;
 }>) {
 	return (
-		<div className='flex'>
+		<div className='flex gap-x-8'>
 			<Sidebar />
-			<main>{children}</main>
+			<main className='flex-1'>{children}</main>
 		</div>
 	);
 }

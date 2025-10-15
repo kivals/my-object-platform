@@ -18,7 +18,7 @@ export function Header() {
 	const toggleSidebar = useToggleSidebar();
 
 	return (
-		<header className='flex justify-between items-center py-5'>
+		<header className='flex justify-between items-center h-header'>
 			<div className='flex items-center gap-x-8'>
 				{!!match('/dashboard{/*path}')(pathname) && (
 					<div onClick={toggleSidebar} className='cursor-pointer'>
