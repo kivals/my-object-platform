@@ -5,7 +5,7 @@ async function mockFetchObjects(): Promise<string> {
 	return new Promise(resolve => {
 		setTimeout(() => {
 			resolve('Объекты');
-		}, 0);
+		}, 2000);
 	});
 }
 
