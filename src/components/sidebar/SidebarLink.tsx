@@ -19,7 +19,7 @@ export function SidebarLink({ link, icon, title, isActive }: ISidebarProps) {
 	const isExtended = useSidebarOpen();
 
 	return (
-		<Link className='group flex gap-x-9 items-center text-black font-medium text-h3' href={link}>
+		<Link href={link} className='group flex gap-x-9 items-center text-black font-medium text-h3'>
 			<Icon
 				classNames={cn('group-hover:text-primary transition group-hover:rotate-6 min-w-6', {
 					'text-primary': isActive && !isExtended

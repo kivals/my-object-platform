@@ -1,8 +1,11 @@
 import {
 	Calendar1,
 	Coins,
+	Eye,
 	FileText,
-	Info, Menu,
+	Globe,
+	Info,
+	Menu,
 	MessagesSquare,
 	PanelRightOpen,
 	Shield,
@@ -20,5 +23,7 @@ export const LUCIDE_ICONS = {
 	SquareCheckBig,
 	Users,
 	PanelRightOpen,
-	Menu
+	Menu,
+	Eye,
+	Globe
 } as const;

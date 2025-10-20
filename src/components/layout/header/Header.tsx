@@ -10,7 +10,7 @@ import { Logo } from '@/components/layout/header/Logo';
 
 import { Icon } from '@/ui/Icon';
 
-import { useSidebarOpen, useToggleSidebar } from '@/store/use-ui.store';
+import { useToggleSidebar } from '@/store/use-ui.store';
 
 export function Header() {
 	const [isLoggedIn] = useState(false);
@@ -20,7 +20,7 @@ export function Header() {
 	return (
 		<header className='flex justify-between items-center h-header'>
 			<div className='flex items-center gap-x-8'>
-				{!!match('/dashboard{/*path}')(pathname) && (
+				{!!match(['/dashboard{/*path}', '/objects{/*path}'])(pathname) && (
 					<div onClick={toggleSidebar} className='cursor-pointer'>
 						<Icon classNames='text-primary' icon='Menu' size={32} />
 					</div>

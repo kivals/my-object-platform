@@ -1,13 +1,17 @@
 'use client';
 
 import { SidebarMenu } from '@/components/sidebar/SidebarMenu';
-import { SIDEBAR_DATA } from '@/components/sidebar/sidebar.data';
+import type { ISidebarDataItem, TSidebarVariant } from '@/components/sidebar/sidebar.types';
 
 import { useSidebarOpen } from '@/store/use-ui.store';
 
 import { cn } from '@/utils/cn';
 
-export function Sidebar() {
+interface ISidebarProps {
+	menu: ISidebarDataItem[];
+}
+
+export function Sidebar({ menu }: ISidebarProps) {
 	const isExtended = useSidebarOpen();
 
 	return (
@@ -17,7 +21,7 @@ export function Sidebar() {
 				!isExtended && 'w-[95px]'
 			)}
 		>
-			<SidebarMenu menu={SIDEBAR_DATA} />
+			<SidebarMenu menu={menu} />
 		</aside>
 	);
 }
