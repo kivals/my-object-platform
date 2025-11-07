@@ -1,7 +1,8 @@
 import type { BackendJWT } from '@/lib/auth/types';
+import { AUTH_ENDPOINTS } from '@/lib/auth/utils/endpoints';
 
-export async function loginOnPython(email: string, password: string): Promise<BackendJWT | null> {
-	const res = await fetch(`${process.env.SERVER_AUTH_URL}/auth/login`, {
+export async function authLogin(email: string, password: string): Promise<BackendJWT | null> {
+	const res = await fetch(AUTH_ENDPOINTS.LOGIN, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ email, password })
@@ -11,8 +12,8 @@ export async function loginOnPython(email: string, password: string): Promise<Ba
 	return res.json();
 }
 
-export async function refreshOnPython(refreshToken: string): Promise<BackendJWT | null> {
-	const res = await fetch(`${process.env.SERVER_AUTH_URL}/auth/refresh`, {
+export async function authRefresh(refreshToken: string): Promise<BackendJWT | null> {
+	const res = await fetch(AUTH_ENDPOINTS.REFRESH, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +23,7 @@ export async function refreshOnPython(refreshToken: string): Promise<BackendJWT 
 	});
 
 	if (!res.ok) {
-		console.error('[refreshOnPython] Refresh failed', res.status);
+		console.error('[authRefresh] Refresh failed', res.status);
 		return null;
 	}
 

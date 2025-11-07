@@ -2,14 +2,14 @@ import type { NextAuthConfig } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 
-import { loginOnPython, refreshOnPython } from '@/lib/auth/actions';
-import { decodeJwt } from '@/lib/auth/decode';
+import { authLogin, authRefresh } from '@/lib/auth/actions';
 import type { AuthValidity, UserObject } from '@/lib/auth/types';
+import { decodeJwt } from '@/lib/auth/utils/decode';
 import { LoginSchema } from '@/lib/validation/schemas';
 
 async function refreshAccessToken(nextAuthJWTCookie: JWT): Promise<JWT> {
 	try {
-		const tokens = await refreshOnPython(nextAuthJWTCookie.data.tokens.refreshToken);
+		const tokens = await authRefresh(nextAuthJWTCookie.data.tokens.refreshToken);
 
 		if (!tokens) {
 			throw new Error('Tokens is not exist');
@@ -53,7 +53,7 @@ export const authConfig = {
 				const { email, password } = parsed.data;
 
 				try {
-					const tokens = await loginOnPython(email, password);
+					const tokens = await authLogin(email, password);
 					if (!tokens) return null;
 
 					const access = decodeJwt(tokens.accessToken);
