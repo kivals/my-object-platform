@@ -3,9 +3,9 @@ import type { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 
 import { authLogin, authRefresh } from '@/domains/auth/actions';
+import { LoginSchema } from '@/lib/auth/login.schema';
 import type { AuthValidity, UserObject } from '@/lib/auth/types';
 import { decodeJwt } from '@/lib/auth/utils/decode';
-import { LoginSchema } from '@/lib/validation/schemas';
 
 async function refreshAccessToken(nextAuthJWTCookie: JWT): Promise<JWT> {
 	try {

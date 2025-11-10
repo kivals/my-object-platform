@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { LoginFlow } from '@/components/landings/auth/LoginFlow';
+import { LoginFlow } from '@/components/auth/LoginFlow';
 
 export const metadata: Metadata = {
 	title: 'Аутентификация'

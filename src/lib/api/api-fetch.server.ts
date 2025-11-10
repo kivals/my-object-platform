@@ -23,11 +23,10 @@ export class ApiParseError extends Error {
 	}
 }
 
-async function apiFetch<T>(path: string, opts: RequestInit = {}, serverUrl?: string): Promise<T> {
+async function apiFetch<T>(endpoint: string, opts: RequestInit = {}): Promise<T> {
 	const token = await getAccessToken();
-	const baseUrl = serverUrl || process.env.PYTHON_API_URL;
-
-	const res = await fetch(`${baseUrl}${path}`, {
+	console.log(endpoint);
+	const res = await fetch(endpoint, {
 		...opts,
 		headers: {
 			...(opts.headers || {}),
@@ -49,23 +48,21 @@ async function apiFetch<T>(path: string, opts: RequestInit = {}, serverUrl?: str
 /**
  * Универсальная версия apiFetch с Zod-валидацией.
  *
- * @param path — endpoint (например, '/properties')
+ * @param endpoint
  * @param schema — ZodSchema, ожидаемый формат данных
  * @param opts — опции fetch
- * @param serverUrl - Url сервера
  */
 export async function apiFetchValidated<S extends ZodType>(
-	path: string,
+	endpoint: string,
 	schema: S,
-	opts?: RequestInit,
-	serverUrl?: string
+	opts?: RequestInit
 ): Promise<z.infer<S>> {
-	const data = await apiFetch<z.infer<S>>(path, opts, serverUrl);
+	const data = await apiFetch<z.infer<S>>(endpoint, opts);
 	try {
 		return schema.parse(data);
 	} catch (err) {
 		if (err instanceof ZodError) {
-			throw new ApiParseError(schema.description ?? path, err);
+			throw new ApiParseError(schema.description ?? endpoint, err);
 		}
 		throw err;
 	}

@@ -3,7 +3,7 @@
 import { AuthError } from 'next-auth';
 
 import { signIn } from '@/auth';
-import { LoginSchema } from '@/lib/validation/schemas';
+import { LoginSchema } from '@/lib/auth/login.schema';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
 interface LoginState {
@@ -31,7 +31,7 @@ export const loginAction = async (_prevState: LoginState, formData: FormData) =>
 			password: password,
 			redirectTo: DEFAULT_LOGIN_REDIRECT
 		});
-		return { success: false };
+		return { success: true };
 	} catch (error) {
 		if (error instanceof AuthError) {
 			switch (error.type) {
@@ -42,6 +42,6 @@ export const loginAction = async (_prevState: LoginState, formData: FormData) =>
 				}
 			}
 		}
-		throw error;
+		return { error: 'Ошибка авторизации. Попробуйте позже!' };
 	}
 };

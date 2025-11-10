@@ -1,10 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema } from 'lib/validation/schemas';
-import { useRouter } from 'next/navigation';
 import { startTransition, useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -14,11 +11,13 @@ import { TextField } from '@/components/form/TextField';
 import { Button } from '@/ui/Button';
 
 import { loginAction } from '@/actions/login.action';
+import { LoginSchema } from '@/lib/auth/login.schema';
 
 const initialState = { error: undefined, success: false };
 
 export function LoginForm() {
 	const [state, action, isPending] = useActionState(loginAction, initialState);
+
 	const {
 		register,
 		handleSubmit,
