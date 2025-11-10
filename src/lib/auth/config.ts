@@ -2,7 +2,7 @@ import type { NextAuthConfig } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 
-import { authLogin, authRefresh } from '@/lib/auth/actions';
+import { authLogin, authRefresh } from '@/domains/auth/actions';
 import type { AuthValidity, UserObject } from '@/lib/auth/types';
 import { decodeJwt } from '@/lib/auth/utils/decode';
 import { LoginSchema } from '@/lib/validation/schemas';

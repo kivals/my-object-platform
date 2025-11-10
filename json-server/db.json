@@ -1,0 +1,230 @@
+{
+  "realEstateProperties": {
+    "realEstateProperties": [
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000001",
+        "name": "Green House 1",
+        "type": "house",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0001",
+        "rental_value": 1200,
+        "area": 110,
+        "description": "Two-storey family house with small garden.",
+        "address": {
+          "city": "Amsterdam",
+          "street": "Prinsengracht",
+          "building": "12A",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000001"
+        },
+        "photos": [
+          {
+            "photoUuid": "p-0001-1",
+            "name": "front.png",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000001/photos/front.png",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000001"
+          },
+          {
+            "photoUuid": "p-0001-2",
+            "name": "living-room.png",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000001/photos/living-room.png",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000001"
+          }
+        ],
+        "documents": [
+          {
+            "documentUuid": "d-0001-1",
+            "name": "document.pdf",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000001/documents/document.pdf",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000001"
+          },
+          {
+            "documentUuid": "d-0001-2",
+            "name": "plan.docx",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000001/documents/plan.docx",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000001"
+          }
+        ]
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000002",
+        "name": "Canal Apartment 2",
+        "type": "apartment",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0002",
+        "rental_value": 1750,
+        "area": 78,
+        "description": "Cozy apartment with canal view.",
+        "address": {
+          "city": "Amsterdam",
+          "street": "Keizersgracht",
+          "building": "221B",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000002"
+        },
+        "photos": [
+          {
+            "photoUuid": "p-0002-1",
+            "name": "view.png",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000002/photos/view.png",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000002"
+          }
+        ],
+        "documents": [
+          {
+            "documentUuid": "d-0002-1",
+            "name": "lease.pdf",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000002/documents/lease.pdf",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000002"
+          }
+        ]
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000003",
+        "name": "Office Park 3",
+        "type": "flat",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0003",
+        "rental_value": null,
+        "area": 540,
+        "description": "Open-space office with 8 meeting rooms.",
+        "address": {
+          "city": "Rotterdam",
+          "street": "Coolsingel",
+          "building": "45",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000003"
+        },
+        "photos": [],
+        "documents": []
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000004",
+        "name": "Warehouse 4",
+        "type": "flat",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0004",
+        "rental_value": 3200,
+        "area": 1200,
+        "description": "Dry storage warehouse near highway.",
+        "address": {
+          "city": "Utrecht",
+          "street": "Industrieweg",
+          "building": "7",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000004"
+        },
+        "photos": [
+          {
+            "photoUuid": "p-0004-1",
+            "name": "outside.png",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000004/photos/outside.png",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000004"
+          }
+        ],
+        "documents": []
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000005",
+        "name": "Loft 5",
+        "type": "apartment",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0005",
+        "rental_value": 2100,
+        "area": 96,
+        "description": "Modern loft with high ceilings.",
+        "address": {
+          "city": "Amsterdam",
+          "street": "Overtoom",
+          "building": "101",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000005"
+        },
+        "photos": [],
+        "documents": []
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000006",
+        "name": "Suburban House 6",
+        "type": "house",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0006",
+        "rental_value": 1500,
+        "area": 130,
+        "description": "Quiet area, private parking.",
+        "address": {
+          "city": "Haarlem",
+          "street": "Dreef",
+          "building": "3C",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000006"
+        },
+        "photos": [],
+        "documents": []
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000007",
+        "name": "Retail Space 7",
+        "type": "apartment",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0007",
+        "rental_value": 2500,
+        "area": 160,
+        "description": "Street-level retail with storage.",
+        "address": {
+          "city": "Rotterdam",
+          "street": "Lijnbaan",
+          "building": "18",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000007"
+        },
+        "photos": [],
+        "documents": []
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000008",
+        "name": "Studio 8",
+        "type": "apartment",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0008",
+        "rental_value": 1100,
+        "area": 42,
+        "description": "Compact studio near metro.",
+        "address": {
+          "city": "The Hague",
+          "street": "Spui",
+          "building": "9",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000008"
+        },
+        "photos": [],
+        "documents": []
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000009",
+        "name": "Penthouse 9",
+        "type": "apartment",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0009",
+        "rental_value": 3500,
+        "area": 145,
+        "description": "Top floor with large terrace.",
+        "address": {
+          "city": "Amsterdam",
+          "street": "Zuidaslaan",
+          "building": "50",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000009"
+        },
+        "photos": [
+          {
+            "photoUuid": "p-0009-1",
+            "name": "terrace.png",
+            "url": "real_estate_properties/a1f5c2f0-1111-4c1b-9a00-000000000009/photos/terrace.png",
+            "realEstateId": "a1f5c2f0-1111-4c1b-9a00-000000000009"
+          }
+        ],
+        "documents": []
+      },
+      {
+        "real_estate_uuid": "a1f5c2f0-1111-4c1b-9a00-000000000010",
+        "name": "Business Center 10",
+        "type": "flat",
+        "manager": "7cafa3c0-aaaa-4caa-9aaa-aaaaaaaa0010",
+        "rental_value": null,
+        "area": 920,
+        "description": "Class A offices with reception.",
+        "address": {
+          "city": "Utrecht",
+          "street": "Jaarbeursplein",
+          "building": "2",
+          "addressUuid": "a1f5c2f0-1111-4c1b-9a00-000000000010"
+        },
+        "photos": [],
+        "documents": []
+      }
+    ]
+  }
+}

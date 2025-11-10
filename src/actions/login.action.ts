@@ -17,8 +17,6 @@ export const loginAction = async (_prevState: LoginState, formData: FormData) =>
 		password: formData.get('password')
 	};
 
-	console.log();
-
 	const validatedData = LoginSchema.parse(data);
 
 	if (!validatedData) {

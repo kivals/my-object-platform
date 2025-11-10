@@ -1,5 +1,5 @@
 import type { BackendJWT } from '@/lib/auth/types';
-import { AUTH_ENDPOINTS } from '@/lib/auth/utils/endpoints';
+import { AUTH_ENDPOINTS } from '@/domains/auth/endpoints';
 
 export async function authLogin(email: string, password: string): Promise<BackendJWT | null> {
 	const res = await fetch(AUTH_ENDPOINTS.LOGIN, {
