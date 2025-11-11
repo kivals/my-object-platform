@@ -1,15 +1,22 @@
+import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { getSidebarData } from '@/components/sidebar/sidebar.data';
 
-export default function DashboardLayout({
+import { auth } from '@/auth';
+
+export default async function DashboardLayout({
 	children
 }: Readonly<{
 	children: ReactNode;
 }>) {
-	const role = 'admin';
-	const sidebarMenu = getSidebarData(role);
+	const session = await auth();
+	if (!session) {
+		redirect('/auth/login');
+	}
+
+	const sidebarMenu = getSidebarData(session.user.role);
 
 	return (
 		<div className='flex gap-x-8'>
