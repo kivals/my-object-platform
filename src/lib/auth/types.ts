@@ -1,20 +1,11 @@
+import type { SignInResponseType } from '@/domains/auth/schema';
 import type { UserRole } from '@/types/common';
-
-/**
- * Ответ от backend при обновлении токена.
- * Содержит только новый access-токен.
- */
-export interface BackendAccessJWT {
-	accessToken: string;
-}
 
 /**
  * Ответ от backend при аутентификации.
  * Содержит короткоживущий access-токен и долгоживущий refresh-токен.
  */
-export interface BackendJWT extends BackendAccessJWT {
-	refreshToken: string;
-}
+export interface BackendJWT extends SignInResponseType {}
 
 /**
  * Данные пользователя, которые можно извлечь из декодированного токена.

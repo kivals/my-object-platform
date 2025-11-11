@@ -1,31 +1,35 @@
-import type { BackendJWT } from '@/lib/auth/types';
 import { AUTH_ENDPOINTS } from '@/domains/auth/endpoints';
+import {
+	RefreshResponseSchema,
+	type RefreshResponseType,
+	SignInResponseSchema,
+	type SignInResponseType
+} from '@/domains/auth/schema';
+import { apiFetchValidated } from '@/lib/api/api-fetch.server';
 
-export async function authLogin(email: string, password: string): Promise<BackendJWT | null> {
-	const res = await fetch(AUTH_ENDPOINTS.LOGIN, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ email, password })
-	});
-
-	if (!res.ok) return null;
-	return res.json();
-}
-
-export async function authRefresh(refreshToken: string): Promise<BackendJWT | null> {
-	const res = await fetch(AUTH_ENDPOINTS.REFRESH, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${refreshToken}`
-		},
-		cache: 'no-store'
-	});
-
-	if (!res.ok) {
-		console.error('[authRefresh] Refresh failed', res.status);
+export async function authLogin(
+	email: string,
+	password: string
+): Promise<SignInResponseType | null> {
+	try {
+		return await apiFetchValidated(AUTH_ENDPOINTS.LOGIN, SignInResponseSchema, {
+			method: 'POST',
+			body: JSON.stringify({ email, password })
+		});
+	} catch (e) {
+		console.error(e);
 		return null;
 	}
+}
 
-	return res.json();
+export async function authRefresh(refreshToken: string): Promise<RefreshResponseType | null> {
+	try {
+		return await apiFetchValidated(AUTH_ENDPOINTS.REFRESH, RefreshResponseSchema, {
+			method: 'POST',
+			body: JSON.stringify({ refreshToken })
+		});
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
