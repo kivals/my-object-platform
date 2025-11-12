@@ -1,7 +1,8 @@
 import camelize from 'camelize-ts';
 import { ZodError, type ZodType, z } from 'zod';
 
-import { getAccessToken } from '@/lib/auth/utils/getAuthJwt.server';
+import { authRefresh } from '@/domains/auth/actions';
+import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
 
 export class ApiError extends Error {
 	status: number;
@@ -30,26 +31,41 @@ async function apiFetch<T>(
 	} = {},
 	isAuth: boolean
 ): Promise<T> {
-	let token = null;
+	let tokens = null;
 
 	if (isAuth) {
-		token = await getAccessToken();
+		tokens = await getAuthTokens();
 	}
 
 	if (opts && 'query' in opts && opts.query) {
 		const params = new URLSearchParams(opts.query).toString();
 		endpoint += endpoint.includes('?') ? '&' + params : '?' + params;
 	}
-	console.log(endpoint, ' !!!endpoint token!!! = ', token);
-	const res = await fetch(endpoint, {
-		...opts,
-		headers: {
-			...(opts.headers || {}),
-			'Content-Type': 'application/json',
-			...(token ? { Authorization: `Bearer ${token}` } : {})
-		},
-		cache: 'no-store'
-	});
+
+	async function doFetch(currentToken?: string): Promise<Response> {
+		return fetch(endpoint, {
+			...opts,
+			headers: {
+				...(opts.headers || {}),
+				'Content-Type': 'application/json',
+				...(currentToken ? { Authorization: `Bearer ${currentToken}` } : {})
+			},
+			cache: 'no-store'
+		});
+	}
+
+	let res = await doFetch(tokens?.accessToken);
+
+	if (res.status === 401 && tokens && isAuth) {
+		console.debug('Status 401. Need to Refresh');
+		try {
+			const newServerTokens = await authRefresh(tokens.refreshToken);
+			if (!newServerTokens?.refreshToken) throw new Error();
+			res = await doFetch(newServerTokens.refreshToken);
+		} catch (err) {
+			throw new ApiError('Unauthorized (refresh failed)', 401);
+		}
+	}
 
 	if (!res.ok) {
 		const text = await res.text();
