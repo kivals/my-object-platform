@@ -9,7 +9,7 @@ import { Button } from '@/ui/Button';
 
 import { cn } from '@/utils/cn';
 
-import { ABOUT_URL } from '@/routes';
+import { ABOUT_URL, LOGIN_URL } from '@/routes';
 import type { IClassNames } from '@/types/components/classname.types';
 
 export function HeroLanding({ classNames }: IClassNames) {
@@ -19,7 +19,9 @@ export function HeroLanding({ classNames }: IClassNames) {
 				<HeroHeading>Контролируйте сдачу Ваших объектов онлайн</HeroHeading>
 				<HeroChecklist items={CheckListData} />
 				<div className='flex justify-between gap-x-7'>
-					<Button className='flex-1'>Войти в систему</Button>
+					<Button asChild className='flex-1'>
+						<Link href={LOGIN_URL}>Войти в систему</Link>
+					</Button>
 					<Button asChild variant='muted' className='flex-1'>
 						<Link href={ABOUT_URL}>Больше информации</Link>
 					</Button>

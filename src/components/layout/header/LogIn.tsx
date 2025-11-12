@@ -6,7 +6,7 @@ import { LOGIN_URL } from '@/routes';
 
 export function LogIn() {
 	return (
-		<Button variant='muted'>
+		<Button asChild variant='muted'>
 			<Link href={LOGIN_URL}>Войти</Link>
 		</Button>
 	);

@@ -1,5 +1,6 @@
 'use client';
 
+import type { Session } from 'next-auth';
 import { usePathname } from 'next/navigation';
 import { match } from 'path-to-regexp';
 import { useEffect, useState } from 'react';
@@ -15,8 +16,11 @@ import { useToggleSidebar } from '@/store/use-ui.store';
 
 import { cn } from '@/utils/cn';
 
-export function Header() {
-	const [isLoggedIn] = useState(false);
+interface IHeaderProps {
+	session?: Session | null;
+}
+
+export function Header({ session }: IHeaderProps) {
 	const pathname = usePathname();
 	const toggleSidebar = useToggleSidebar();
 	const [header, setHeader] = useState(false);
@@ -30,7 +34,10 @@ export function Header() {
 
 	return (
 		<header
-			className={cn('transition-all h-[var(--height-header)] py-6 sticky top-0 z-30 h-header', header && 'bg-white shadow-lg py-4')}
+			className={cn(
+				'transition-all h-[var(--height-header)] py-6 sticky top-0 z-30 h-header',
+				header && 'bg-white shadow-lg py-4'
+			)}
 		>
 			<Container>
 				<div className='flex z-30 justify-between items-center'>
@@ -42,7 +49,7 @@ export function Header() {
 						)}
 						<Logo />
 					</div>
-					{isLoggedIn ? <HeaderActions classNames='flex-1 justify-end ' /> : <LogIn />}
+					{session ? <HeaderActions classNames='flex-1 justify-end ' /> : <LogIn />}
 				</div>
 			</Container>
 		</header>
