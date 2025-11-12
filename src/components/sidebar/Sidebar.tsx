@@ -1,7 +1,7 @@
 'use client';
 
 import { SidebarMenu } from '@/components/sidebar/SidebarMenu';
-import type { ISidebarDataItem, TSidebarVariant } from '@/components/sidebar/sidebar.types';
+import type { ISidebarDataItem } from '@/components/sidebar/sidebar.types';
 
 import { useSidebarOpen } from '@/store/use-ui.store';
 

@@ -2,9 +2,8 @@ import type { NextAuthConfig } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 
-import { LoginSchema } from '@/lib/auth/login.schema';
-
 import { authLogin, authRefresh } from '@/domains/auth/actions';
+import { LoginSchema } from '@/lib/auth/login.schema';
 import type { AuthValidity, UserObject } from '@/lib/auth/types';
 import { decodeJwt } from '@/lib/auth/utils/decode';
 
@@ -25,7 +24,7 @@ async function refreshAccessToken(nextAuthJWTCookie: JWT): Promise<JWT> {
 		nextAuthJWTCookie.data.tokens.refreshToken = tokens.refreshToken;
 
 		return { ...nextAuthJWTCookie, error: null };
-	} catch (error) {
+	} catch {
 		return {
 			...nextAuthJWTCookie,
 			error: 'RefreshAccessTokenError'

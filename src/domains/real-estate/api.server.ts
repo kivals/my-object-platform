@@ -1,3 +1,5 @@
+import { unstable_rethrow } from 'next/navigation';
+
 import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints';
 import { realEstateListSchema } from '@/domains/real-estate/schema';
 import { apiFetchValidated } from '@/lib/api/api-fetch.server';
@@ -9,6 +11,7 @@ export async function getRealEstateList() {
 		});
 		return response.realEstateProperties;
 	} catch (e) {
+		unstable_rethrow(e);
 		console.error('[getRealEstateList]', e);
 		return [];
 	}

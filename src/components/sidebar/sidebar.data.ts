@@ -1,4 +1,6 @@
-import type { ISidebarDataItem, TSidebarVariant } from '@/components/sidebar/sidebar.types';
+import type { ISidebarDataItem } from '@/components/sidebar/sidebar.types';
+
+import { UserRole } from '@/types/common';
 
 const ADMIN_SIDEBAR_DATA: ISidebarDataItem[] = [
 	{ id: 'main', title: 'Главная', icon: 'Info', link: '/dashboard' },
@@ -31,7 +33,7 @@ function getObjectSidebarData(uuid?: string): ISidebarDataItem[] {
 	return OBJECTS_SIDEBAR_DATA.map(o => ({ ...o, link: `/objects/${uuid ?? uuid}/${o.link}` }));
 }
 
-function getSidebarData(role: TSidebarVariant, uuid?: string): ISidebarDataItem[] {
+function getSidebarData(role: UserRole | 'objects', uuid?: string): ISidebarDataItem[] {
 	switch (role) {
 		case 'admin':
 			return getAdminSidebarData();

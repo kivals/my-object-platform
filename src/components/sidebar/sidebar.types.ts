@@ -1,4 +1,3 @@
-import type { TRole } from '@/types/common';
 import type { TLucideIcons } from '@/types/components/lucide.types';
 
 export interface ISidebarDataItem {
@@ -7,5 +6,3 @@ export interface ISidebarDataItem {
 	icon: TLucideIcons;
 	link: string;
 }
-
-export type TSidebarVariant = TRole | 'objects';

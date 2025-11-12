@@ -23,7 +23,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 				<Input
 					ref={ref}
 					id={props.id || props.name}
-
+					type={type}
 					aria-invalid={!!error}
 					{...props}
 				/>

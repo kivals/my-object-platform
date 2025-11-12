@@ -1,13 +1,14 @@
 import type { User } from 'next-auth';
 
-import type { AuthValidity, BackendJWT, UserObject } from '@/lib/auth/types';
+import type { AuthValidity, UserObject } from '@/lib/auth/types';
+import type { SignInResponseType } from '@/domains/auth/schema';
 
 type RefreshError = 'RefreshTokenExpired' | 'RefreshAccessTokenError' | null;
 
 declare module 'next-auth' {
 	export interface User {
 		id: string;
-		tokens: BackendJWT;
+		tokens: SignInResponseType;
 		user: UserObject;
 		validity: AuthValidity;
 	}

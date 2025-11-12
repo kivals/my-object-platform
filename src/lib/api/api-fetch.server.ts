@@ -1,6 +1,6 @@
+import camelize from 'camelize-ts';
 import { ZodError, type ZodType, z } from 'zod';
 
-import { camelize } from '@/lib/api/utils';
 import { getAccessToken } from '@/lib/auth/utils/getAuthJwt.server';
 
 export class ApiError extends Error {
