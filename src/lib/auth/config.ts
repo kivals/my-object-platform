@@ -64,8 +64,6 @@ export const authConfig = {
 						role: access.role
 					};
 
-					console.log("USER = ", user.fn);
-
 					const validity: AuthValidity = {
 						valid_until: access.exp,
 						refresh_until: refresh.exp
@@ -85,6 +83,7 @@ export const authConfig = {
 	],
 	callbacks: {
 		async jwt({ token, user, account }) {
+			console.log("JWT CALLBACK");
 			// Первичный логин
 			if (user && account) {
 				console.debug('JWT Initial signin');
