@@ -20,7 +20,10 @@ export async function RealEstateList() {
 
 	return (
 		<div>
-			<h2 className='text-h2 font-medium mb-6'>{objects}</h2>
+			<h2 className='text-h2 font-medium mb-6'>
+				{objects}
+				{realEstateList.length}
+			</h2>
 			{realEstateList.length > 0 ? (
 				<ul className='flex flex-col gap-y-4'>
 					<li>

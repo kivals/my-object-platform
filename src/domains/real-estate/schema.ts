@@ -37,7 +37,9 @@ export const realEstateSchema = z.object({
 });
 
 export const realEstateListSchema = z.object({
-	realEstateProperties: z.array(realEstateSchema)
+	data: z.object({
+		realEstateProperties: z.array(realEstateSchema)
+	})
 });
 
 // Удобные типы

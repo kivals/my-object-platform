@@ -23,13 +23,24 @@ export class ApiParseError extends Error {
 	}
 }
 
-async function apiFetch<T>(endpoint: string, opts: RequestInit = {}, isAuth: boolean): Promise<T> {
+async function apiFetch<T>(
+	endpoint: string,
+	opts: RequestInit & {
+		query?: Record<string, string>;
+	} = {},
+	isAuth: boolean
+): Promise<T> {
 	let token = null;
 
 	if (isAuth) {
 		token = await getAccessToken();
 	}
 
+	if (opts && 'query' in opts && opts.query) {
+		const params = new URLSearchParams(opts.query).toString();
+		endpoint += endpoint.includes('?') ? '&' + params : '?' + params;
+	}
+	console.log(endpoint, ' !!!endpoint token!!! = ', token);
 	const res = await fetch(endpoint, {
 		...opts,
 		headers: {
@@ -60,7 +71,7 @@ async function apiFetch<T>(endpoint: string, opts: RequestInit = {}, isAuth: boo
 export async function apiFetchValidated<S extends ZodType>(
 	endpoint: string,
 	schema: S,
-	fetchOptions?: RequestInit,
+	fetchOptions?: RequestInit & { query?: Record<string, string> },
 	isAuth: boolean = true
 ): Promise<z.infer<S>> {
 	const data = await apiFetch<z.infer<S>>(endpoint, fetchOptions, isAuth);
