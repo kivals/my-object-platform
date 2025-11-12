@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { HeroChecklist } from '@/components/landings/hero/HeroChecklist';
 import { HeroHeading } from '@/components/landings/hero/HeroHeading';
 import { PropertyCard } from '@/components/landings/hero/PropertyCard';
@@ -7,6 +9,7 @@ import { Button } from '@/ui/Button';
 
 import { cn } from '@/utils/cn';
 
+import { ABOUT_URL } from '@/routes';
 import type { IClassNames } from '@/types/components/classname.types';
 
 export function HeroLanding({ classNames }: IClassNames) {
@@ -16,9 +19,9 @@ export function HeroLanding({ classNames }: IClassNames) {
 				<HeroHeading>Контролируйте сдачу Ваших объектов онлайн</HeroHeading>
 				<HeroChecklist items={CheckListData} />
 				<div className='flex justify-between gap-x-7'>
-					<Button className='flex-1'>Зарегистрироваться</Button>
-					<Button variant='muted' className='flex-1'>
-						Больше информации
+					<Button className='flex-1'>Войти в систему</Button>
+					<Button asChild variant='muted' className='flex-1'>
+						<Link href={ABOUT_URL}>Больше информации</Link>
 					</Button>
 				</div>
 			</div>

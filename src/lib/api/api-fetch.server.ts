@@ -23,9 +23,13 @@ export class ApiParseError extends Error {
 	}
 }
 
-async function apiFetch<T>(endpoint: string, opts: RequestInit = {}): Promise<T> {
-	const token = await getAccessToken();
-	console.log(endpoint);
+async function apiFetch<T>(endpoint: string, opts: RequestInit = {}, isAuth: boolean): Promise<T> {
+	let token = null;
+
+	if (isAuth) {
+		token = await getAccessToken();
+	}
+
 	const res = await fetch(endpoint, {
 		...opts,
 		headers: {
@@ -50,14 +54,16 @@ async function apiFetch<T>(endpoint: string, opts: RequestInit = {}): Promise<T>
  *
  * @param endpoint
  * @param schema — ZodSchema, ожидаемый формат данных
- * @param opts — опции fetch
+ * @param fetchOptions — опции fetch
+ * @param isAuth - определяет нужно ли добавлять в запрос заголовок Bearer
  */
 export async function apiFetchValidated<S extends ZodType>(
 	endpoint: string,
 	schema: S,
-	opts?: RequestInit
+	fetchOptions?: RequestInit,
+	isAuth: boolean = true
 ): Promise<z.infer<S>> {
-	const data = await apiFetch<z.infer<S>>(endpoint, opts);
+	const data = await apiFetch<z.infer<S>>(endpoint, fetchOptions, isAuth);
 	try {
 		return schema.parse(data);
 	} catch (err) {
