@@ -60,9 +60,11 @@ export const authConfig = {
 					const refresh = decodeJwt(tokens.refreshToken);
 
 					const user: UserObject = {
-						name: access.name ?? 'Пользователь',
+						fn: access.fn,
 						role: access.role
 					};
+
+					console.log("USER = ", user.fn);
 
 					const validity: AuthValidity = {
 						valid_until: access.exp,

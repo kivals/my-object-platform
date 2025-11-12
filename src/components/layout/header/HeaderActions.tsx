@@ -5,11 +5,15 @@ import { cn } from '@/utils/cn';
 
 import type { IClassNames } from '@/types/components/classname.types';
 
-export function HeaderActions({ classNames }: IClassNames) {
+interface IHeaderActions extends IClassNames {
+	userName?: string;
+}
+
+export function HeaderActions({ classNames, userName }: IHeaderActions) {
 	return (
-		<div className={cn('flex gap-x-4', classNames)}>
+		<div className={cn('flex items-center gap-x-4', classNames)}>
 			<NotificationButton />
-			<HeaderProfile />
+			<HeaderProfile name={userName || 'Неизвестный пользователь'} />
 		</div>
 	);
 }

@@ -5,7 +5,7 @@ import type { UserRole } from '@/types/common';
  */
 export interface UserObject {
 	role: UserRole;
-	name: string;
+	fn: string;
 }
 
 /**

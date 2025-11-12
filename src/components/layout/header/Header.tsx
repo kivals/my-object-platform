@@ -35,7 +35,7 @@ export function Header({ session }: IHeaderProps) {
 	return (
 		<header
 			className={cn(
-				'transition-all h-[var(--height-header)] py-6 sticky top-0 z-30 h-header',
+				'transition-all py-6 sticky top-0 z-30 h-header',
 				header && 'bg-white shadow-lg py-4'
 			)}
 		>
@@ -49,7 +49,11 @@ export function Header({ session }: IHeaderProps) {
 						)}
 						<Logo />
 					</div>
-					{session ? <HeaderActions classNames='flex-1 justify-end ' /> : <LogIn />}
+					{session ? (
+						<HeaderActions userName={session.user.fn} classNames='flex-1 justify-end ' />
+					) : (
+						<LogIn />
+					)}
 				</div>
 			</Container>
 		</header>
