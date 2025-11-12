@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
 
+import { Container } from '@/components/layout/Container';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { getSidebarData } from '@/components/sidebar/sidebar.data';
 
@@ -19,9 +20,11 @@ export default async function DashboardLayout({
 	const sidebarMenu = getSidebarData(session.user.role);
 
 	return (
-		<div className='flex gap-x-8'>
-			<Sidebar menu={sidebarMenu} />
-			<main className='flex-1'>{children}</main>
-		</div>
+		<Container>
+			<div className='flex gap-x-8'>
+				<Sidebar menu={sidebarMenu} />
+				<main className='flex-1'>{children}</main>
+			</div>
+		</Container>
 	);
 }

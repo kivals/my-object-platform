@@ -17,7 +17,7 @@ export function Sidebar({ menu }: ISidebarProps) {
 	return (
 		<aside
 			className={cn(
-				'sticky top-[var(--height-header)] max-h-[calc(100dvh-var(--height-header))] overflow-y-auto w-[400px] bg-white p-9 rounded-[40px] shadow-lg overflow-hidden transition-all duration-250',
+				'sticky top-[calc(var(--height-header) + 100px)] max-h-[calc(100dvh-var(--height-header))] overflow-y-auto w-[400px] bg-white p-9 rounded-[40px] shadow-lg overflow-hidden transition-all duration-250',
 				!isExtended && 'w-[95px]'
 			)}
 		>

@@ -14,11 +14,9 @@ export default function Layout({
 	children: ReactNode;
 }>) {
 	return (
-		<Container>
 			<div className='flex flex-col min-h-screen'>
 				<Header />
 				{children}
 			</div>
-		</Container>
 	);
 }
