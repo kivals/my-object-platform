@@ -3,7 +3,10 @@ import Link from 'next/link';
 import { PropertyCard } from '@/components/landings/hero/PropertyCard';
 import { propertyData } from '@/components/landings/hero/data';
 
+import { OptionGroup } from '@/ui/OptionGroup';
+
 import { getRealEstateList } from '@/domains/real-estate/api.server';
+import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 
 //todo remove after realized backend
 async function mockFetchObjects(): Promise<string> {
@@ -20,10 +23,16 @@ export async function RealEstateList() {
 
 	return (
 		<div>
-			<h2 className='text-h2 font-medium mb-6'>
-				{objects}
-				{realEstateList.length}
-			</h2>
+			<div className='flex justify-between mb-2'>
+				<h2 className='text-h2 font-medium self-center mb-4'>{objects}</h2>
+				<OptionGroup
+					classNames='self-end'
+					options={REAL_ESTATE_TYPE_LABELS}
+					initial='house'
+					areaLabel='Тип недвижимости'
+				/>
+			</div>
+
 			{realEstateList.length > 0 ? (
 				<ul className='flex flex-col gap-y-4'>
 					<li>
