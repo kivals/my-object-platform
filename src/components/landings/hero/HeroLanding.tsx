@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { HeroChecklist } from '@/components/landings/hero/HeroChecklist';
 import { HeroHeading } from '@/components/landings/hero/HeroHeading';
-import { PropertyCard } from '@/components/landings/hero/PropertyCard';
+import { RealEstateLandingCard } from '@/components/landings/hero/RealEstateLandingCard';
 import { CheckListData, propertyData } from '@/components/landings/hero/data';
 
 import { Button } from '@/ui/Button';
@@ -28,7 +28,7 @@ export function HeroLanding({ classNames }: IClassNames) {
 				</div>
 			</div>
 			<div className='basis-1/2'>
-				<PropertyCard
+				<RealEstateLandingCard
 					status={propertyData.status}
 					imageUrl={propertyData.imageUrl}
 					address={propertyData.address}

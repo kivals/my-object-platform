@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
-import { PropertyCard } from '@/components/landings/hero/PropertyCard';
-import { propertyData } from '@/components/landings/hero/data';
+import { RealEstateCard } from '@/components/widgets/real-estate-list/server/RealEstateCard';
 
 import { getRealEstateList } from '@/domains/real-estate/api.server';
 import type { RealEstateType } from '@/domains/real-estate/schema';
@@ -19,52 +18,11 @@ export async function RealEstateList({ type }: IRealEstateListProps) {
 
 	return (
 		<ul className='flex flex-col gap-y-4'>
-			<li>
-				<Link href='/objects/mock-uuid'>
-					<PropertyCard
-						status={propertyData.status}
-						imageUrl={propertyData.imageUrl}
-						address={propertyData.address}
-						area={propertyData.area}
-						nextPayment={propertyData.nextPayment}
-						income={propertyData.income}
-						size='xs'
-					/>
+			{items.map(item => (
+				<Link key={item.realEstateUuid} href='/objects/mock-uuid'>
+					<RealEstateCard data={item} size='xs' />
 				</Link>
-			</li>
-			<li>
-				<PropertyCard
-					status={propertyData.status}
-					imageUrl={propertyData.imageUrl}
-					address={propertyData.address}
-					area={propertyData.area}
-					nextPayment={propertyData.nextPayment}
-					income={propertyData.income}
-					size='xs'
-				/>
-			</li>
-			<li>
-				<PropertyCard
-					status={propertyData.status}
-					imageUrl={propertyData.imageUrl}
-					address={propertyData.address}
-					area={propertyData.area}
-					nextPayment={propertyData.nextPayment}
-					income={propertyData.income}
-					size='xs'
-				/>
-			</li>
-			<li>
-				<PropertyCard
-					status={propertyData.status}
-					imageUrl={propertyData.imageUrl}
-					address={propertyData.address}
-					area={propertyData.area}
-					nextPayment={propertyData.nextPayment}
-					income={propertyData.income}
-					size='xs'
-				/>
-			</li>
+			))}
 		</ul>
 	);
 }

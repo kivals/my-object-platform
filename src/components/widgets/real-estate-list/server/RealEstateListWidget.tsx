@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { FilterController } from '@/components/widgets/real-estate-list/FilterController';
+import { FilterController } from '@/components/widgets/real-estate-list/client/FilterController';
 import { RealEstateList } from '@/components/widgets/real-estate-list/server/RealEstateList';
 
 import { SkeletonLoader } from '@/ui/SkeletonLoader';
@@ -19,7 +19,7 @@ export function RealEstateListWidget({ type = 'house' }: IRealEstateListProps) {
 				<FilterController currentType={type} />
 			</div>
 
-			<Suspense key={type} fallback={<SkeletonLoader count={5} className='h-52 rounded-[40px]' />}>
+			<Suspense key={type} fallback={<SkeletonLoader count={5} className='h-72 rounded-[40px]' />}>
 				<RealEstateList type={type} />
 			</Suspense>
 		</div>

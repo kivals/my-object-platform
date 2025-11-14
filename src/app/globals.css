@@ -25,7 +25,7 @@
   --text-h2: 2rem;         /* 32px */
   --text-h3: 1.5rem;       /* 24px */
   --text-body: 1.25rem;    /* 20px */
-
+  --text-small: 1rem;      /* 16px */
   /* Основные цвета */
   --color-primary: var(--color-primary);
   --color-text: var(--color-text);
