@@ -1,8 +1,5 @@
-'use client';
-
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { motion } from 'motion/react';
-import { useState } from 'react';
 
 import { cn } from '@/utils/cn';
 
@@ -10,24 +7,25 @@ import type { IClassNames } from '@/types/components/classname.types';
 
 interface OptionGroupProps<T extends string> extends IClassNames {
 	options: Record<T, string>;
-	initial: T;
+	value: T;
 	areaLabel?: string;
+	onChange: (value: T) => void;
 }
 
 export function OptionGroup<T extends string>({
 	options,
-	initial,
+	value,
 	areaLabel,
-	classNames
+	classNames,
+	onChange
 }: OptionGroupProps<T>) {
 	const keys = Object.keys(options) as T[];
-	const [selected, setSelected] = useState<T>(initial);
 
 	return (
 		<ToggleGroup.Root
 			type='single'
-			value={selected}
-			onValueChange={v => v && setSelected(v as T)}
+			value={value}
+			onValueChange={onChange}
 			className={cn(
 				'relative inline-flex items-center gap-x-3 px-3 py-2 bg-[#DFDAFF] rounded-[20px] shadow-lg',
 				classNames
@@ -35,7 +33,7 @@ export function OptionGroup<T extends string>({
 			aria-label={areaLabel}
 		>
 			{keys.map(key => {
-				const isActive = selected === key;
+				const isActive = value === key;
 
 				return (
 					<ToggleGroup.Item

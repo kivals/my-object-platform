@@ -1,15 +1,19 @@
 import { unstable_rethrow } from 'next/navigation';
 
 import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints';
-import { realEstateListSchema } from '@/domains/real-estate/schema';
+import {
+	type RealEstate,
+	type RealEstateType,
+	realEstateListSchema
+} from '@/domains/real-estate/schema';
 import { apiFetchValidated } from '@/lib/api/api-fetch.server';
 
-export async function getRealEstateList() {
+export async function getRealEstateList(type: RealEstateType): Promise<RealEstate[]> {
 	try {
 		const { data } = await apiFetchValidated(REAL_ESTATE_ENDPOINTS.GET_ALL, realEstateListSchema, {
 			method: 'GET',
 			query: {
-				type: 'house'
+				type
 			}
 		});
 		return data.realEstateProperties;

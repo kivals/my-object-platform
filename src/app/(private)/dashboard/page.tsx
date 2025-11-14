@@ -1,15 +1,18 @@
-import { Suspense } from 'react';
+import { RealEstateListWidget } from '@/components/widgets/real-estate-list/server/RealEstateListWidget';
 
-import { RealEstateList } from '@/components/widgets/real-estate-list/RealEstateList';
+import type { RealEstateType } from '@/domains/real-estate/schema';
 
-import { SkeletonLoader } from '@/ui/SkeletonLoader';
+interface PageProps {
+	searchParams: Promise<{ type?: RealEstateType }>;
+}
 
-export default function DashboardEntry() {
+export default async function DashboardEntry({ searchParams }: PageProps) {
+	const params = await searchParams;
+	const { type } = params;
+
 	return (
 		<section>
-			<Suspense fallback={<SkeletonLoader count={5} className='h-52 rounded-[40px]' />}>
-				<RealEstateList />
-			</Suspense>
+			<RealEstateListWidget type={type ?? 'house'} />
 		</section>
 	);
 }

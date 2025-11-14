@@ -62,7 +62,7 @@ async function apiFetch<T>(
 			const newServerTokens = await authRefresh(tokens.refreshToken);
 			if (!newServerTokens?.refreshToken) throw new Error();
 			res = await doFetch(newServerTokens.refreshToken);
-		} catch (err) {
+		} catch {
 			throw new ApiError('Unauthorized (refresh failed)', 401);
 		}
 	}
