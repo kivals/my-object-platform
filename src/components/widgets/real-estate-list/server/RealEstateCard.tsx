@@ -1,8 +1,8 @@
 import { BadgeCheck } from 'lucide-react';
-import Image from 'next/image';
 
 import { Badge } from '@/ui/Badge';
 import { Card } from '@/ui/Card';
+import { LoadingImage } from '@/ui/LoadingImage';
 
 import { cn } from '@/utils/cn';
 
@@ -21,7 +21,7 @@ export function RealEstateCard({ data, size = 'lg' }: IPropertyCardProps) {
 
 	return (
 		<Card variant='xl' className='px-8 py-7 drop-shadow-lg min-h-[320px]'>
-			<div className='text-h3 flex'>
+			<div className='text-h3 flex gap-x-3.5'>
 				<div className='basis-1/2 font-medium flex flex-col gap-y-7 '>
 					<div className='flex flex-col gap-y-3'>
 						<div className={cn('font-bold', size === 'xs' ? 'text-h2' : 'text-[46px] ')}>
@@ -51,16 +51,14 @@ export function RealEstateCard({ data, size = 'lg' }: IPropertyCardProps) {
 						</p>
 					</div>
 				</div>
-				<div className='basis-1/2 relative'>
-					<Image
-						className={cn('', {
-							'absolute -right-18 bottom-0 w-[414px] h-[401px]': size === 'lg',
-							'object-contain': size === 'xs'
-						})}
+				<div className='basis-1/2 flex justify-center items-center'>
+					<LoadingImage
+						imageClassName='w-full object-fill rounded-[20px] max-h-[300px]'
+						containerClassName='w-full'
 						src={titlePhoto}
+						alt='Картинка'
 						width={350}
 						height={350}
-						alt='Картинка'
 					/>
 				</div>
 			</div>
