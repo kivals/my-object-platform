@@ -42,7 +42,11 @@ export const realEstateListSchema = z.object({
 	})
 });
 
-// Удобные типы
+export const realEstateItemSchema = z.object({
+	data: realEstateSchema
+});
+
+// типы
 export type RealEstateType = z.infer<typeof realEstateTypeSchema>;
 export type RealEstateAddress = z.infer<typeof addressSchema>;
 export type RealEstatePhoto = z.infer<typeof photoSchema>;

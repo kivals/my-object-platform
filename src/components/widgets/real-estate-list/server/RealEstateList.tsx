@@ -4,6 +4,7 @@ import { RealEstateCard } from '@/components/widgets/real-estate-list/server/Rea
 
 import { getRealEstateList } from '@/domains/real-estate/api.server';
 import type { RealEstateType } from '@/domains/real-estate/schema';
+import { REAL_ESTATE_URL } from '@/routes';
 
 interface IRealEstateListProps {
 	type: RealEstateType;
@@ -19,7 +20,7 @@ export async function RealEstateList({ type }: IRealEstateListProps) {
 	return (
 		<ul className='flex flex-col gap-y-4'>
 			{items.map(item => (
-				<Link key={item.realEstateUuid} href='/objects/mock-uuid'>
+				<Link key={item.realEstateUuid} href={`${REAL_ESTATE_URL}/${item.realEstateUuid}`}>
 					<RealEstateCard data={item} size='xs' />
 				</Link>
 			))}
