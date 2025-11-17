@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 
-import { Sidebar } from '@/components/sidebar/Sidebar';
-import { getSidebarData } from '@/components/sidebar/sidebar.data';
+import { RealEstateSidebar } from '@/components/sidebar/real-estate-sidebar/RealEstateSidebar';
 
 import { getRealEstateByUuid } from '@/domains/real-estate/api.server';
+import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 
 export default async function ObjectIdLayout({
 	children,
@@ -13,12 +13,17 @@ export default async function ObjectIdLayout({
 	params: Promise<{ uuid: string }>;
 }) {
 	const { uuid } = await params;
-	const sidebarMenu = getSidebarData('objects', uuid);
 	const realEstate = await getRealEstateByUuid(uuid);
-	console.log(realEstate);
+	const addressLine = `${realEstate?.address.street}, ${realEstate?.address.building}, ${realEstate?.address.city}`;
+
 	return (
 		<div className='flex gap-x-8'>
-			<Sidebar menu={sidebarMenu} />
+			<RealEstateSidebar
+				typeLabel={REAL_ESTATE_TYPE_LABELS[realEstate?.type || 'house']}
+				uuid={uuid}
+				address={addressLine}
+				area={realEstate?.area}
+			/>
 			<main className='flex-1'>{children}</main>
 		</div>
 	);

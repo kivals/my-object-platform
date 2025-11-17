@@ -16,6 +16,8 @@ import { useToggleSidebar } from '@/store/use-ui.store';
 
 import { cn } from '@/utils/cn';
 
+import { DASHBOARD_URL, REAL_ESTATE_URL } from '@/routes';
+
 interface IHeaderProps {
 	session?: Session | null;
 }
@@ -42,7 +44,7 @@ export function Header({ session }: IHeaderProps) {
 			<Container>
 				<div className='flex z-30 justify-between items-center'>
 					<div className='flex items-center gap-x-8'>
-						{!!match(['/dashboard{/*path}', '/objects{/*path}'])(pathname) && (
+						{!!match([`${DASHBOARD_URL}{/*path}`, `${REAL_ESTATE_URL}{/*path}`])(pathname) && (
 							<div onClick={toggleSidebar} className='cursor-pointer'>
 								<Icon classNames='text-primary' icon='Menu' size={32} />
 							</div>

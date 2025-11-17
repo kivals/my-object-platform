@@ -1,5 +1,6 @@
 import {
 	Calendar1,
+	ChevronLeft,
 	Coins,
 	Eye,
 	FileText,
@@ -25,5 +26,6 @@ export const LUCIDE_ICONS = {
 	PanelRightOpen,
 	Menu,
 	Eye,
-	Globe
+	Globe,
+	ChevronLeft
 } as const;

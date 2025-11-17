@@ -5,7 +5,7 @@ import type { PropsWithChildren } from 'react';
 import { cn } from '@/utils/cn';
 
 const badgeVariants = cva(
-	'inline-flex items-center font-bold text-h3 gap-x-2.5 rounded-[15px] px-8 py-2.5',
+	'inline-flex items-center font-bold text-h3 gap-x-2.5 rounded-[15px] px-6 py-2.5',
 	{
 		variants: {
 			variant: {
