@@ -1,4 +1,5 @@
 import {
+	Building,
 	Calendar1,
 	ChevronLeft,
 	Coins,
@@ -9,6 +10,7 @@ import {
 	Menu,
 	MessagesSquare,
 	PanelRightOpen,
+	Pencil,
 	Shield,
 	SquareCheckBig,
 	Users
@@ -17,6 +19,7 @@ import {
 export const LUCIDE_ICONS = {
 	Calendar1,
 	Coins,
+	Building,
 	FileText,
 	Info,
 	MessagesSquare,
@@ -27,5 +30,6 @@ export const LUCIDE_ICONS = {
 	Menu,
 	Eye,
 	Globe,
-	ChevronLeft
+	ChevronLeft,
+	Pencil
 } as const;
