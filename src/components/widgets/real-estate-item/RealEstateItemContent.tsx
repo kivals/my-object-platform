@@ -1,18 +1,16 @@
-import type { ReactNode } from 'react';
+import React from 'react';
 
 import { RealEstateSidebar } from '@/components/sidebar/real-estate-sidebar/RealEstateSidebar';
+import { RealEstateItem } from '@/components/widgets/real-estate-item/RealEstateItem';
 
 import { getRealEstateByUuid } from '@/domains/real-estate/api.server';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 
-export default async function ObjectIdLayout({
-	children,
-	params
-}: {
-	children: ReactNode;
-	params: Promise<{ uuid: string }>;
-}) {
-	const { uuid } = await params;
+interface IRealEstateItemContent {
+	uuid: string;
+}
+
+export async function RealEstateItemContent({ uuid }: IRealEstateItemContent) {
 	const realEstate = await getRealEstateByUuid(uuid);
 	const addressLine = `${realEstate?.address.street}, ${realEstate?.address.building}, ${realEstate?.address.city}`;
 
@@ -24,7 +22,9 @@ export default async function ObjectIdLayout({
 				address={addressLine}
 				area={realEstate?.area}
 			/>
-			<main className='flex-1'>{children}</main>
+			<main className='flex-1'>
+				<RealEstateItem data={realEstate} />
+			</main>
 		</div>
 	);
 }

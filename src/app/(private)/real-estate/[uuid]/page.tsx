@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { type ReactNode, Suspense } from 'react';
 
-import { RealEstateItem } from '@/components/widgets/real-estate-item/RealEstateItem';
+import { RealEstateItemContent } from '@/components/widgets/real-estate-item/RealEstateItemContent';
+import { RealEstateItemPageSkeleton } from '@/components/widgets/real-estate-item/RealEstateItemPageSkeleton';
 
-export default function RealEstateItemPage() {
-	return <RealEstateItem />;
+export default async function RealEstateItemPage({
+	params
+}: {
+	children: ReactNode;
+	params: Promise<{ uuid: string }>;
+}) {
+	const { uuid } = await params;
+
+	return (
+		<Suspense fallback={<RealEstateItemPageSkeleton />}>
+			<RealEstateItemContent uuid={uuid} />
+		</Suspense>
+	);
 }
