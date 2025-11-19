@@ -1,7 +1,7 @@
 'use client';
 
 import Image, { type ImageProps } from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { cn } from '@/utils/cn';
 
@@ -25,6 +25,11 @@ export function LoadingImage({
 	const [error, setError] = useState(false);
 
 	const finalSrc = error ? fallbackSrc : src;
+
+	useEffect(() => {
+		setLoaded(false);
+		setError(false);
+	}, [src]);
 
 	return (
 		<div

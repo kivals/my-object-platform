@@ -22,9 +22,7 @@ export async function RealEstateItemContent({ uuid }: IRealEstateItemContent) {
 				address={addressLine}
 				area={realEstate?.area}
 			/>
-			<main className='flex-1'>
-				<RealEstateItem data={realEstate} />
-			</main>
+			<main className='flex-1'>{realEstate && <RealEstateItem data={realEstate} />}</main>
 		</div>
 	);
 }
