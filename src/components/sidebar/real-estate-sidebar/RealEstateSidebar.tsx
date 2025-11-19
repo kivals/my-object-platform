@@ -3,9 +3,9 @@
 import { BadgeCheck } from 'lucide-react';
 
 import { Sidebar } from '@/components/sidebar/Sidebar';
-import { BackButton } from '@/components/sidebar/real-estate-sidebar/BackButton';
 import { getSidebarData } from '@/components/sidebar/sidebar.data';
 
+import { BackButton } from '@/ui/BackButton';
 import { Badge } from '@/ui/Badge';
 
 import { useSidebarOpen } from '@/store/use-ui.store';

@@ -1,3 +1,5 @@
+'use client';
+
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { motion } from 'motion/react';
 
@@ -9,7 +11,7 @@ interface OptionGroupProps<T extends string> extends IClassNames {
 	options: Record<T, string>;
 	value: T;
 	areaLabel?: string;
-	onChange: (value: T) => void;
+	onChange?: (value: T) => void;
 }
 
 export function OptionGroup<T extends string>({

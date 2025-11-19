@@ -9,7 +9,7 @@ interface IRealEstateItemDescription {
 export function RealEstateItemDescription({ text }: IRealEstateItemDescription) {
 	return (
 		<div>
-			<SectionCard>
+			<SectionCard classNames='item-center'>
 				<p className='leading-relaxed whitespace-pre-line'>{text}</p>
 			</SectionCard>
 		</div>
