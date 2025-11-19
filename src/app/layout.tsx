@@ -29,6 +29,8 @@ export default function RootLayout({
 				className={`${jura.variable} font-jura antialiased text-body text-text bg-background leading-none`}
 			>
 				{children}
+				{/*//todo надо тут что-то отрисовать */}
+				<footer className='h-48'></footer>
 			</body>
 		</html>
 	);

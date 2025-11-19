@@ -10,7 +10,7 @@ interface IRealEstateItemContent {
 	uuid: string;
 }
 
-export async function RealEstateItemContent({ uuid }: IRealEstateItemContent) {
+export async function RealEstateItemLoader({ uuid }: IRealEstateItemContent) {
 	const realEstate = await getRealEstateByUuid(uuid);
 	const addressLine = `${realEstate?.address.street}, ${realEstate?.address.building}, ${realEstate?.address.city}`;
 

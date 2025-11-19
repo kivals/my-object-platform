@@ -1,6 +1,6 @@
 import React, { type ReactNode, Suspense } from 'react';
 
-import { RealEstateItemContent } from '@/components/widgets/real-estate-item/RealEstateItemContent';
+import { RealEstateItemLoader } from '@/components/widgets/real-estate-item/RealEstateItemLoader';
 import { RealEstateItemPageSkeleton } from '@/components/widgets/real-estate-item/RealEstateItemPageSkeleton';
 
 export default async function RealEstateItemPage({
@@ -13,7 +13,7 @@ export default async function RealEstateItemPage({
 
 	return (
 		<Suspense fallback={<RealEstateItemPageSkeleton />}>
-			<RealEstateItemContent uuid={uuid} />
+			<RealEstateItemLoader uuid={uuid} />
 		</Suspense>
 	);
 }

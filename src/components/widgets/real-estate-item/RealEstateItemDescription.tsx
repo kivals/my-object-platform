@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SectionCard } from '@/components/widgets/real-estate-item/SectionCard';
+import { SectionCard } from '@/ui/SectionCard';
 
 interface IRealEstateItemDescription {
 	text: string;

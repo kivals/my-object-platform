@@ -1,6 +1,5 @@
-import { SectionCard } from '@/components/widgets/real-estate-item/SectionCard';
-
 import { Icon } from '@/ui/Icon';
+import { SectionCard } from '@/ui/SectionCard';
 
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 import type { RealEstateType } from '@/domains/real-estate/schema';
