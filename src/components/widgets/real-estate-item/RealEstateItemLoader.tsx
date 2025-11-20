@@ -3,7 +3,7 @@ import React from 'react';
 import { RealEstateSidebar } from '@/components/sidebar/real-estate-sidebar/RealEstateSidebar';
 import { RealEstateItem } from '@/components/widgets/real-estate-item/RealEstateItem';
 
-import { getRealEstateByUuid } from '@/domains/real-estate/api.server';
+import { getRealEstateByUuid } from '@/domains/real-estate/api/api.server';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 
 interface IRealEstateItemContent {

@@ -1,27 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
+
+import { UploadImage } from '@/components/widgets/real-estate-gallery/UploadImage';
 
 import { Icon } from '@/ui/Icon';
 import { LoadingImage } from '@/ui/LoadingImage';
 
 import { cn } from '@/utils/cn';
 
+import type { Uuid } from '@/types/common';
 import type { IClassNames } from '@/types/components/classname.types';
 
+interface IMedia {
+	uuid: Uuid;
+	url: string;
+}
+
 interface IRealEstateGallery extends IClassNames {
-	media: string[];
-	active?: string;
+	media: IMedia[];
+	active?: Uuid;
 	isEdit?: boolean;
+	onUpload?: (file: File) => Promise<void>;
+	onDelete?: (uuid: string) => void;
 }
 
 export function RealEstateGallery({
 	media,
 	active,
 	classNames,
-	isEdit = false
+	isEdit = false,
+	onUpload,
+	onDelete
 }: IRealEstateGallery) {
-	const [activeMedia, setActiveMedia] = useState(() => active || media[0]);
+	const [activeMedia, setActiveMedia] = useState<IMedia>(
+		() => media.find(m => m.uuid === active) || media[0]
+	);
+
+	async function handleUpload(e: ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files?.[0];
+
+		if (file && onUpload) {
+			try {
+				await onUpload(file);
+			} finally {
+				e.target.value = '';
+			}
+		} else {
+			e.target.value = '';
+		}
+	}
 
 	return (
 		<div className={cn(classNames, isEdit && 'bg-white')}>
@@ -30,7 +58,7 @@ export function RealEstateGallery({
 				<LoadingImage
 					containerClassName='h-full'
 					imageClassName='w-full'
-					src={activeMedia}
+					src={activeMedia.url}
 					width='300'
 					height='300'
 					alt=''
@@ -41,26 +69,31 @@ export function RealEstateGallery({
 
 			{/*список всех картинок*/}
 			<div className='flex justify-center gap-x-1.5'>
-				{isEdit && (
-					<div className='flex items-center justify-center h-[75px] w-[75px] bg-[#F2F2F2] rounded-[15px] overflow-hidden cursor-pointer'>
-						<Icon icon='Upload' size={24} classNames='text-[#868686]' />
-					</div>
-				)}
+				{isEdit && <UploadImage onChange={handleUpload} />}
 				{media.map((item, index) => (
 					<div
-						onClick={() => setActiveMedia(item)}
+						onClick={() => {
+							console.log('HOSTING');
+							setActiveMedia(item);
+						}}
 						className='relative rounded-[15px] cursor-pointer'
 						key={index}
 					>
-						{isEdit && (
-							<div className='h-6 rounded-full flex justify-center items-center w-6 bg-[#FF5454] absolute z-40 -right-2 -top-2'>
+						{isEdit && onDelete && (
+							<div
+								onClick={e => {
+									e.stopPropagation();
+									onDelete(item.uuid);
+								}}
+								className='h-6 rounded-full flex justify-center items-center w-6 bg-[#FF5454] absolute z-40 -right-2 -top-2'
+							>
 								<Icon icon='X' size={15} classNames='text-white' />
 							</div>
 						)}
 						<div
 							className={cn(
 								'z-10 transition-opacity absolute bg-background top-0 bottom-0 left-0 right-0',
-								activeMedia !== item ? 'opacity-50' : 'opacity-0'
+								activeMedia.uuid !== item.uuid ? 'opacity-50' : 'opacity-0'
 							)}
 						></div>
 
@@ -69,7 +102,7 @@ export function RealEstateGallery({
 							imageClassName='size-[75px]'
 							width={75}
 							height={75}
-							src={item}
+							src={item.url}
 							alt=''
 						/>
 					</div>

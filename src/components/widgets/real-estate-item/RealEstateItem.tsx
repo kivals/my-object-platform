@@ -14,7 +14,13 @@ export function RealEstateItem({ data }: IRealEstateItem) {
 		<section>
 			<RealEstateItemHeader />
 
-			<RealEstateGallery classNames='mb-8' media={data.photos.map(p => p.url)} />
+			<RealEstateGallery
+				classNames='mb-8'
+				media={data.photos.map(p => ({
+					uuid: p.photoUuid,
+					url: p.url
+				}))}
+			/>
 
 			<RealEstateItemInfo type={data.type} rent={'225000'} area={345} />
 

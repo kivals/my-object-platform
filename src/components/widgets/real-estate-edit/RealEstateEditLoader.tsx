@@ -1,6 +1,6 @@
 import { RealEstateEdit } from '@/components/widgets/real-estate-edit/RealEstateEdit';
 
-import { getRealEstateByUuid } from '@/domains/real-estate/api.server';
+import { getRealEstateByUuid } from '@/domains/real-estate/api/api.server';
 
 interface IRealEstateEditLoader {
 	uuid: string;

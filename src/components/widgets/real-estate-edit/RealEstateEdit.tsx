@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/RealEstateGallery';
 
 import { BackButton } from '@/ui/BackButton';
@@ -6,14 +10,40 @@ import { OptionGroup } from '@/ui/OptionGroup';
 import { SectionCard } from '@/ui/SectionCard';
 import { Textarea } from '@/ui/Textarea';
 
+import { deletePhoto, uploadPhoto } from '@/domains/real-estate/api/api.client';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
-import type { RealEstate } from '@/domains/real-estate/schema';
+import type { RealEstate, RealEstatePhoto, RealEstateType } from '@/domains/real-estate/schema';
+import type { Uuid } from '@/types/common';
 
 interface IRealEstateEditProps {
 	data: RealEstate;
 }
 
 export function RealEstateEdit({ data }: IRealEstateEditProps) {
+	const [photos, setPhotos] = useState<RealEstatePhoto[]>(data.photos);
+
+	async function handleUpload(file: File) {
+		try {
+			const json = await uploadPhoto(data.realEstateUuid, file, 'photos');
+			const newPhoto = json.photos?.[0];
+			setPhotos(prev => [...prev, newPhoto]);
+		} catch (err) {
+			// показать тост/ошибку
+			console.error('[handleUpload] Failed:', err);
+		}
+	}
+
+	//todo useOptimistic чтобы не ждать ответ от сервера
+	async function handleDelete(uuid: Uuid) {
+		try {
+			await deletePhoto(data.realEstateUuid, uuid, 'photos');
+			setPhotos(prev => prev.filter(p => p.photoUuid !== uuid));
+		} catch (err) {
+			// показать тост/ошибку
+			console.error('[handleDelete] Failed:', err);
+		}
+	}
+
 	return (
 		<section>
 			<header className='mb-12 flex justify-center items-center relative bg-white rounded-full h-[85px]'>
@@ -64,7 +94,15 @@ export function RealEstateEdit({ data }: IRealEstateEditProps) {
 				<div className='flex-1'>
 					<h2 className='mb-4 font-bold text-h3'>Фотографии объекта</h2>
 					<SectionCard classNames='pt-0 px-0'>
-						<RealEstateGallery media={data.photos.map(p => p.url)} isEdit={true} />
+						<RealEstateGallery
+							onUpload={handleUpload}
+							onDelete={handleDelete}
+							media={photos.map(m => ({
+								uuid: m.photoUuid,
+								url: m.url
+							}))}
+							isEdit={true}
+						/>
 					</SectionCard>
 				</div>
 			</div>

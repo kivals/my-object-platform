@@ -3,3 +3,5 @@ export enum UserRole {
 	MANAGER = 'manager',
 	USER = 'user'
 }
+
+export type Uuid = string;

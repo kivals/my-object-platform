@@ -1,6 +1,6 @@
 import { unstable_rethrow } from 'next/navigation';
 
-import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints';
+import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints/external';
 import {
 	type RealEstate,
 	type RealEstateType,
