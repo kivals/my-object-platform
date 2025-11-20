@@ -13,7 +13,9 @@ import {
 	Pencil,
 	Shield,
 	SquareCheckBig,
-	Users
+	Upload,
+	Users,
+	X
 } from 'lucide-react';
 
 export const LUCIDE_ICONS = {
@@ -31,5 +33,7 @@ export const LUCIDE_ICONS = {
 	Eye,
 	Globe,
 	ChevronLeft,
-	Pencil
+	Pencil,
+	Upload,
+	X
 } as const;
