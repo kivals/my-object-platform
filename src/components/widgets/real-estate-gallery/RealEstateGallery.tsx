@@ -49,7 +49,7 @@ export function RealEstateGallery({
 	return (
 		<div className={cn(classNames, isEdit && 'bg-white')}>
 			{/*Основное окно просмотра*/}
-			<MediaPreview url={activeMedia.url} />
+			<MediaPreview url={activeMedia?.url ?? '/images/empty-placeholder.webp'} />
 
 			{isEdit && <div className='mx-auto mt-6 mb-6 bg-[#868686]/50 w-[160px] h-0.5'></div>}
 
@@ -57,16 +57,18 @@ export function RealEstateGallery({
 			<div className='flex justify-center gap-x-1.5'>
 				{isEdit && <UploadImage onChange={handleUpload} />}
 
-				{media.map(item => (
-					<MediaThumbnail
-						key={item.uuid}
-						item={item}
-						selected={activeMedia.uuid === item.uuid}
-						onSelect={() => setActiveMedia(item)}
-						onDelete={onDelete ? () => onDelete(item.uuid) : undefined}
-						isEdit={isEdit}
-					/>
-				))}
+				{activeMedia &&
+					media.length > 0 &&
+					media.map(item => (
+						<MediaThumbnail
+							key={item.uuid}
+							item={item}
+							selected={activeMedia.uuid === item.uuid}
+							onSelect={() => setActiveMedia(item)}
+							onDelete={onDelete ? () => onDelete(item.uuid) : undefined}
+							isEdit={isEdit}
+						/>
+					))}
 			</div>
 		</div>
 	);

@@ -21,14 +21,14 @@ export function MediaThumbnail({
 	isEdit
 }: IMediaThumbnailProps) {
 	return (
-		<div onClick={onSelect} className='relative rounded-[15px] cursor-pointer'>
+		<div onClick={onSelect} className='relative rounded-[15px]'>
 			{isEdit && onDelete && (
 				<button
 					onClick={e => {
 						e.stopPropagation();
 						onDelete();
 					}}
-					className='h-6 w-6 rounded-full bg-[#FF5454] absolute -right-2 -top-2
+					className='cursor-pointer h-6 w-6 rounded-full bg-[#FF5454] absolute -right-2 -top-2
                      flex justify-center items-center text-white z-40'
 				>
 					<Icon icon='X' size={15} />

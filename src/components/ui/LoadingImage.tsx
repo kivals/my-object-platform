@@ -40,20 +40,22 @@ export function LoadingImage({
 				containerClassName
 			)}
 		>
-			<Image
-				{...rest}
-				src={finalSrc}
-				alt={alt}
-				className={cn(
-					'transition-opacity duration-300 object-cover',
-					loaded ? 'opacity-100' : 'opacity-0',
-					imageClassName
-				)}
-				onLoad={() => {
-					setLoaded(true);
-				}}
-				onError={() => setError(true)}
-			/>
+			{src && (
+				<Image
+					{...rest}
+					src={finalSrc}
+					alt={alt}
+					className={cn(
+						'transition-opacity duration-300 object-cover',
+						loaded ? 'opacity-100' : 'opacity-0',
+						imageClassName
+					)}
+					onLoad={() => {
+						setLoaded(true);
+					}}
+					onError={() => setError(true)}
+				/>
+			)}
 		</div>
 	);
 }
