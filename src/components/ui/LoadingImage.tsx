@@ -1,7 +1,7 @@
 'use client';
 
 import Image, { type ImageProps } from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { cn } from '@/utils/cn';
 
@@ -22,14 +22,6 @@ export function LoadingImage({
 	...rest
 }: ILoadingImageProps) {
 	const [loaded, setLoaded] = useState(false);
-	const [error, setError] = useState(false);
-
-	const finalSrc = error ? fallbackSrc : src;
-
-	useEffect(() => {
-		setLoaded(false);
-		setError(false);
-	}, [src]);
 
 	return (
 		<div
@@ -42,7 +34,7 @@ export function LoadingImage({
 		>
 			<Image
 				{...rest}
-				src={finalSrc}
+				src={src}
 				alt={alt}
 				className={cn(
 					'transition-opacity duration-300 object-cover',
@@ -52,7 +44,6 @@ export function LoadingImage({
 				onLoad={() => {
 					setLoaded(true);
 				}}
-				onError={() => setError(true)}
 			/>
 		</div>
 	);
