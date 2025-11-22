@@ -11,6 +11,7 @@ interface IMediaThumbnailProps {
 	onSelect: () => void;
 	onDelete?: () => void;
 	isEdit?: boolean;
+	isLoading?: boolean;
 }
 
 export function MediaThumbnail({
@@ -18,10 +19,14 @@ export function MediaThumbnail({
 	selected,
 	onSelect,
 	onDelete,
-	isEdit
+	isEdit,
+	isLoading = false
 }: IMediaThumbnailProps) {
 	return (
-		<div onClick={onSelect} className='relative rounded-[15px]'>
+		<div
+			onClick={onSelect}
+			className={cn('relative rounded-[15px]', isLoading && 'pointer-events-none opacity-60')}
+		>
 			{isEdit && onDelete && (
 				<button
 					onClick={e => {

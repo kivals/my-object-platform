@@ -12,7 +12,7 @@ import { Textarea } from '@/ui/Textarea';
 
 import { deletePhoto, uploadPhoto } from '@/domains/real-estate/api/api.client';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
-import type { RealEstate, RealEstatePhoto, RealEstateType } from '@/domains/real-estate/schema';
+import type { RealEstate, RealEstatePhoto } from '@/domains/real-estate/schema';
 import type { Uuid } from '@/types/common';
 
 interface IRealEstateEditProps {
@@ -21,26 +21,33 @@ interface IRealEstateEditProps {
 
 export function RealEstateEdit({ data }: IRealEstateEditProps) {
 	const [photos, setPhotos] = useState<RealEstatePhoto[]>(data.photos);
+	const [isLoading, setIsLoading] = useState(false);
 
 	async function handleUpload(file: File) {
 		try {
+			setIsLoading(true);
 			const json = await uploadPhoto(data.realEstateUuid, file, 'photos');
 			const newPhoto = json.photos?.[0];
-			setPhotos(prev => [...prev, newPhoto]);
+			setPhotos(prev => [newPhoto, ...prev]);
 		} catch (err) {
 			// показать тост/ошибку
 			console.error('[handleUpload] Failed:', err);
+		} finally {
+			setIsLoading(false);
 		}
 	}
 
 	//todo useOptimistic чтобы не ждать ответ от сервера
 	async function handleDelete(uuid: Uuid) {
 		try {
+			setIsLoading(true);
 			await deletePhoto(data.realEstateUuid, uuid, 'photos');
 			setPhotos(prev => prev.filter(p => p.photoUuid !== uuid));
 		} catch (err) {
 			// показать тост/ошибку
 			console.error('[handleDelete] Failed:', err);
+		} finally {
+			setIsLoading(false);
 		}
 	}
 
@@ -102,6 +109,7 @@ export function RealEstateEdit({ data }: IRealEstateEditProps) {
 								url: m.url
 							}))}
 							isEdit={true}
+							isLoading={isLoading}
 						/>
 					</SectionCard>
 				</div>

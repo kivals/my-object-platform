@@ -8,6 +8,7 @@ import { UploadImage } from '@/components/widgets/real-estate-gallery/UploadImag
 import type { IMedia } from '@/components/widgets/real-estate-gallery/types';
 
 import { cn } from '@/utils/cn';
+import { DEFAULT_IMAGE_PLACEHOLDER } from '@/utils/constants';
 
 import type { Uuid } from '@/types/common';
 import type { IClassNames } from '@/types/components/classname.types';
@@ -18,6 +19,7 @@ interface IRealEstateGallery extends IClassNames {
 	isEdit?: boolean;
 	onUpload?: (file: File) => Promise<void>;
 	onDelete?: (uuid: string) => void;
+	isLoading?: boolean;
 }
 
 export function RealEstateGallery({
@@ -26,7 +28,8 @@ export function RealEstateGallery({
 	classNames,
 	isEdit = false,
 	onUpload,
-	onDelete
+	onDelete,
+	isLoading = false
 }: IRealEstateGallery) {
 	const [activeMedia, setActiveMedia] = useState<IMedia>(
 		() => media.find(m => m.uuid === active) || media[0]
@@ -49,14 +52,13 @@ export function RealEstateGallery({
 	return (
 		<div className={cn(classNames, isEdit && 'bg-white')}>
 			{/*Основное окно просмотра*/}
-			<MediaPreview url={activeMedia?.url ?? '/images/empty-placeholder.webp'} />
+			<MediaPreview isLoading={isLoading} url={activeMedia?.url ?? DEFAULT_IMAGE_PLACEHOLDER} />
 
 			{isEdit && <div className='mx-auto mt-6 mb-6 bg-[#868686]/50 w-[160px] h-0.5'></div>}
 
 			{/*список всех картинок*/}
 			<div className='flex justify-center gap-x-1.5'>
-				{isEdit && <UploadImage onChange={handleUpload} />}
-
+				{isEdit && !isLoading && <UploadImage onChange={handleUpload} />}
 				{activeMedia &&
 					media.length > 0 &&
 					media.map(item => (
@@ -67,6 +69,7 @@ export function RealEstateGallery({
 							onSelect={() => setActiveMedia(item)}
 							onDelete={onDelete ? () => onDelete(item.uuid) : undefined}
 							isEdit={isEdit}
+							isLoading={isLoading}
 						/>
 					))}
 			</div>
