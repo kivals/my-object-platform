@@ -28,7 +28,7 @@ export function RealEstateEdit({ data }: IRealEstateEditProps) {
 			setIsLoading(true);
 			const json = await uploadPhoto(data.realEstateUuid, file, 'photos');
 			const newPhoto = json.photos?.[0];
-			setPhotos(prev => [newPhoto, ...prev]);
+			setPhotos(prev => [...prev, newPhoto]);
 		} catch (err) {
 			// показать тост/ошибку
 			console.error('[handleUpload] Failed:', err);

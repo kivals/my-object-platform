@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useEffect, useState } from 'react';
 
 import { MediaPreview } from '@/components/widgets/real-estate-gallery/MediaPreview';
 import { MediaThumbnail } from '@/components/widgets/real-estate-gallery/MediaThumbnail';
@@ -34,6 +34,18 @@ export function RealEstateGallery({
 	const [activeMedia, setActiveMedia] = useState<IMedia>(
 		() => media.find(m => m.uuid === active) || media[0]
 	);
+
+	useEffect(() => {
+		if (!activeMedia && media.length > 0) {
+			setActiveMedia(media[0]);
+		}
+
+		// если activeMedia больше не существует (удалили) — переключиться на первую
+		if (activeMedia && media.length > 0) {
+			const exists = media.some(m => m.uuid === activeMedia.uuid);
+			if (!exists) setActiveMedia(media[0]);
+		}
+	}, [media]);
 
 	async function handleUpload(e: ChangeEvent<HTMLInputElement>) {
 		const file = e.target.files?.[0];
