@@ -22,6 +22,11 @@ interface IRealEstateGallery extends IClassNames {
 	isLoading?: boolean;
 }
 
+const defaultMedia: IMedia = {
+	uuid: '-1',
+	url: DEFAULT_IMAGE_PLACEHOLDER
+};
+
 export function RealEstateGallery({
 	media,
 	active,
@@ -31,6 +36,7 @@ export function RealEstateGallery({
 	onDelete,
 	isLoading = false
 }: IRealEstateGallery) {
+	console.log('RealEstateGallery media', media);
 	const [activeMedia, setActiveMedia] = useState<IMedia>(
 		() => media.find(m => m.uuid === active) || media[0]
 	);
@@ -40,10 +46,13 @@ export function RealEstateGallery({
 			setActiveMedia(media[0]);
 		}
 
-		// если activeMedia больше не существует (удалили) — переключиться на первую
 		if (activeMedia && media.length > 0) {
 			const exists = media.some(m => m.uuid === activeMedia.uuid);
 			if (!exists) setActiveMedia(media[0]);
+		}
+
+		if (media.length === 0) {
+			setActiveMedia(defaultMedia);
 		}
 	}, [media]);
 
