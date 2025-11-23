@@ -36,7 +36,6 @@ export function RealEstateGallery({
 	onDelete,
 	isLoading = false
 }: IRealEstateGallery) {
-	console.log('RealEstateGallery media', media);
 	const [activeMedia, setActiveMedia] = useState<IMedia>(
 		() => media.find(m => m.uuid === active) || media[0]
 	);
@@ -79,7 +78,12 @@ export function RealEstateGallery({
 
 			{/*список всех картинок*/}
 			<div className='flex justify-center gap-x-1.5'>
-				{isEdit && !isLoading && <UploadImage onChange={handleUpload} />}
+				{isEdit && (
+					<UploadImage
+						classNames={cn(isLoading && 'opacity-0 pointer-events-none')}
+						onChange={handleUpload}
+					/>
+				)}
 				{activeMedia &&
 					media.length > 0 &&
 					media.map(item => (

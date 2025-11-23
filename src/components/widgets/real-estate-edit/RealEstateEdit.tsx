@@ -13,13 +13,15 @@ import { Textarea } from '@/ui/Textarea';
 import { deletePhoto, uploadPhoto } from '@/domains/real-estate/api/api.client';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 import type { RealEstate, RealEstatePhoto } from '@/domains/real-estate/schema';
+import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
 interface IRealEstateEditProps {
 	data: RealEstate;
+	uuid: Uuid;
 }
 
-export function RealEstateEdit({ data }: IRealEstateEditProps) {
+export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 	const [photos, setPhotos] = useState<RealEstatePhoto[]>(data.photos);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -54,7 +56,10 @@ export function RealEstateEdit({ data }: IRealEstateEditProps) {
 	return (
 		<section>
 			<header className='mb-12 flex justify-center items-center relative bg-white rounded-full h-[85px]'>
-				<BackButton classNames='absolute inset-x-0 left-[15px] top-[50%] -translate-y-1/2 z-10' />
+				<BackButton
+					backUrl={`${REAL_ESTATE_URL}/${uuid}`}
+					classNames='absolute inset-x-0 left-[15px] top-[50%] -translate-y-1/2 z-10'
+				/>
 				<h2 className='font-medium text-h2'>Редактирование объекта</h2>
 			</header>
 

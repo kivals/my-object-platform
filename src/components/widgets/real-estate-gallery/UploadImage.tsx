@@ -2,13 +2,17 @@ import type { ChangeEvent } from 'react';
 
 import { Icon } from '@/ui/Icon';
 
-interface IUploadImageProps {
+import { cn } from '@/utils/cn';
+
+import type { IClassNames } from '@/types/components/classname.types';
+
+interface IUploadImageProps extends IClassNames {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export function UploadImage({ onChange }: IUploadImageProps) {
+export function UploadImage({ onChange, classNames }: IUploadImageProps) {
 	return (
-		<div>
+		<div className={cn('opacity-100 pointer-events-auto', classNames)}>
 			<input type='file' id='upload-photo-input' hidden accept='image/*' onChange={onChange} />
 
 			<label htmlFor='upload-photo-input'>

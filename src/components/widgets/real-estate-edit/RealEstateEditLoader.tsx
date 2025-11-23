@@ -11,5 +11,5 @@ export async function RealEstateEditLoader({ uuid }: IRealEstateEditLoader) {
 
 	if (!realEstate) return null;
 
-	return <RealEstateEdit data={realEstate} />;
+	return <RealEstateEdit uuid={uuid} data={realEstate} />;
 }

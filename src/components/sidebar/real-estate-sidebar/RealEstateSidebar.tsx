@@ -13,6 +13,7 @@ import { useSidebarOpen } from '@/store/use-ui.store';
 import { cn } from '@/utils/cn';
 
 import type { RealEstateTypeLabel } from '@/domains/real-estate/types';
+import { DASHBOARD_URL } from '@/routes';
 
 interface IRealEstateSidebarProps {
 	uuid: string;
@@ -33,7 +34,7 @@ export function RealEstateSidebar({ uuid, address, area, typeLabel }: IRealEstat
 					!isExtended && 'flex items-center justify-center p-0 w-auto bg-background shadow-none'
 				)}
 			>
-				<BackButton classNames='shrink-0' />
+				<BackButton backUrl={DASHBOARD_URL} classNames='shrink-0' />
 				{isExtended && (
 					<div className='flex flex-col gap-y-2 items-center'>
 						<p className='font-medium text-h2 '>{`${typeLabel}, ${area} м2`}</p>
