@@ -1,11 +1,12 @@
 import { z } from 'zod';
 
-import { realEstateTypeSchema } from '@/domains/real-estate/api/schema';
+import { addressSchema, realEstateTypeSchema } from '@/domains/real-estate/api/schema';
 
-export const UpdateSchema = z.object({
-	name: z.string().min(3).max(255),
+export const RealEstateFormSchema = z.object({
+	name: z.string().min(5).max(255),
 	type: realEstateTypeSchema,
-	rentalValue: z.number().nonnegative().nullable(),
+	rentalValue: z.number().nonnegative(),
 	area: z.number().nonnegative(),
-	description: z.string().optional()
+	description: z.string().min(30),
+	address: addressSchema
 });

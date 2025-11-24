@@ -3,6 +3,7 @@ import { unstable_rethrow } from 'next/navigation';
 import {
 	type RealEstate,
 	type RealEstateType,
+	type RealEstateUpdate,
 	realEstateItemSchema,
 	realEstateListSchema
 } from '@/domains/real-estate/api/schema';
@@ -44,6 +45,30 @@ export async function getRealEstateByUuid(uuid: string): Promise<RealEstate | nu
 			realEstateItemSchema,
 			{
 				method: 'GET'
+			}
+		);
+
+		return data;
+	} catch (e) {
+		unstable_rethrow(e);
+		console.error('[getRealEstateItem]', e);
+		return null;
+	}
+}
+
+export async function editRealEstateByUuid(
+	uuid: string,
+	sendData: RealEstateUpdate
+): Promise<RealEstate | null> {
+	if (!uuid) return null;
+
+	try {
+		const { data } = await apiFetchValidated(
+			REAL_ESTATE_ENDPOINTS.PUT_BY_UUID(uuid),
+			realEstateItemSchema,
+			{
+				method: 'PUT',
+				body: JSON.stringify(sendData)
 			}
 		);
 

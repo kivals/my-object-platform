@@ -37,18 +37,20 @@ async function apiFetch<T>(
 		tokens = await getAuthTokens();
 	}
 
-	if (opts && 'query' in opts && opts.query) {
+	if (opts.query) {
 		const params = new URLSearchParams(opts.query).toString();
 		endpoint += endpoint.includes('?') ? '&' + params : '?' + params;
 	}
+
+	const isFormData = opts.body instanceof FormData;
 
 	async function doFetch(currentToken?: string): Promise<Response> {
 		return fetch(endpoint, {
 			...opts,
 			headers: {
 				...(opts.headers || {}),
-				'Content-Type': 'application/json',
-				...(currentToken ? { Authorization: `Bearer ${currentToken}` } : {})
+				...(currentToken ? { Authorization: `Bearer ${currentToken}` } : {}),
+				...(!isFormData ? { 'Content-Type': 'application/json' } : {})
 			},
 			cache: 'no-store'
 		});

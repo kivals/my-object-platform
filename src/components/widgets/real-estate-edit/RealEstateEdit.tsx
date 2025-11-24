@@ -13,12 +13,13 @@ import { BackButton } from '@/ui/BackButton';
 import { Button } from '@/ui/Button';
 import { OptionGroup } from '@/ui/OptionGroup';
 import { SectionCard } from '@/ui/SectionCard';
+import { Separator } from '@/ui/Separator';
 
 import { realEstateEditAction } from '@/actions/real-estate-edit.action';
 import { deletePhoto, uploadPhoto } from '@/domains/real-estate/api/api.client';
 import type { RealEstate, RealEstatePhoto } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
-import { UpdateSchema } from '@/domains/real-estate/validate/edit.schema';
+import { RealEstateFormSchema } from '@/domains/real-estate/validate/edit.schema';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
@@ -29,24 +30,30 @@ interface IRealEstateEditProps {
 
 const initialState = { error: undefined, success: false };
 
+//todo декомпозировать компонент
 export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 	const [photos, setPhotos] = useState<RealEstatePhoto[]>(data.photos);
 	const [isLoading, setIsLoading] = useState(false);
-	const [state, action, isPending] = useActionState(realEstateEditAction, initialState);
+	const [state, action] = useActionState(realEstateEditAction, initialState);
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		control
-	} = useForm<z.infer<typeof UpdateSchema>>({
-		resolver: zodResolver(UpdateSchema),
+	} = useForm<z.infer<typeof RealEstateFormSchema>>({
+		resolver: zodResolver(RealEstateFormSchema),
 		defaultValues: {
 			name: data.name,
-			type: 'house',
-			area: Number(data.area) || 0,
-			rentalValue: Number(data.rentalValue) || 0,
-			description: data.description || ''
+			type: data.type,
+			area: data.area || 0,
+			rentalValue: data.rentalValue || 0,
+			description: data.description,
+			address: {
+				city: data.address.city,
+				street: data.address.street,
+				building: data.address.building
+			}
 		}
 	});
 
@@ -78,16 +85,18 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 		}
 	}
 
-	const onSubmit = async (submitData: z.infer<typeof UpdateSchema>) => {
-		const formData = new FormData();
-		formData.append('name', submitData.name);
-		formData.append('rentValue', String(submitData.rentalValue));
-		formData.append('area', String(submitData.area));
-		formData.append('description', String(submitData.description));
-		formData.append('type', submitData.type);
-
+	const onSubmit = async (submitData: z.infer<typeof RealEstateFormSchema>) => {
 		startTransition(() => {
-			action(formData);
+			action({
+				name: submitData.name,
+				type: submitData.type,
+				area: submitData.area,
+				rentalValue: submitData.rentalValue,
+				description: submitData.description,
+				manager: data.manager,
+				uuid: uuid,
+				address: submitData.address
+			});
 			state.error = '';
 		});
 	};
@@ -132,27 +141,65 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 								/>
 							</div>
 
-							<TextField
-								type='number'
-								label='Арендная стоимость в месяц'
-								placeholder='Введите стоимость'
-								inputClassName='max-w-[245px] placeholder:text-body'
-								labelClassName='text-body font-medium'
-								error={errors.rentalValue?.message}
-								{...register('rentalValue')}
-								suffix={() => <span className='font-medium text-h3 text-primary'>RUB</span>}
-							/>
+							<div className='flex justify-between'>
+								<TextField
+									type='number'
+									label='Арендная стоимость в месяц'
+									placeholder='Введите стоимость'
+									inputClassName='max-w-[200px] placeholder:text-body'
+									labelClassName='text-body font-medium'
+									error={errors.rentalValue?.message}
+									{...register('rentalValue', { valueAsNumber: true })}
+									suffix={() => <span className='font-medium text-h3 text-primary'>RUB</span>}
+								/>
+
+								<TextField
+									type='number'
+									label='Площадь'
+									placeholder='Введите площадь'
+									inputClassName='max-w-[200px] placeholder:text-body'
+									labelClassName='text-body font-medium'
+									error={errors.area?.message}
+									{...register('area', { valueAsNumber: true })}
+									suffix={() => <span className='font-medium text-h3 text-primary'>М2</span>}
+								/>
+							</div>
+
+							<Separator orientation='horizontal' />
+
+							<div className=' flex justify-between'>
+								<TextField
+									type='text'
+									label='Город'
+									placeholder='Введите город'
+									inputClassName='placeholder:text-body'
+									labelClassName='text-body font-medium'
+									error={errors.address?.city?.message}
+									{...register('address.city')}
+								/>
+
+								<TextField
+									type='text'
+									label='Улица'
+									placeholder='Введите улицу'
+									inputClassName='placeholder:text-body'
+									labelClassName='text-body font-medium'
+									error={errors.address?.street?.message}
+									{...register('address.street')}
+								/>
+							</div>
 
 							<TextField
-								type='number'
-								label='Площадь'
-								placeholder='Введите площадь'
-								inputClassName='max-w-[245px] placeholder:text-body'
+								type='text'
+								label='Дом'
+								placeholder='Введите номер дома'
+								inputClassName='placeholder:text-body max-w-[200px]'
 								labelClassName='text-body font-medium'
-								error={errors.area?.message}
-								{...register('area')}
-								suffix={() => <span className='font-medium text-h3 text-primary'>М2</span>}
+								error={errors.address?.building?.message}
+								{...register('address.building')}
 							/>
+
+							<Separator orientation='horizontal' />
 
 							<TextField
 								label='Описание объекта'
@@ -165,7 +212,7 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 							/>
 
 							<FormError classNames='mb-10' message={state.error} />
-
+							<Separator orientation='horizontal' />
 							<div className='flex flex-col gap-y-7 cursor-pointer'>
 								<Button type='submit'>Сохранить изменения</Button>
 							</div>

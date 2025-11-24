@@ -6,6 +6,9 @@ export const REAL_ESTATE_ENDPOINTS = {
 	GET_BY_UUID: (uuid: string) =>
 		`${process.env.SERVER_REAL_ESTATE_URL}/real-estate-properties/${uuid}`,
 
+	PUT_BY_UUID: (uuid: string) =>
+		`${process.env.SERVER_REAL_ESTATE_URL}/real-estate-properties/${uuid}`,
+
 	POST_FILE: (uuid: string, type: RealEstateDocumentsType) =>
 		`${process.env.SERVER_REAL_ESTATE_URL}/real-estate-properties/${uuid}/files?type=${type}`,
 
