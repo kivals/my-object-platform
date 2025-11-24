@@ -61,11 +61,11 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 			</header>
 
 			<div className='flex gap-x-6'>
-				<div className='flex-1 flex flex-col'>
+				<div className='w-1/2 flex-1 flex flex-col'>
 					<h2 className='mb-4 font-bold text-h3'>Характеристики объекта</h2>
 					<RealEstateEditForm uuid={uuid} data={data} />
 				</div>
-				<div className='flex-1'>
+				<div className='w-1/2 flex-1'>
 					<h2 className='mb-4 font-bold text-h3'>Фотографии объекта</h2>
 					<SectionCard classNames='pt-0 px-0'>
 						<RealEstateGallery

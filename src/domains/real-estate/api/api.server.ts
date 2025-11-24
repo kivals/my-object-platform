@@ -56,6 +56,11 @@ export async function getRealEstateByUuid(uuid: string): Promise<RealEstate | nu
 	}
 }
 
+/**
+ * Запускает редактирование объекта недвижимости
+ * @param uuid Идентификатор недвижимости.
+ * @param sendData Новые данные
+ */
 export async function editRealEstateByUuid(
 	uuid: string,
 	sendData: RealEstateUpdate

@@ -15,14 +15,14 @@ export async function RealEstateItemLoader({ uuid }: IRealEstateItemContent) {
 	const addressLine = `${realEstate?.address.street}, ${realEstate?.address.building}, ${realEstate?.address.city}`;
 
 	return (
-		<div className='flex gap-x-8'>
+		<div className='flex gap-x-8 min-w-0'>
 			<RealEstateSidebar
 				typeLabel={REAL_ESTATE_TYPE_LABELS[realEstate?.type || 'house']}
 				uuid={uuid}
 				address={addressLine}
 				area={realEstate?.area}
 			/>
-			<main className='flex-1'>{realEstate && <RealEstateItem data={realEstate} />}</main>
+			<main className='flex-1 min-w-0'>{realEstate && <RealEstateItem data={realEstate} />}</main>
 		</div>
 	);
 }

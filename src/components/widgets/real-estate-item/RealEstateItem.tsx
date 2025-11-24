@@ -22,7 +22,7 @@ export function RealEstateItem({ data }: IRealEstateItem) {
 				}))}
 			/>
 
-			<RealEstateItemInfo type={data.type} rent={'225000'} area={345} />
+			<RealEstateItemInfo type={data.type} rent={data.rentalValue} area={data.area} />
 
 			<RealEstateItemDescription text={data.description} />
 		</section>

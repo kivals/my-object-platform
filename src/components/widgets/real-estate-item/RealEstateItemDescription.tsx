@@ -10,7 +10,7 @@ export function RealEstateItemDescription({ text }: IRealEstateItemDescription) 
 	return (
 		<div>
 			<SectionCard classNames='item-center'>
-				<p className='leading-relaxed whitespace-pre-line'>{text}</p>
+				<p className='leading-relaxed whitespace-pre-wrap break-words'>{text}</p>
 			</SectionCard>
 		</div>
 	);

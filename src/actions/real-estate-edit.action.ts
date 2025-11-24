@@ -18,8 +18,6 @@ export const realEstateEditAction = async (
 		return { error: 'Ошибка. Не передан идентификатор объекта' };
 	}
 
-	console.log(payload);
-
 	try {
 		await editRealEstateByUuid(payload.uuid, {
 			name: payload.name,

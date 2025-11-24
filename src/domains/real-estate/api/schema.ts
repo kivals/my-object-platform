@@ -28,7 +28,7 @@ export const realEstateSchema = z.object({
 	name: z.string(),
 	type: realEstateTypeSchema,
 	manager: z.string(),
-	rentalValue: z.number().nonnegative().nullable(),
+	rentalValue: z.number().nonnegative(),
 	area: z.number().nonnegative(),
 	description: z.string().optional().default(''),
 	address: addressSchema,

@@ -6,7 +6,7 @@ import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 
 interface IRealEstateItemProps {
 	type: RealEstateType;
-	rent: string;
+	rent: number;
 	area: number;
 }
 

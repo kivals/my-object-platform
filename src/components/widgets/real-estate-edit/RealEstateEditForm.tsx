@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { startTransition, useActionState } from 'react';
+import { useRouter } from 'next/navigation';
+import { startTransition, useActionState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -15,6 +16,7 @@ import { realEstateEditAction } from '@/actions/real-estate-edit.action';
 import type { RealEstate } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 import { RealEstateFormSchema } from '@/domains/real-estate/validate/edit.schema';
+import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
 interface IRealEstateEditFormProps {
@@ -26,7 +28,7 @@ const initialState = { error: undefined, success: false };
 
 export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 	const [state, action, isPending] = useActionState(realEstateEditAction, initialState);
-
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -48,6 +50,14 @@ export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 			}
 		}
 	});
+
+	// возвращаемся на просмотр ПОСЛЕ успешного сохранения
+	useEffect(() => {
+		if (state.success) {
+			router.push(`${REAL_ESTATE_URL}/${uuid}`);
+		}
+	}, [state.success, router, uuid]);
+
 	const onSubmit = async (submitData: z.infer<typeof RealEstateFormSchema>) => {
 		startTransition(() => {
 			action({
