@@ -5,6 +5,9 @@ import { cn } from '@/utils/cn';
 function Input({ className, type, ...props }: ComponentProps<'input'>) {
 	return (
 		<input
+			onWheel={e => {
+				if (type === 'number') e.currentTarget.blur();
+			}}
 			type={type}
 			data-slot='input'
 			className={cn(
