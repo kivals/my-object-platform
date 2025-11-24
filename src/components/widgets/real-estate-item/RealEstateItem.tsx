@@ -3,7 +3,7 @@ import { RealEstateItemDescription } from '@/components/widgets/real-estate-item
 import { RealEstateItemHeader } from '@/components/widgets/real-estate-item/RealEstateItemHeader';
 import { RealEstateItemInfo } from '@/components/widgets/real-estate-item/RealEstateItemInfo';
 
-import type { RealEstate } from '@/domains/real-estate/schema';
+import type { RealEstate } from '@/domains/real-estate/api/schema';
 
 interface IRealEstateItem {
 	data: RealEstate;

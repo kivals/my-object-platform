@@ -1,18 +1,21 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
+import { TextField } from '@/components/form/TextField';
 import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/RealEstateGallery';
 
 import { BackButton } from '@/ui/BackButton';
-import { Input } from '@/ui/Input';
 import { OptionGroup } from '@/ui/OptionGroup';
 import { SectionCard } from '@/ui/SectionCard';
-import { Textarea } from '@/ui/Textarea';
 
 import { deletePhoto, uploadPhoto } from '@/domains/real-estate/api/api.client';
+import type { RealEstate, RealEstatePhoto } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
-import type { RealEstate, RealEstatePhoto } from '@/domains/real-estate/schema';
+import { UpdateSchema } from '@/domains/real-estate/validate/edit.schema';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
@@ -24,6 +27,21 @@ interface IRealEstateEditProps {
 export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 	const [photos, setPhotos] = useState<RealEstatePhoto[]>(data.photos);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm<z.infer<typeof UpdateSchema>>({
+		resolver: zodResolver(UpdateSchema),
+		defaultValues: {
+			name: data.name,
+			type: 'house',
+			area: data.area || 0,
+			rentalValue: data.rentalValue || 0,
+			description: data.description || ''
+		}
+	});
 
 	async function handleUpload(file: File) {
 		try {
@@ -67,40 +85,52 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 				<div className='flex-1 flex flex-col'>
 					<h2 className='mb-4 font-bold text-h3'>Характеристики объекта</h2>
 					<SectionCard classNames='gap-y-7 flex-1 px-8'>
-						<div>
-							<h3 className='mb-3.5 text-body font-medium'>Название объекта недвижимости</h3>
-							<div className='flex gap-x-4 items-center '>
-								<Input value={data.name} className='' />
-							</div>
-						</div>
+						<TextField
+							type='text'
+							label='Название объекта'
+							placeholder='Введите название'
+							inputClassName='placeholder:text-body'
+							labelClassName='text-body font-medium'
+							error={errors.name?.message}
+							{...register('name')}
+						/>
 
 						<div>
-							<h3 className='mb-3.5 text-body font-medium'>Тип объекта</h3>
+							<h3 className='mb-2 text-body font-medium'>Тип объекта</h3>
 							<OptionGroup options={REAL_ESTATE_TYPE_LABELS} value={data.type} />
 						</div>
 
-						<div>
-							<h3 className='mb-3.5 text-body font-medium'>Арендная стоимость в месяц</h3>
-							<div className='flex gap-x-4 items-center '>
-								<Input value={data.rentalValue || 0} className='max-w-[245px]' type='number' />
-								<span className='font-medium text-h3 text-primary'>RUB</span>
-							</div>
-						</div>
+						<TextField
+							type='number'
+							label='Арендная стоимость в месяц'
+							placeholder='Введите стоимость'
+							inputClassName='max-w-[245px] placeholder:text-body'
+							labelClassName='text-body font-medium'
+							error={errors.rentalValue?.message}
+							{...register('rentalValue')}
+							suffix={() => <span className='font-medium text-h3 text-primary'>RUB</span>}
+						/>
 
-						<div>
-							<h3 className='mb-3.5 text-body font-medium'>Площадь</h3>
-							<div className='flex gap-x-4 items-center '>
-								<Input value={data.area} className='max-w-[245px]' type='number' />
-								<span className='font-medium text-h3 text-primary'>М2</span>
-							</div>
-						</div>
+						<TextField
+							type='number'
+							label='Площадь'
+							placeholder='Введите площадь'
+							inputClassName='max-w-[245px] placeholder:text-body'
+							labelClassName='text-body font-medium'
+							error={errors.area?.message}
+							{...register('area')}
+							suffix={() => <span className='font-medium text-h3 text-primary'>М2</span>}
+						/>
 
-						<div>
-							<h3 className='mb-3.5 text-body font-medium'>Описание объекта</h3>
-							<div className='flex gap-x-4 items-center '>
-								<Textarea defaultValue={data.description} />
-							</div>
-						</div>
+						<TextField
+							label='Описание объекта'
+							placeholder='Введите oписание'
+							inputClassName='placeholder:text-body'
+							labelClassName='text-body font-medium'
+							error={errors.description?.message}
+							{...register('description')}
+							multiline
+						/>
 					</SectionCard>
 				</div>
 				<div className='flex-1'>

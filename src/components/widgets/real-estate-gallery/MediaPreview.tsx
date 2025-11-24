@@ -14,7 +14,7 @@ export function MediaPreview({ url, isLoading = false }: IMediaPreviewProps) {
 			) : (
 				<LoadingImage
 					containerClassName='h-full w-full h-[500px]'
-					imageClassName='w-full object-contain'
+					imageClassName='w-full'
 					src={url}
 					fill
 					alt=''

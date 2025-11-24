@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { RealEstateCard } from '@/components/widgets/real-estate-list/server/RealEstateCard';
 
 import { getRealEstateList } from '@/domains/real-estate/api/api.server';
-import type { RealEstateType } from '@/domains/real-estate/schema';
+import type { RealEstateType } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_URL } from '@/routes';
 
 interface IRealEstateListProps {

@@ -1,12 +1,12 @@
 import { unstable_rethrow } from 'next/navigation';
 
-import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints/external';
 import {
 	type RealEstate,
 	type RealEstateType,
 	realEstateItemSchema,
 	realEstateListSchema
-} from '@/domains/real-estate/schema';
+} from '@/domains/real-estate/api/schema';
+import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints/external';
 import { apiFetchValidated } from '@/lib/api/api-fetch.server';
 
 /**

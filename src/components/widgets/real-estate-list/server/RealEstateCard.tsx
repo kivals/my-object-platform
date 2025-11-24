@@ -6,7 +6,7 @@ import { LoadingImage } from '@/ui/LoadingImage';
 
 import { cn } from '@/utils/cn';
 
-import type { RealEstate } from '@/domains/real-estate/schema';
+import type { RealEstate } from '@/domains/real-estate/api/schema';
 
 interface IPropertyCardProps {
 	data: RealEstate;
@@ -53,7 +53,7 @@ export function RealEstateCard({ data, size = 'lg' }: IPropertyCardProps) {
 				</div>
 				<div className='basis-1/2 flex justify-center items-center'>
 					<LoadingImage
-						imageClassName='w-full object-fill rounded-[20px] max-h-[300px]'
+						imageClassName='w-full rounded-[20px] max-h-[300px]'
 						containerClassName='w-full'
 						src={titlePhoto}
 						alt='Картинка'

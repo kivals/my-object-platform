@@ -4,8 +4,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { OptionGroup } from '@/ui/OptionGroup';
 
+import type { RealEstateType } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
-import type { RealEstateType } from '@/domains/real-estate/schema';
 
 interface IFilterControllerProps {
 	currentType: RealEstateType;

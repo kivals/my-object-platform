@@ -5,7 +5,7 @@ import { RealEstateList } from '@/components/widgets/real-estate-list/server/Rea
 
 import { SkeletonLoader } from '@/ui/SkeletonLoader';
 
-import type { RealEstateType } from '@/domains/real-estate/schema';
+import type { RealEstateType } from '@/domains/real-estate/api/schema';
 
 interface IRealEstateListProps {
 	type: RealEstateType;

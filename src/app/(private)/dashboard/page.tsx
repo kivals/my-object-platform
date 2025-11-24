@@ -1,6 +1,6 @@
 import { RealEstateListWidget } from '@/components/widgets/real-estate-list/server/RealEstateListWidget';
 
-import type { RealEstateType } from '@/domains/real-estate/schema';
+import type { RealEstateType } from '@/domains/real-estate/api/schema';
 
 interface PageProps {
 	searchParams: Promise<{ type?: RealEstateType }>;
