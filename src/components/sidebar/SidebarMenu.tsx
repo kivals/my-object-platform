@@ -14,9 +14,15 @@ export function SidebarMenu({ menu }: ISidebarMenuProps) {
 	return (
 		<nav>
 			<ul className='flex flex-col gap-y-9'>
-				{menu.map(({ id, link, icon, title }) => (
+				{menu.map(({ id, link, icon, title, isWork }) => (
 					<li key={id}>
-						<SidebarLink isActive={!!match(link)(pathname)} link={link} icon={icon} title={title} />
+						<SidebarLink
+							isWork={isWork}
+							isActive={!!match(pathname)(link)}
+							link={link}
+							icon={icon}
+							title={title}
+						/>
 					</li>
 				))}
 			</ul>

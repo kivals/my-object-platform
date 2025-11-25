@@ -23,7 +23,7 @@ interface IRealEstateSidebarProps {
 }
 
 export function RealEstateSidebar({ uuid, address, area, typeLabel }: IRealEstateSidebarProps) {
-	const sidebarMenu = getSidebarData('objects', uuid);
+	const sidebarMenu = getSidebarData('real-estate', uuid);
 	const isExtended = useSidebarOpen();
 
 	return (

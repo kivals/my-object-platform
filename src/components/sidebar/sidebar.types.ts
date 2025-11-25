@@ -5,4 +5,5 @@ export interface ISidebarDataItem {
 	title: string;
 	icon: TLucideIcons;
 	link: string;
+	isWork: boolean;
 }
