@@ -22,14 +22,23 @@ interface IHeaderProps {
 	session?: Session | null;
 }
 
+function shouldShowSidebarToggle(pathname: string) {
+	if (!!match(`${REAL_ESTATE_URL}{/*path}/edit`)(pathname)) return false;
+	return !!match([`${DASHBOARD_URL}{/*path}`, `${REAL_ESTATE_URL}{/*path}`])(pathname);
+}
+
 export function Header({ session }: IHeaderProps) {
 	const pathname = usePathname();
 	const toggleSidebar = useToggleSidebar();
 	const [header, setHeader] = useState(false);
 
 	useEffect(() => {
-		const scrollHandler = () => (window.scrollY > 10 ? setHeader(true) : setHeader(false));
+		const scrollHandler = () => {
+			setHeader(window.scrollY > 10);
+		};
+
 		window.addEventListener('scroll', scrollHandler);
+		scrollHandler();
 
 		return () => window.removeEventListener('scroll', scrollHandler);
 	}, []);
@@ -37,14 +46,14 @@ export function Header({ session }: IHeaderProps) {
 	return (
 		<header
 			className={cn(
-				'transition-all py-6 sticky top-0 z-30 h-header',
-				header && 'bg-white shadow-lg py-4'
+				'transition-all py-6 sticky top-0 z-30',
+				header && 'bg-white shadow-lg py-2'
 			)}
 		>
 			<Container>
 				<div className='flex z-30 justify-between items-center'>
 					<div className='flex items-center gap-x-8'>
-						{!!match([`${DASHBOARD_URL}{/*path}`, `${REAL_ESTATE_URL}{/*path}`])(pathname) && (
+						{shouldShowSidebarToggle(pathname) && (
 							<div onClick={toggleSidebar} className='cursor-pointer'>
 								<Icon classNames='text-primary' icon='Menu' size={32} />
 							</div>
