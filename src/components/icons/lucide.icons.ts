@@ -7,6 +7,7 @@ import {
 	FileText,
 	Globe,
 	Info,
+	LogOut,
 	Menu,
 	MessagesSquare,
 	PanelRightOpen,
@@ -35,5 +36,6 @@ export const LUCIDE_ICONS = {
 	ChevronLeft,
 	Pencil,
 	Upload,
-	X
+	X,
+	LogOut
 } as const;
