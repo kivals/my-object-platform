@@ -23,11 +23,17 @@ export function OptionGroup<T extends string>({
 }: OptionGroupProps<T>) {
 	const keys = Object.keys(options) as T[];
 
+	const handleValueChange = (nextValue: string) => {
+		if (!nextValue || nextValue === value) return;
+
+		onChange?.(nextValue as T);
+	};
+
 	return (
 		<ToggleGroup.Root
 			type='single'
 			value={value}
-			onValueChange={onChange}
+			onValueChange={handleValueChange}
 			className={cn(
 				'relative inline-flex items-center gap-x-3 px-3 py-2 bg-[#DFDAFF] rounded-[20px] shadow-lg',
 				classNames
