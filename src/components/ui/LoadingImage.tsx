@@ -7,7 +7,6 @@ import { cn } from '@/utils/cn';
 
 interface ILoadingImageProps extends ImageProps {
 	placeholderClassName?: string;
-	fallbackSrc?: string;
 	imageClassName?: string;
 	containerClassName?: string;
 }
@@ -16,7 +15,6 @@ export function LoadingImage({
 	imageClassName,
 	containerClassName,
 	placeholderClassName = 'bg-gray-200',
-	fallbackSrc = '/images/fallback.png',
 	src,
 	alt,
 	...rest
