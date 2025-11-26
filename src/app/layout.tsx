@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Jura } from 'next/font/google';
 
+import { Toaster } from '@/ui/Sonner';
+
 import './globals.css';
 
 const jura = Jura({
@@ -28,6 +30,7 @@ export default function RootLayout({
 			<body
 				className={`${jura.variable} font-jura antialiased text-body text-text bg-background leading-none`}
 			>
+				<Toaster />
 				{children}
 				{/*//todo надо тут что-то отрисовать */}
 				<footer className='h-48'></footer>

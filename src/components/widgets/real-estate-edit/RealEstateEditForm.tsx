@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { startTransition, useActionState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { FormError } from '@/components/form/FormError';
@@ -54,6 +55,7 @@ export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 	// возвращаемся на просмотр ПОСЛЕ успешного сохранения
 	useEffect(() => {
 		if (state.success) {
+			toast.success('Данные успешно сохранены');
 			router.push(`${REAL_ESTATE_URL}/${uuid}`);
 		}
 	}, [state.success, router, uuid]);
