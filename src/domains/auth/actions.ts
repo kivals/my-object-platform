@@ -1,4 +1,4 @@
-import { AUTH_ENDPOINTS } from '@/domains/auth/endpoints';
+import { AUTH_ENDPOINTS } from '@/domains/auth/endpoints/external';
 import {
 	RefreshResponseSchema,
 	type RefreshResponseType,

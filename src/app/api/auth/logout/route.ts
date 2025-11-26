@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { AUTH_ENDPOINTS } from '@/domains/auth/endpoints';
+import { AUTH_ENDPOINTS } from '@/domains/auth/endpoints/external';
 import { signOut } from '@/lib/auth';
 import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
 
