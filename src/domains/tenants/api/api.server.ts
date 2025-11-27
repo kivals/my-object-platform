@@ -21,7 +21,7 @@ export async function getTenantsByRealEstate(
 		);
 	} catch (e) {
 		unstable_rethrow(e);
-		console.error('[getRealEstateList]', e);
+		console.error('[getTenants real-estate]', e);
 		return null;
 	}
 }
