@@ -15,8 +15,8 @@ const ADMIN_SIDEBAR_DATA: ISidebarDataItem[] = [
 
 const OBJECTS_SIDEBAR_DATA: ISidebarDataItem[] = [
 	{ id: 'overview', title: 'Описание объекта', icon: 'Info', link: '', isWork: true },
+	{ id: 'tenants', title: 'Арендаторы', icon: 'Users', link: 'tenants', isWork: true },
 	{ id: 'documents', title: 'Документы', icon: 'FileText', link: '#', isWork: false },
-	{ id: 'tenants', title: 'Арендаторы', icon: 'Users', link: '#', isWork: false },
 	{ id: 'finance', title: 'Финансы', icon: 'Coins', link: '#', isWork: false },
 	{ id: 'tasks', title: 'Задачи', icon: 'SquareCheckBig', link: '#', isWork: false },
 	{ id: 'calendar', title: 'Календарь', icon: 'Calendar1', link: '#', isWork: false },

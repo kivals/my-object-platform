@@ -1,6 +1,7 @@
 import {
 	Building,
 	Calendar1,
+	ChevronDown,
 	ChevronLeft,
 	Coins,
 	Eye,
@@ -37,5 +38,6 @@ export const LUCIDE_ICONS = {
 	Pencil,
 	Upload,
 	X,
-	LogOut
+	LogOut,
+	ChevronDown
 } as const;
