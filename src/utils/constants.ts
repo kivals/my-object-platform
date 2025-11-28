@@ -1,1 +1,1 @@
-export const DEFAULT_IMAGE_PLACEHOLDER = '/images/empty-placeholder.webp';
+export const DEFAULT_IMAGE_PLACEHOLDER = '/images/image3.png';

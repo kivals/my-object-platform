@@ -4,8 +4,10 @@ import {
 	ChevronDown,
 	ChevronLeft,
 	Coins,
+	Download,
 	Eye,
 	FileText,
+	FileTextIcon,
 	Globe,
 	Info,
 	LogOut,
@@ -13,6 +15,7 @@ import {
 	MessagesSquare,
 	PanelRightOpen,
 	Pencil,
+	Plus,
 	Shield,
 	SquareCheckBig,
 	Upload,
@@ -39,5 +42,8 @@ export const LUCIDE_ICONS = {
 	Upload,
 	X,
 	LogOut,
-	ChevronDown
+	ChevronDown,
+	Plus,
+	FileTextIcon,
+	Download
 } as const;

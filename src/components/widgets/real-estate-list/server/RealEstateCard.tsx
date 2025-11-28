@@ -5,6 +5,7 @@ import { Card } from '@/ui/Card';
 import { LoadingImage } from '@/ui/LoadingImage';
 
 import { cn } from '@/utils/cn';
+import { DEFAULT_IMAGE_PLACEHOLDER } from '@/utils/constants';
 
 import type { RealEstate } from '@/domains/real-estate/api/schema';
 
@@ -16,7 +17,7 @@ interface IPropertyCardProps {
 export function RealEstateCard({ data, size = 'lg' }: IPropertyCardProps) {
 	const { address, photos } = data;
 
-	const titlePhoto = photos[0]?.url || '/images/property-card.png';
+	const titlePhoto = photos[0]?.url || DEFAULT_IMAGE_PLACEHOLDER;
 	const street = `${address.street}, ${address.building}, ${address.city}`;
 
 	return (

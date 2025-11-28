@@ -23,3 +23,4 @@ export const documentsByRealEstateResponseSchema = z.object({
 export type DocumentsType = z.infer<typeof documentTypeSchema>;
 export type DocumentsByRealEstateResponse = z.infer<typeof documentsByRealEstateResponseSchema>;
 export type DocumentsByRealEstateData = z.infer<typeof documentsByRealEstateDataSchema>;
+export type RealEstateDocument = z.infer<typeof realEstateDocumentSchema>;

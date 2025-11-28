@@ -10,11 +10,12 @@ import type { TLucideIcons } from '@/types/components/lucide.types';
 interface IconProps extends IClassNames {
 	icon: TLucideIcons;
 	size: number;
+	strokeWidth?: number;
 }
 
-export function Icon({ icon, size, classNames }: IconProps) {
+export function Icon({ icon, size, classNames, strokeWidth }: IconProps) {
 	const Icon: LucideIcon = LUCIDE_ICONS[icon];
 	if (!Icon) return;
 
-	return <Icon className={cn(classNames)} size={size} />;
+	return <Icon className={cn(classNames)} size={size} strokeWidth={strokeWidth} />;
 }

@@ -4,13 +4,16 @@ import type { PropsWithChildren } from 'react';
 
 import { cn } from '@/utils/cn';
 
+import type { IClassNames } from '@/types/components/classname.types';
+
 const badgeVariants = cva(
 	'inline-flex items-center font-bold text-h3 gap-x-2.5 rounded-[15px] px-6 py-2.5',
 	{
 		variants: {
 			variant: {
 				default: 'bg-[#BCBCBC]/20 text-[#868686]',
-				success: 'bg-[#2CFF2C]/20 text-[#27EC00]'
+				success: 'bg-[#2CFF2C]/20 text-[#27EC00]',
+				muted: 'bg-[#E2E2E2]/20 text-black/50'
 			}
 		},
 		defaultVariants: {
@@ -19,17 +22,18 @@ const badgeVariants = cva(
 	}
 );
 
-interface IBadgeProps {
+interface IBadgeProps extends IClassNames {
 	Icon?: LucideIcon;
 }
 
 export function Badge({
 	children,
 	Icon,
-	variant
+	variant,
+	classNames
 }: PropsWithChildren<IBadgeProps & VariantProps<typeof badgeVariants>>) {
 	return (
-		<div className={cn(badgeVariants({ variant }))}>
+		<div className={cn(badgeVariants({ variant }), classNames)}>
 			{Icon && <Icon size={20} />}
 			{children}
 		</div>

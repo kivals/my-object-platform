@@ -1,26 +1,37 @@
+import { DocumentsGroup } from '@/components/widgets/documents/DocumentsGroup';
 import { DocumentsHeader } from '@/components/widgets/documents/DocumentsHeader';
 
-import type { DocumentsByRealEstateData } from '@/domains/documents/api/schema';
+import type { DocumentsByRealEstateData, DocumentsType } from '@/domains/documents/api/schema';
 
 interface IDocumentsListWidgetProps {
 	data: DocumentsByRealEstateData;
 }
 
+const DocumentsStatusLabels: Record<DocumentsType, string> = {
+	contracts: 'Договора',
+	invoices: 'Счета',
+	acts: 'Акты'
+};
+
 export function DocumentsListWidget({ data }: IDocumentsListWidgetProps) {
-	//const isTenantsExists = data.inactiveTenants.length > 0 || data.activeTenants.length > 0;
-	console.log(data);
+	const { acts, contracts, invoices } = data;
+
 	return (
 		<section className='flex flex-1 flex-col'>
 			<DocumentsHeader />
-			{/*<div className={cn('flex-1 flex items-start', !isTenantsExists && 'items-center')}>
-				{isTenantsExists ? (
-					<TenantsList data={data} />
-				) : (
-					<h2 className='flex-1 text-center text-primary font-semibold text-h2'>
-						Арендаторы пока не добавлены
-					</h2>
-				)}
-			</div>*/}
+			<div className="flex flex-col gap-y-5">
+				<DocumentsGroup
+					docs={contracts}
+					title={DocumentsStatusLabels.contracts}
+					newLabel='Новый договор'
+				/>
+				<DocumentsGroup
+					docs={invoices}
+					title={DocumentsStatusLabels.invoices}
+					newLabel='Новый cчет'
+				/>
+				<DocumentsGroup docs={acts} title={DocumentsStatusLabels.acts} newLabel='Новый акт' />
+			</div>
 		</section>
 	);
 }
