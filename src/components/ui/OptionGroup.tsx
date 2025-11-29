@@ -12,6 +12,7 @@ interface OptionGroupProps<T extends string> extends IClassNames {
 	value: T;
 	areaLabel?: string;
 	onChange?: (value: T) => void;
+	title?: string;
 }
 
 export function OptionGroup<T extends string>({
@@ -19,7 +20,8 @@ export function OptionGroup<T extends string>({
 	value,
 	areaLabel,
 	classNames,
-	onChange
+	onChange,
+	title
 }: OptionGroupProps<T>) {
 	const keys = Object.keys(options) as T[];
 
@@ -30,40 +32,43 @@ export function OptionGroup<T extends string>({
 	};
 
 	return (
-		<ToggleGroup.Root
-			type='single'
-			value={value}
-			onValueChange={handleValueChange}
-			className={cn(
-				'relative inline-flex items-center gap-x-3 px-3 py-2 bg-[#DFDAFF] rounded-[20px] shadow-lg',
-				classNames
-			)}
-			aria-label={areaLabel}
-		>
-			{keys.map(key => {
-				const isActive = value === key;
+		<div className='flex flex-col gap-y-2.5'>
+			{title && <span className='font-medium text-h3'>{title}</span>}
+			<ToggleGroup.Root
+				type='single'
+				value={value}
+				onValueChange={handleValueChange}
+				className={cn(
+					'relative inline-flex items-center gap-x-3 px-3 py-2 bg-[#DFDAFF] rounded-[20px] shadow-lg',
+					classNames
+				)}
+				aria-label={areaLabel}
+			>
+				{keys.map(key => {
+					const isActive = value === key;
 
-				return (
-					<ToggleGroup.Item
-						key={key}
-						value={key}
-						className={cn(
-							'relative flex items-center justify-center px-4 py-2.5 text-[18px] font-bold rounded-[15px] select-none transition-colors',
-							isActive ? 'text-white' : 'text-primary hover:text-primary/80'
-						)}
-					>
-						{isActive && (
-							<motion.div
-								layoutId='pill'
-								className='absolute inset-0 bg-primary rounded-[15px]'
-								transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-							/>
-						)}
+					return (
+						<ToggleGroup.Item
+							key={key}
+							value={key}
+							className={cn(
+								'relative flex items-center justify-center px-4 py-2.5 text-[18px] font-bold rounded-[15px] select-none transition-colors',
+								isActive ? 'text-white' : 'text-primary hover:text-primary/80'
+							)}
+						>
+							{isActive && (
+								<motion.div
+									layoutId='pill'
+									className='absolute inset-0 bg-primary rounded-[15px]'
+									transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+								/>
+							)}
 
-						<span className='relative z-10'>{options[key]}</span>
-					</ToggleGroup.Item>
-				);
-			})}
-		</ToggleGroup.Root>
+							<span className='relative z-10'>{options[key]}</span>
+						</ToggleGroup.Item>
+					);
+				})}
+			</ToggleGroup.Root>
+		</div>
 	);
 }

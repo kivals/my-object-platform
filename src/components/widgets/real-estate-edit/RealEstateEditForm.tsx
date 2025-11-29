@@ -95,6 +95,7 @@ export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 						control={control}
 						render={({ field }) => (
 							<OptionGroup
+								classNames='self-start'
 								options={REAL_ESTATE_TYPE_LABELS}
 								value={field.value}
 								onChange={field.onChange}

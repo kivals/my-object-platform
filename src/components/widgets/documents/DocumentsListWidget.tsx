@@ -19,18 +19,28 @@ export function DocumentsListWidget({ data }: IDocumentsListWidgetProps) {
 	return (
 		<section className='flex flex-1 flex-col'>
 			<DocumentsHeader />
-			<div className="flex flex-col gap-y-5">
+			<div className='flex flex-col gap-y-5'>
 				<DocumentsGroup
 					docs={contracts}
 					title={DocumentsStatusLabels.contracts}
-					newLabel='Новый договор'
+					buttonLabel='Новый договор'
+					uploadLabel='Добавить договор'
+					type='contracts'
 				/>
 				<DocumentsGroup
 					docs={invoices}
 					title={DocumentsStatusLabels.invoices}
-					newLabel='Новый cчет'
+					buttonLabel='Новый cчет'
+					uploadLabel='Добавить cчет'
+					type='invoices'
 				/>
-				<DocumentsGroup docs={acts} title={DocumentsStatusLabels.acts} newLabel='Новый акт' />
+				<DocumentsGroup
+					docs={acts}
+					title={DocumentsStatusLabels.acts}
+					buttonLabel='Новый акт'
+					uploadLabel='Добавить акт'
+					type='acts'
+				/>
 			</div>
 		</section>
 	);

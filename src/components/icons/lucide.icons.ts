@@ -14,6 +14,7 @@ import {
 	Menu,
 	MessagesSquare,
 	PanelRightOpen,
+	Paperclip,
 	Pencil,
 	Plus,
 	Shield,
@@ -45,5 +46,6 @@ export const LUCIDE_ICONS = {
 	ChevronDown,
 	Plus,
 	FileTextIcon,
-	Download
+	Download,
+	Paperclip
 } as const;
