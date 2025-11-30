@@ -11,12 +11,8 @@ interface IDocumentItemProps {
 	url: string;
 }
 
-const MAX_NAME_LENGTH = 30;
-
 export function DocumentItem({ name, isCompleted, url }: IDocumentItemProps) {
 	const label = isCompleted ? 'Завершенный' : 'Действующий';
-	const isPreparedName =
-		name.length > MAX_NAME_LENGTH ? `${name.slice(0, MAX_NAME_LENGTH)}...` : name;
 
 	return (
 		<div
@@ -46,7 +42,7 @@ export function DocumentItem({ name, isCompleted, url }: IDocumentItemProps) {
 				size={85}
 				strokeWidth={1}
 			/>
-			<span className='text-body font-medium'>{isPreparedName}</span>
+			<span className='truncate text-wrap text-body font-medium'>{name}</span>
 		</div>
 	);
 }

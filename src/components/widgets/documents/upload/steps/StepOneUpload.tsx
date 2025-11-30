@@ -7,9 +7,10 @@ import { Icon } from '@/ui/Icon';
 interface IStepOneUploadProps {
 	title: string;
 	onSelectFile: (f: File) => void;
+	isLoading?: boolean;
 }
 
-export function StepOneUpload({ title, onSelectFile }: IStepOneUploadProps) {
+export function StepOneUpload({ title, onSelectFile, isLoading }: IStepOneUploadProps) {
 	return (
 		<div className='relative w-[80vw] rounded-[30px] bg-white p-8 shadow-2xl'>
 			<div className='flex justify-between items-start mb-4'>
@@ -24,7 +25,7 @@ export function StepOneUpload({ title, onSelectFile }: IStepOneUploadProps) {
 				</Dialog.Close>
 			</div>
 
-			<UploadDropzone onSelect={onSelectFile} />
+			<UploadDropzone isLoading={isLoading} onSelect={onSelectFile} />
 		</div>
 	);
 }

@@ -7,6 +7,7 @@ interface IMediaPreviewProps {
 }
 
 export function MediaPreview({ url, isLoading = false }: IMediaPreviewProps) {
+	console.log(url);
 	return (
 		<div className='mb-2 w-full h-[500px] flex items-center justify-center'>
 			{isLoading ? (

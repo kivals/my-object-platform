@@ -54,7 +54,9 @@ export function UploadDocumentWizard({ title, children, type }: IUploadDocumentD
 				<Dialog.Overlay className='fixed inset-0 z-50 bg-black/40 backdrop-blur-sm' />
 
 				<Dialog.Content className={clsx('fixed inset-0 z-50 flex items-center justify-center')}>
-					{step === 1 && <StepOneUpload title={title} onSelectFile={handleFileSelected} />}
+					{step === 1 && (
+						<StepOneUpload isLoading={isLoading} title={title} onSelectFile={handleFileSelected} />
+					)}
 					{step === 2 && file && <StepTwoForm type={type} file={file} />}
 				</Dialog.Content>
 			</Dialog.Portal>
