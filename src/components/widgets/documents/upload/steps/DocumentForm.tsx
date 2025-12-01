@@ -4,7 +4,7 @@ import { TextField } from '@/components/form/TextField';
 import { Button } from '@/ui/Button';
 import { OptionGroup } from '@/ui/OptionGroup';
 
-import { ALLOW_DOCUMENT_TYPES, DOCUMENT_STATUS } from '@/domains/documents/constants';
+import { ALLOW_DOCUMENT_TYPES, DOCUMENT_STATUS_LABEL } from '@/domains/documents/constants';
 import type { TDocumentStatus } from '@/domains/documents/types';
 
 interface IDocumentFormProps {
@@ -29,7 +29,7 @@ export function DocumentForm({ file, isActive = true }: IDocumentFormProps) {
 			<OptionGroup
 				title='Статус договора'
 				classNames='self-start'
-				options={DOCUMENT_STATUS}
+				options={DOCUMENT_STATUS_LABEL}
 				value={status}
 			/>
 

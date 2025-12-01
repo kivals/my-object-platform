@@ -19,6 +19,7 @@ import {
 	Plus,
 	Shield,
 	SquareCheckBig,
+	Trash2,
 	Upload,
 	Users,
 	X
@@ -47,5 +48,6 @@ export const LUCIDE_ICONS = {
 	Plus,
 	FileTextIcon,
 	Download,
-	Paperclip
+	Paperclip,
+	Trash2
 } as const;

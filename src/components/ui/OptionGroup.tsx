@@ -13,6 +13,7 @@ interface OptionGroupProps<T extends string> extends IClassNames {
 	areaLabel?: string;
 	onChange?: (value: T) => void;
 	title?: string;
+	id?: string;
 }
 
 export function OptionGroup<T extends string>({
@@ -21,7 +22,8 @@ export function OptionGroup<T extends string>({
 	areaLabel,
 	classNames,
 	onChange,
-	title
+	title,
+	id = String(Date.now())
 }: OptionGroupProps<T>) {
 	const keys = Object.keys(options) as T[];
 
@@ -58,7 +60,7 @@ export function OptionGroup<T extends string>({
 						>
 							{isActive && (
 								<motion.div
-									layoutId='pill'
+									layoutId={`pill-${id}`}
 									className='absolute inset-0 bg-primary rounded-[15px]'
 									transition={{ type: 'spring', stiffness: 400, damping: 30 }}
 								/>

@@ -11,7 +11,8 @@ const buttonVariants = cva(
 			variant: {
 				default: 'bg-primary text-white hover:bg-primary/80',
 				muted: 'bg-primary/20 text-primary hover:bg-primary/40',
-				transparent: 'bg-transparent text-primary hover:text-primary/80 cursor-pointer'
+				transparent: 'bg-transparent text-primary hover:text-primary/80 cursor-pointer',
+				attention: 'bg-red-500 text-white hover:text-white/80 cursor-pointer'
 			},
 			size: {
 				default: 'py-3.5 px-9'
