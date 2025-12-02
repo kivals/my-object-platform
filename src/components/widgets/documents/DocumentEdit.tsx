@@ -15,6 +15,8 @@ interface IDocumentEditProps {
 	isCompleted: boolean;
 	onClose: () => void;
 	name: string;
+	onDelete: () => void;
+	isLoading?: boolean;
 }
 
 function getFormTitle(type: DocumentsType) {
@@ -30,7 +32,9 @@ export function DocumentEdit({
 	isCompleted,
 	documentType,
 	onClose,
-	name
+	name,
+	onDelete,
+	isLoading = false
 }: IDocumentEditProps) {
 	const status: TDocumentStatus = !isCompleted ? 'active' : 'completed';
 
@@ -58,6 +62,8 @@ export function DocumentEdit({
 							documentType={documentType}
 							status={status}
 							onClose={onClose}
+							onDelete={onDelete}
+							isLoading={isLoading}
 						/>
 					</SectionCard>
 				</Dialog.Content>

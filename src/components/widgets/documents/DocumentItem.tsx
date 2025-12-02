@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 import { DocumentEdit } from '@/components/widgets/documents/DocumentEdit';
 
@@ -11,17 +13,48 @@ import { Icon } from '@/ui/Icon';
 import { cn } from '@/utils/cn';
 
 import type { DocumentsType } from '@/domains/documents/api/schema';
+import { deleteFile } from '@/domains/real-estate/api/api.client';
+import { REAL_ESTATE_URL } from '@/routes';
+import type { Uuid } from '@/types/common';
 
 interface IDocumentItemProps {
+	documentUuid: Uuid;
 	isCompleted: boolean;
 	name: string;
 	url: string;
 	documentType: DocumentsType;
 }
 
-export function DocumentItem({ name, isCompleted, url, documentType }: IDocumentItemProps) {
+export function DocumentItem({
+	name,
+	isCompleted,
+	url,
+	documentType,
+	documentUuid
+}: IDocumentItemProps) {
 	const label = isCompleted ? 'Завершенный' : 'Действующий';
 	const [isEdit, setIsEdit] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const { uuid } = useParams<{ uuid: string }>();
+	const router = useRouter();
+
+	//todo useOptimistic чтобы не ждать ответ от сервера
+	async function handleDelete() {
+		if (!uuid || !documentUuid) return;
+
+		try {
+			setIsLoading(true);
+			await deleteFile(uuid, documentUuid, 'documents');
+
+			//TODO hack, нужно выяснить почему не сработал router.refresh();
+			router.push(`${REAL_ESTATE_URL}/${uuid}/documents`);
+		} catch (err) {
+			console.error('[handleDelete] Failed:', err);
+			toast.error('Ошибка удаления документа');
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	return (
 		<>
@@ -61,12 +94,13 @@ export function DocumentItem({ name, isCompleted, url, documentType }: IDocument
 				<DocumentEdit
 					name={name}
 					onClose={() => {
-						console.log('onClose');
 						setIsEdit(false);
 					}}
 					isOpen={isEdit}
 					isCompleted={isCompleted}
 					documentType={documentType}
+					onDelete={handleDelete}
+					isLoading={isLoading}
 				/>
 			)}
 		</>

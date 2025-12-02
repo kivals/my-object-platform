@@ -74,12 +74,12 @@ export async function uploadDocument(realEstateUuid: string, file: File, docType
  * @returns true, если операция удаления выполнена успешно.
  * @throws Ошибка при неудачном запросе.
  */
-export async function deletePhoto(
+export async function deleteFile(
 	realEstateUuid: string,
 	fileUuid: Uuid,
 	type: RealEstateDocumentsType
 ) {
-	const res = await fetch(REAL_ESTATE_API_ROUTES.DELETE_PHOTO(realEstateUuid, fileUuid, type), {
+	const res = await fetch(REAL_ESTATE_API_ROUTES.DELETE_FILE(realEstateUuid, fileUuid, type), {
 		method: 'DELETE',
 		cache: 'no-cache'
 	});

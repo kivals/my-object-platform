@@ -1,3 +1,4 @@
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -6,6 +7,9 @@ import { TextField } from '@/components/form/TextField';
 import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
 import { OptionGroup } from '@/ui/OptionGroup';
+import { Spinner } from '@/ui/Spinner';
+
+import { cn } from '@/utils/cn';
 
 import type { DocumentsType } from '@/domains/documents/api/schema';
 import { DOCUMENT_STATUS_LABEL, DOCUMENT_TYPE_LABEL } from '@/domains/documents/constants';
@@ -17,9 +21,18 @@ interface IDocumentEditFormProps {
 	documentType: DocumentsType;
 	name: string;
 	onClose: () => void;
+	onDelete: () => void;
+	isLoading?: boolean;
 }
 
-export function DocumentEditForm({ status, name, documentType, onClose }: IDocumentEditFormProps) {
+export function DocumentEditForm({
+	status,
+	name,
+	documentType,
+	onClose,
+	onDelete,
+	isLoading = false
+}: IDocumentEditFormProps) {
 	const { control } = useForm<z.infer<typeof DocumentEditFormSchema>>({
 		defaultValues: {
 			status: status,
@@ -28,11 +41,11 @@ export function DocumentEditForm({ status, name, documentType, onClose }: IDocum
 	});
 
 	return (
-		<form className='flex flex-col gap-y-8'>
+		<form className={cn('flex flex-col gap-y-8', isLoading && 'opacity-50 pointer-events-none')}>
 			<div className='flex gap-x-3.5'>
 				<TextField classNames='flex-1' type='text' disabled value={name} />
-				<Button onClick={onClose} variant='attention' className=' cursor-pointer'>
-					<Icon icon='Trash2' size={25} />
+				<Button onClick={onDelete} variant='attention' className='cursor-pointer'>
+					{isLoading ? <Spinner className='size-6' /> : <Icon icon='Trash2' size={25} />}
 				</Button>
 			</div>
 

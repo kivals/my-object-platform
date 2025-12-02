@@ -8,7 +8,7 @@ import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/Real
 import { BackButton } from '@/ui/BackButton';
 import { SectionCard } from '@/ui/SectionCard';
 
-import { deletePhoto, uploadPhoto } from '@/domains/real-estate/api/api.client';
+import { deleteFile, uploadPhoto } from '@/domains/real-estate/api/api.client';
 import type { RealEstate, RealEstatePhoto } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
@@ -40,7 +40,7 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 	async function handleDelete(uuid: Uuid) {
 		try {
 			setIsLoading(true);
-			await deletePhoto(data.realEstateUuid, uuid, 'photos');
+			await deleteFile(data.realEstateUuid, uuid, 'photos');
 			setPhotos(prev => prev.filter(p => p.photoUuid !== uuid));
 		} catch (err) {
 			// показать тост/ошибку

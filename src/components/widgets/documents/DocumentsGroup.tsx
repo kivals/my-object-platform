@@ -41,6 +41,7 @@ export function DocumentsGroup({
 					{docs.length > 0 ? (
 						sortedDocs.map(({ name, type, isCompleted, documentUuid, url }) => (
 							<DocumentItem
+								documentUuid={documentUuid}
 								documentType={type}
 								key={documentUuid}
 								name={name}
