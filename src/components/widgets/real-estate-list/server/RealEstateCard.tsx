@@ -35,7 +35,7 @@ export function RealEstateCard({ data, size = 'lg' }: IPropertyCardProps) {
 						<Badge Icon={BadgeCheck} variant='success'>
 							{'нет данных'}
 						</Badge>
-						<Badge> {data.area} м2</Badge>
+						<Badge> {data.area} м²</Badge>
 					</div>
 
 					<div>

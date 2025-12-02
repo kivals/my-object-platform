@@ -8,6 +8,7 @@ import { SectionCard } from '@/ui/SectionCard';
 
 import { type DocumentsType } from '@/domains/documents/api/schema';
 import type { TDocumentStatus } from '@/domains/documents/types';
+import type { Uuid } from '@/types/common';
 
 interface IDocumentEditProps {
 	isOpen: boolean;
@@ -17,6 +18,7 @@ interface IDocumentEditProps {
 	name: string;
 	onDelete: () => void;
 	isLoading?: boolean;
+	documentUuid: Uuid;
 }
 
 function getFormTitle(type: DocumentsType) {
@@ -34,6 +36,7 @@ export function DocumentEdit({
 	onClose,
 	name,
 	onDelete,
+	documentUuid,
 	isLoading = false
 }: IDocumentEditProps) {
 	const status: TDocumentStatus = !isCompleted ? 'active' : 'completed';
@@ -64,6 +67,7 @@ export function DocumentEdit({
 							onClose={onClose}
 							onDelete={onDelete}
 							isLoading={isLoading}
+							documentUuid={documentUuid}
 						/>
 					</SectionCard>
 				</Dialog.Content>

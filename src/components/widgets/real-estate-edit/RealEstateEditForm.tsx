@@ -124,7 +124,7 @@ export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 						labelClassName='text-body font-medium'
 						error={errors.area?.message}
 						{...register('area', { valueAsNumber: true })}
-						suffix={() => <span className='font-medium text-h3 text-primary'>М2</span>}
+						suffix={() => <span className='font-medium text-h3 text-primary'>м²</span>}
 					/>
 				</div>
 

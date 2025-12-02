@@ -28,7 +28,7 @@ export function RealEstateItemInfo({ type, rent, area }: IRealEstateItemProps) {
 
 			<SectionCard classNames='item-center'>
 				<span>Площадь</span>
-				<span className='text-h2 font-medium flex items-end gap-x-3.5'>{area} м2</span>
+				<span className='text-h2 font-medium flex items-end gap-x-3.5'>{area} м²</span>
 			</SectionCard>
 		</div>
 	);

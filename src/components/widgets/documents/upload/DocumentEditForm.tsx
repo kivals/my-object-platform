@@ -1,5 +1,7 @@
-import React from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import React, { startTransition, useActionState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { TextField } from '@/components/form/TextField';
@@ -11,10 +13,13 @@ import { Spinner } from '@/ui/Spinner';
 
 import { cn } from '@/utils/cn';
 
+import { documentEditAction } from '@/actions/document-edit.action';
 import type { DocumentsType } from '@/domains/documents/api/schema';
 import { DOCUMENT_STATUS_LABEL, DOCUMENT_TYPE_LABEL } from '@/domains/documents/constants';
 import type { TDocumentStatus } from '@/domains/documents/types';
 import { DocumentEditFormSchema } from '@/domains/documents/validate/edit.schema';
+import { REAL_ESTATE_URL } from '@/routes';
+import type { Uuid } from '@/types/common';
 
 interface IDocumentEditFormProps {
 	status: TDocumentStatus;
@@ -23,7 +28,11 @@ interface IDocumentEditFormProps {
 	onClose: () => void;
 	onDelete: () => void;
 	isLoading?: boolean;
+	documentUuid: Uuid;
 }
+
+//todo дублируется логика при работе с экшенами
+const initialState = { error: undefined, success: false };
 
 export function DocumentEditForm({
 	status,
@@ -31,17 +40,51 @@ export function DocumentEditForm({
 	documentType,
 	onClose,
 	onDelete,
+	documentUuid,
 	isLoading = false
 }: IDocumentEditFormProps) {
-	const { control } = useForm<z.infer<typeof DocumentEditFormSchema>>({
+	const [state, action, isPending] = useActionState(documentEditAction, initialState);
+	const { uuid } = useParams<{ uuid: string }>();
+	const router = useRouter();
+
+	const { control, handleSubmit } = useForm<z.infer<typeof DocumentEditFormSchema>>({
 		defaultValues: {
 			status: status,
 			documentType: documentType
 		}
 	});
 
+	// возвращаемся на просмотр ПОСЛЕ успешного сохранения
+	useEffect(() => {
+		//todo есть задержка
+		if (state.success) {
+			onClose();
+			toast.success('Данные успешно сохранены');
+			router.push(`${REAL_ESTATE_URL}/${uuid}/documents`);
+			router.refresh();
+		}
+	}, [state.success]);
+
+	const onSubmit = async (submitData: z.infer<typeof DocumentEditFormSchema>) => {
+		startTransition(() => {
+			action({
+				type: submitData.documentType,
+				isCompleted: submitData.status === 'completed',
+				uuid: uuid,
+				documentUuid: documentUuid
+			});
+			state.error = '';
+		});
+	};
+
 	return (
-		<form className={cn('flex flex-col gap-y-8', isLoading && 'opacity-50 pointer-events-none')}>
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			className={cn(
+				'flex flex-col gap-y-8',
+				isLoading || (isPending && 'opacity-50 pointer-events-none')
+			)}
+		>
 			<div className='flex gap-x-3.5'>
 				<TextField classNames='flex-1' type='text' disabled value={name} />
 				<Button onClick={onDelete} variant='attention' className='cursor-pointer'>

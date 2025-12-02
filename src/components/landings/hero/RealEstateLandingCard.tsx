@@ -35,7 +35,7 @@ export function RealEstateLandingCard({
 						<Badge Icon={BadgeCheck} variant='success'>
 							{status}
 						</Badge>
-						<Badge> {area} м2</Badge>
+						<Badge> {area} м²</Badge>
 					</div>
 
 					<div>

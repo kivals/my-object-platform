@@ -92,6 +92,7 @@ export function DocumentItem({
 			</div>
 			{isEdit && (
 				<DocumentEdit
+					documentUuid={documentUuid}
 					name={name}
 					onClose={() => {
 						setIsEdit(false);

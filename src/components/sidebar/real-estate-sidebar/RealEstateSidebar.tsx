@@ -37,8 +37,8 @@ export function RealEstateSidebar({ uuid, address, area, typeLabel }: IRealEstat
 				<BackButton backUrl={DASHBOARD_URL} classNames='shrink-0' />
 				{isExtended && (
 					<div className='flex flex-col gap-y-2 items-center'>
-						<p className='font-medium text-h2 '>{`${typeLabel}, ${area} м2`}</p>
-						<p className='text-small'>{address}</p>
+						<p className='font-medium text-h2 '>{`${typeLabel}, ${area} м²`}</p>
+						<p className='break-all text-small'>{address}</p>
 					</div>
 				)}
 			</div>
@@ -48,7 +48,7 @@ export function RealEstateSidebar({ uuid, address, area, typeLabel }: IRealEstat
 						<Badge Icon={BadgeCheck} variant='success'>
 							{'нет данных'}
 						</Badge>
-						<Badge> {area} м2</Badge>
+						<Badge> {area} м²</Badge>
 					</div>
 				</div>
 			)}
