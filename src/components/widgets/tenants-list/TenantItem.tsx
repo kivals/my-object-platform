@@ -18,7 +18,8 @@ interface ITenantItemProps {
 	status: TenantStatus;
 }
 
-const TenantStatusLabels: Record<TenantStatus, string> = {
+//TODO вынести
+export const TenantStatusLabels: Record<TenantStatus, string> = {
 	natural_person: 'Физ. лицо',
 	sole_proprietor: 'ИП',
 	'self-employed': 'Самозанятый',

@@ -1,3 +1,8 @@
+'use client';
+
+import { useState } from 'react';
+
+import { TenantAdd } from '@/components/widgets/tenants-list/TenantAdd';
 import { TenantsHeader } from '@/components/widgets/tenants-list/TenantsHeader';
 import { TenantsList } from '@/components/widgets/tenants-list/TenantsList';
 
@@ -11,10 +16,15 @@ interface ITenantsListWidgetProps {
 
 export function TenantsListWidget({ data }: ITenantsListWidgetProps) {
 	const isTenantsExists = data.inactiveTenants.length > 0 || data.activeTenants.length > 0;
+	const [isAddOpen, setIsAddOpen] = useState(false);
+
+	function handleAddNewTenant() {
+		setIsAddOpen(true);
+	}
 
 	return (
 		<section className='flex flex-1 flex-col'>
-			<TenantsHeader />
+			<TenantsHeader onAdd={handleAddNewTenant} />
 			<div className={cn('flex-1 flex items-start', !isTenantsExists && 'items-center')}>
 				{isTenantsExists ? (
 					<TenantsList data={data} />
@@ -24,6 +34,11 @@ export function TenantsListWidget({ data }: ITenantsListWidgetProps) {
 					</h2>
 				)}
 			</div>
+			<TenantAdd
+				title='Создание арендатора по объекту недвижимости'
+				isOpen={isAddOpen}
+				onClose={handleAddNewTenant}
+			/>
 		</section>
 	);
 }
