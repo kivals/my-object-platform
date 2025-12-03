@@ -31,7 +31,7 @@ export function TenantAdd({ isOpen, onClose, title }: ITenantAddProps) {
 							</Dialog.Close>
 						</div>
 
-						<TenantAddForm />
+						<TenantAddForm onClose={onClose} />
 					</SectionCard>
 				</Dialog.Content>
 			</Dialog.Portal>

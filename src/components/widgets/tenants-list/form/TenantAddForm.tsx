@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams } from 'next/navigation';
-import { startTransition, useActionState, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { startTransition, useActionState, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { FormError } from '@/components/form/FormError';
@@ -16,22 +17,27 @@ import { SectionCard } from '@/ui/SectionCard';
 import { tenantCreateAction } from '@/actions/tenant-create.action';
 import { createFormSchema } from '@/domains/tenants/validate/create-form.schema';
 import type { TTenantUser } from '@/domains/users/api/schema';
+import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
 const initialState = { error: undefined, success: false };
 
-export function TenantAddForm() {
+interface ITenantAddFormProps {
+	onClose: () => void;
+}
+
+export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 	const [selectedTenant, setSelectedTenant] = useState<TTenantUser | null>(null);
 	const [state, action, isPending] = useActionState(tenantCreateAction, initialState);
 	const [tenantError, setTenantError] = useState<string | null>(null);
 	const { uuid } = useParams<{ uuid: Uuid }>();
+	const router = useRouter();
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-		control,
-		reset
+		control
 	} = useForm<z.infer<typeof createFormSchema>>({
 		resolver: zodResolver(createFormSchema),
 		defaultValues: {
@@ -39,6 +45,7 @@ export function TenantAddForm() {
 				legal_name: '',
 				status: 'natural_person'
 			},
+			//todo временно, для этапа разработки и тестирования
 			requisites: {
 				bankAccountNumber: '70340000000000000000',
 				bic: '660100000',
@@ -49,6 +56,17 @@ export function TenantAddForm() {
 			}
 		}
 	});
+
+	// возвращаемся на просмотр ПОСЛЕ успешного сохранения
+	useEffect(() => {
+		//todo есть задержка
+		if (state.success) {
+			onClose();
+			toast.success('Данные успешно сохранены');
+			router.push(`${REAL_ESTATE_URL}/${uuid}/tenants`);
+			router.refresh();
+		}
+	}, [state.success]);
 
 	const onSubmit = async (submitData: z.infer<typeof createFormSchema>) => {
 		if (!selectedTenant) {
@@ -174,8 +192,8 @@ export function TenantAddForm() {
 					<Button disabled={isPending} type='submit'>
 						{isPending ? 'Ожидайте' : 'Сохранить изменения'}
 					</Button>
-					<Button type='button' variant='transparent' disabled={isPending} onClick={() => reset()}>
-						Сбросить
+					<Button type='button' variant='transparent' disabled={isPending} onClick={onClose}>
+						Отмена
 					</Button>
 				</div>
 			</SectionCard>

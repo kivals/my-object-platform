@@ -63,7 +63,7 @@ export function TenantItem({
 
 			//TODO hack, нужно выяснить почему не сработал router.refresh();
 			router.push(`${REAL_ESTATE_URL}/${uuid}/tenants`);
-			toast.success('Арендатель успешно удален');
+			toast.success('Арендатель успешно откреплен');
 		} catch (err) {
 			console.error('[handleDelete] Failed:', err);
 			toast.error('Ошибка открепления арендателя');

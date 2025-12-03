@@ -37,7 +37,7 @@ export function TenantsListWidget({ data }: ITenantsListWidgetProps) {
 			<TenantAdd
 				title='Создание арендатора по объекту недвижимости'
 				isOpen={isAddOpen}
-				onClose={handleAddNewTenant}
+				onClose={() => setIsAddOpen(false)}
 			/>
 		</section>
 	);
