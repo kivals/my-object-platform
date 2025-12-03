@@ -24,12 +24,12 @@ export class ApiParseError extends Error {
 	}
 }
 
-async function apiFetch<T>(
+export async function apiFetch<T>(
 	endpoint: string,
 	opts: RequestInit & {
 		query?: Record<string, string>;
 	} = {},
-	isAuth: boolean
+	isAuth = true
 ): Promise<T> {
 	let tokens = null;
 

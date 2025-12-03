@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { tenantStatusSchema } from '@/domains/tenants/api/schema';
+import { tenantStatusSchema } from '@/domains/tenants/validate/status.schema';
 
 export const tenantRequisitesSchema = z.object({
 	bankAccountNumber: z.string().regex(/^\d{20}$/, 'Номер счёта должен содержать 20 цифр'),
@@ -21,13 +21,8 @@ export const tenantRequisitesSchema = z.object({
 		.regex(/^(\d{9}|)$/, 'КПП должен содержать 9 цифр или быть пустым')
 });
 
-export const createTenantSchema = z
+export const createFormSchema = z
 	.object({
-		firstName: z.string().min(1, 'Имя обязательно'),
-		lastName: z.string().min(1, 'Фамилия обязательна'),
-		middleName: z.string().min(1, 'Отчество обязательно'),
-		email: z.email('Некорректный email'),
-		phone: z.string().min(1, 'Телефон обязателен'),
 		tenant: z.object({
 			status: tenantStatusSchema,
 			legal_name: z.string().max(255).nullable().optional()
@@ -52,4 +47,4 @@ export const createTenantSchema = z
 		}
 	});
 
-export type TCreateTenant = z.infer<typeof createTenantSchema>;
+export type TCreateTenant = z.infer<typeof createFormSchema>;

@@ -1,6 +1,9 @@
 'use server';
 
-import type { TCreateTenant } from '@/domains/tenants/validate/create-form.schema';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
+
+import { createTenantToRealEstate } from '@/domains/tenants/api/api.server';
+import type { TAttachTenantByRealEstateRequest } from '@/domains/tenants/api/schema';
 
 interface ITenantCreateState {
 	error?: string;
@@ -9,8 +12,16 @@ interface ITenantCreateState {
 
 export const tenantCreateAction = async (
 	_prevState: ITenantCreateState,
-	payload: TCreateTenant
+	payload: TAttachTenantByRealEstateRequest & { uuid: string }
 ): Promise<ITenantCreateState> => {
 	console.log(payload);
-	return { success: true };
+
+	try {
+		await createTenantToRealEstate(payload.uuid, payload);
+		return { success: true };
+	} catch (error) {
+		// https://github.com/nextauthjs/next-auth/discussions/9389
+		if (isRedirectError(error)) throw error;
+		return { error: 'Ошибка добавления арендатора! Возможно арендатор уже привязан к объекту' };
+	}
 };

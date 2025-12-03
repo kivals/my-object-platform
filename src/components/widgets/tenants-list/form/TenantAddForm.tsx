@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useParams } from 'next/navigation';
 import { startTransition, useActionState, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { FormError } from '@/components/form/FormError';
 import { TextField } from '@/components/form/TextField';
 import { TenantStatusLabels } from '@/components/widgets/tenants-list/TenantItem';
 import { TenantSearch } from '@/components/widgets/tenants-list/form/TenantSearch';
@@ -12,14 +14,17 @@ import { OptionGroup } from '@/ui/OptionGroup';
 import { SectionCard } from '@/ui/SectionCard';
 
 import { tenantCreateAction } from '@/actions/tenant-create.action';
-import { createTenantSchema } from '@/domains/tenants/validate/create-form.schema';
+import { createFormSchema } from '@/domains/tenants/validate/create-form.schema';
 import type { TTenantUser } from '@/domains/users/api/schema';
+import type { Uuid } from '@/types/common';
 
 const initialState = { error: undefined, success: false };
 
 export function TenantAddForm() {
 	const [selectedTenant, setSelectedTenant] = useState<TTenantUser | null>(null);
 	const [state, action, isPending] = useActionState(tenantCreateAction, initialState);
+	const [tenantError, setTenantError] = useState<string | null>(null);
+	const { uuid } = useParams<{ uuid: Uuid }>();
 
 	const {
 		register,
@@ -27,32 +32,34 @@ export function TenantAddForm() {
 		formState: { errors },
 		control,
 		reset
-	} = useForm<z.infer<typeof createTenantSchema>>({
-		resolver: zodResolver(createTenantSchema),
+	} = useForm<z.infer<typeof createFormSchema>>({
+		resolver: zodResolver(createFormSchema),
 		defaultValues: {
-			firstName: '',
-			lastName: '',
-			middleName: '',
-			email: '',
-			phone: '',
 			tenant: {
 				legal_name: '',
 				status: 'natural_person'
 			},
 			requisites: {
-				bankAccountNumber: '',
-				bic: '',
-				beneficiaryBank: '',
-				correspondentAccount: '',
-				inn: '',
-				kpp: ''
+				bankAccountNumber: '70340000000000000000',
+				bic: '660100000',
+				beneficiaryBank: 'st',
+				correspondentAccount: '22780000000000000000',
+				inn: '5384000000',
+				kpp: '234623464'
 			}
 		}
 	});
 
-	const onSubmit = async (submitData: z.infer<typeof createTenantSchema>) => {
+	const onSubmit = async (submitData: z.infer<typeof createFormSchema>) => {
+		if (!selectedTenant) {
+			setTenantError('Сначала выберите арендатора из списка.');
+			return;
+		}
+		setTenantError(null);
+
 		startTransition(() => {
 			action({
+				uuid: uuid,
 				firstName: selectedTenant?.firstName || '',
 				lastName: selectedTenant?.lastName || '',
 				middleName: selectedTenant?.middleName || '',
@@ -78,8 +85,7 @@ export function TenantAddForm() {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
 			<TenantSearch onSelect={setSelectedTenant} />
-
-			{/* Карточка "Арендатор" */}
+			{tenantError && <p className='text-sm text-red-600 mt-2'>{tenantError}</p>}
 			<SectionCard classNames='px-6 py-5 space-y-4'>
 				<div className='flex items-center justify-between gap-4'>
 					<h3 className='text-lg font-semibold text-black'>Арендатор</h3>
@@ -163,7 +169,7 @@ export function TenantAddForm() {
 						error={errors.requisites?.kpp?.message}
 					/>
 				</div>
-
+				<FormError classNames='mb-10' message={state.error} />
 				<div className='flex flex-col gap-y-7 cursor-pointer'>
 					<Button disabled={isPending} type='submit'>
 						{isPending ? 'Ожидайте' : 'Сохранить изменения'}

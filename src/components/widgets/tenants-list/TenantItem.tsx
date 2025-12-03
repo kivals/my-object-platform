@@ -8,7 +8,7 @@ import { Separator } from '@/ui/Separator';
 
 import { cn } from '@/utils/cn';
 
-import type { TenantStatus } from '@/domains/tenants/api/schema';
+import type { TenantStatus } from '@/domains/tenants/validate/status.schema';
 
 interface ITenantItemProps {
 	firstName: string;
