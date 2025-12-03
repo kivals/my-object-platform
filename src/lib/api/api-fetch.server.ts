@@ -73,7 +73,10 @@ export async function apiFetch<T>(
 		const text = await res.text();
 		throw new ApiError(text || 'Ошибка при запросе к backend', res.status);
 	}
-	const json = await res.json();
+	// иногда приходит ответ от сервера пустой
+	const text = await res.text();
+	const json = text ? JSON.parse(text) : null;
+
 	const data = camelize(json);
 	return data as T;
 }

@@ -1,16 +1,24 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
+import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
 import { SectionCard } from '@/ui/SectionCard';
 import { Separator } from '@/ui/Separator';
+import { Spinner } from '@/ui/Spinner';
 
 import { cn } from '@/utils/cn';
 
+import { deleteTenant } from '@/domains/tenants/api/api.client';
 import type { TenantStatus } from '@/domains/tenants/validate/status.schema';
+import { REAL_ESTATE_URL } from '@/routes';
+import type { Uuid } from '@/types/common';
 
 interface ITenantItemProps {
+	tenantUuid: Uuid;
 	firstName: string;
 	lastName: string;
 	middleName?: string;
@@ -28,9 +36,39 @@ export const TenantStatusLabels: Record<TenantStatus, string> = {
 	'non-public_joint-stock_company': 'АО'
 };
 
-export function TenantItem({ firstName, lastName, middleName, inn, status }: ITenantItemProps) {
+export function TenantItem({
+	tenantUuid,
+	firstName,
+	lastName,
+	middleName,
+	inn,
+	status
+}: ITenantItemProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
+	const [isLoading, setIsLoading] = useState(false);
+	const { uuid } = useParams<{ uuid: string }>();
+	const router = useRouter();
+
+	//todo useOptimistic чтобы не ждать ответ от сервера
+	async function handleDelete() {
+		if (!uuid) return;
+
+		try {
+			setIsLoading(true);
+			await deleteTenant(uuid, tenantUuid);
+
+			//TODO hack, нужно выяснить почему не сработал router.refresh();
+			router.push(`${REAL_ESTATE_URL}/${uuid}/tenants`);
+			toast.success('Арендатель успешно удален');
+		} catch (err) {
+			console.error('[handleDelete] Failed:', err);
+			toast.error('Ошибка открепления арендателя');
+		} finally {
+			setIsLoading(false);
+			setIsOpen(false);
+		}
+	}
 
 	useEffect(() => {
 		if (contentRef.current) {
@@ -38,6 +76,7 @@ export function TenantItem({ firstName, lastName, middleName, inn, status }: ITe
 			contentRef.current.parentElement?.style.setProperty('--target-height', `${h}px`);
 		}
 	}, [isOpen]);
+
 	const fullName = middleName
 		? `${lastName} ${firstName.charAt(0)}. ${middleName.charAt(0)}.`
 		: `${lastName} ${firstName.charAt(0)}.`;
@@ -74,19 +113,34 @@ export function TenantItem({ firstName, lastName, middleName, inn, status }: ITe
 						isOpen ? 'animate-expand' : 'animate-collapse'
 					)}
 				>
-					<div ref={contentRef} className='flex flex-row gap-x-7 py-5 bg-transparent'>
-						<div className='flex flex-col gap-y-2.5 text-h3'>
-							<span className='text-black/50 font-normal'>Контактный телефон</span>
-							<span className='font-medium'>
-								<a href='tel:+7 (954) 123-45-67'>+7 (954) 123-45-67</a>
-							</span>
+					<div ref={contentRef} className='flex justify-between gap-x-7 py-5 bg-transparent'>
+						<div className='flex gap-x-7'>
+							<div className='flex flex-col gap-y-2.5 text-h3'>
+								<span className='text-black/50 font-normal'>Контактный телефон</span>
+								<span className='font-medium'>
+									<a href='tel:+7 (954) 123-45-67'>+7 (954) 123-45-67</a>
+								</span>
+							</div>
+							<div className='flex flex-col gap-y-2.5 text-h3'>
+								<span className='text-black/50 font-normal'>Почта</span>
+								<span className='font-medium'>
+									<a href='mailto:sidorov@mail.ru'>sidorov@mail.ru</a>
+								</span>
+							</div>
 						</div>
-						<div className='flex flex-col gap-y-2.5 text-h3'>
-							<span className='text-black/50 font-normal'>Почта</span>
-							<span className='font-medium'>
-								<a href='mailto:sidorov@mail.ru'>sidorov@mail.ru</a>
-							</span>
-						</div>
+
+						<Button
+							className={cn(
+								'py-1 px-5 text-sm flex justify-between cursor-pointer',
+								isLoading && 'pointer-events-none'
+							)}
+							onClick={handleDelete}
+							variant='attention'
+							disabled={isLoading}
+						>
+							Открепить арендателя
+							{isLoading ? <Spinner className='size-5' /> : <Icon icon='Trash2' size={20} />}
+						</Button>
 					</div>
 				</SectionCard>
 			</div>

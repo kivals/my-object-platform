@@ -9,9 +9,10 @@ interface ITenantsListProps {
 export function TenantsList({ data }: ITenantsListProps) {
 	return (
 		<ul className='flex flex-1 flex-col gap-y-5'>
-			{data.activeTenants.map(({ tenant, requisitesInn }, i) => (
-				<li key={i}>
+			{data.activeTenants.map(({ tenant, requisitesInn }) => (
+				<li key={tenant.tenantId}>
 					<TenantItem
+						tenantUuid={tenant.tenantId}
 						firstName={tenant.firstName}
 						lastName={tenant.lastName}
 						middleName={tenant.middleName}
@@ -20,9 +21,10 @@ export function TenantsList({ data }: ITenantsListProps) {
 					/>
 				</li>
 			))}
-			{data.inactiveTenants.map(({ tenant, requisitesInn }, i) => (
-				<li key={i}>
+			{data.inactiveTenants.map(({ tenant, requisitesInn }) => (
+				<li key={tenant.tenantId}>
 					<TenantItem
+						tenantUuid={tenant.tenantId}
 						firstName={tenant.firstName}
 						lastName={tenant.lastName}
 						middleName={tenant.middleName}
