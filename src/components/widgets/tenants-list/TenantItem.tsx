@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
+import { Badge } from '@/ui/Badge';
 import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
 import { SectionCard } from '@/ui/SectionCard';
@@ -24,6 +25,7 @@ interface ITenantItemProps {
 	middleName?: string;
 	inn: string;
 	status: TenantStatus;
+	isActive: boolean;
 }
 
 //TODO вынести
@@ -42,7 +44,8 @@ export function TenantItem({
 	lastName,
 	middleName,
 	inn,
-	status
+	status,
+	isActive
 }: ITenantItemProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
@@ -86,17 +89,22 @@ export function TenantItem({
 			<div>
 				<SectionCard classNames='shadow-xs'>
 					<div
-						className='cursor-pointer flex justify-between items-center'
+						className='cursor-pointer flex gap-x-3.5 justify-between items-center'
 						onClick={() => setIsOpen(o => !o)}
 					>
-						<div className='flex gap-x-3.5 items-center'>
-							<div className='font-medium text-h3'>
-								{TenantStatusLabels[status]} {fullName}
+						<div className='flex flex-1 gap-x-3.5 items-center justify-between'>
+							<div className='flex-1 flex gap-x-3.5 items-center'>
+								<div className='font-medium text-h3'>
+									{TenantStatusLabels[status]} {fullName}
+								</div>
+								<div className='h-6'>
+									<Separator orientation='vertical' />
+								</div>
+								<span className='text-black/20 font-medium text-h3'>ИНН {inn}</span>
 							</div>
-							<div className='h-6'>
-								<Separator orientation='vertical' />
-							</div>
-							<span className='text-black/20 font-medium text-h3'>ИНН {inn}</span>
+							<Badge variant={isActive ? 'success' : 'muted'}>
+								{isActive ? 'Действующий' : 'Не активен'}
+							</Badge>
 						</div>
 						<div>
 							<Icon
@@ -129,18 +137,20 @@ export function TenantItem({
 							</div>
 						</div>
 
-						<Button
-							className={cn(
-								'py-1 px-5 text-sm flex justify-between cursor-pointer',
-								isLoading && 'pointer-events-none'
-							)}
-							onClick={handleDelete}
-							variant='attention'
-							disabled={isLoading}
-						>
-							Открепить арендателя
-							{isLoading ? <Spinner className='size-5' /> : <Icon icon='Trash2' size={20} />}
-						</Button>
+						{isActive && (
+							<Button
+								className={cn(
+									'py-1 px-5 text-sm flex justify-between cursor-pointer',
+									isLoading && 'pointer-events-none'
+								)}
+								onClick={handleDelete}
+								variant='attention'
+								disabled={isLoading}
+							>
+								Открепить арендателя
+								{isLoading ? <Spinner className='size-5' /> : <Icon icon='Trash2' size={20} />}
+							</Button>
+						)}
 					</div>
 				</SectionCard>
 			</div>

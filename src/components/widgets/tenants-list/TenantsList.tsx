@@ -12,6 +12,7 @@ export function TenantsList({ data }: ITenantsListProps) {
 			{data.activeTenants.map(({ tenant, requisitesInn }) => (
 				<li key={tenant.tenantId}>
 					<TenantItem
+						isActive={true}
 						tenantUuid={tenant.tenantId}
 						firstName={tenant.firstName}
 						lastName={tenant.lastName}
@@ -24,6 +25,7 @@ export function TenantsList({ data }: ITenantsListProps) {
 			{data.inactiveTenants.map(({ tenant, requisitesInn }) => (
 				<li key={tenant.tenantId}>
 					<TenantItem
+						isActive={false}
 						tenantUuid={tenant.tenantId}
 						firstName={tenant.firstName}
 						lastName={tenant.lastName}
