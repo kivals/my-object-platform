@@ -17,9 +17,9 @@ const OBJECTS_SIDEBAR_DATA: ISidebarDataItem[] = [
 	{ id: 'overview', title: 'Описание объекта', icon: 'Info', link: '', isWork: true },
 	{ id: 'documents', title: 'Документы', icon: 'FileText', link: 'documents', isWork: true },
 	{ id: 'tenants', title: 'Арендаторы', icon: 'Users', link: 'tenants', isWork: true },
+	{ id: 'calendar', title: 'Календарь', icon: 'Calendar1', link: 'calendar', isWork: true },
 	{ id: 'finance', title: 'Финансы', icon: 'Coins', link: '#', isWork: false },
 	{ id: 'tasks', title: 'Задачи', icon: 'SquareCheckBig', link: '#', isWork: false },
-	{ id: 'calendar', title: 'Календарь', icon: 'Calendar1', link: '#', isWork: false },
 	{ id: 'cases', title: 'Судебные дела', icon: 'Shield', link: '#', isWork: false },
 	{ id: 'video', title: 'Видеопросмотр', icon: 'Eye', link: '#', isWork: false },
 	{ id: 'satellite', title: 'Спутник', icon: 'Globe', link: '#', isWork: false }

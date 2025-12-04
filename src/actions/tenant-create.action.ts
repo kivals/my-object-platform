@@ -14,8 +14,6 @@ export const tenantCreateAction = async (
 	_prevState: ITenantCreateState,
 	payload: TAttachTenantByRealEstateRequest & { uuid: string }
 ): Promise<ITenantCreateState> => {
-	console.log(payload);
-
 	try {
 		await createTenantToRealEstate(payload.uuid, payload);
 		return { success: true };

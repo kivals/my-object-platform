@@ -10,14 +10,12 @@ export async function DELETE(
 	{ params }: { params: Promise<{ uuid: string; tenantUuid: string }> }
 ) {
 	try {
-		console.log('ROUTE');
 		const { uuid, tenantUuid } = await params;
 
 		const tokens = await getAuthTokens();
 		const endpoint = TENANTS_ENDPOINTS.DETACH_TENANT_BY_REAL_ESTATE_UUID(uuid, tenantUuid);
 
 		if (!tokens) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-		console.log('endpoint', endpoint);
 		await apiFetch(endpoint, {
 			method: 'DELETE'
 		});

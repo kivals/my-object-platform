@@ -2,7 +2,6 @@ import { auth } from '@/auth';
 import { DASHBOARD_URL, LOGIN_URL, authRoutes, privateRoutes } from '@/routes';
 
 export default auth(req => {
-	console.log('MIDDleware');
 	const { nextUrl } = req;
 	const session = req.auth;
 
@@ -37,8 +36,5 @@ export default auth(req => {
 });
 
 export const config = {
-	matcher: [
-		'/((?!$|about$|.*\\.[\\w]+$|_next).*)',
-		'/(api|trpc)(.*)',
-	],
+	matcher: ['/((?!$|about$|.*\\.[\\w]+$|_next).*)', '/(api|trpc)(.*)']
 };
