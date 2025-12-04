@@ -83,7 +83,6 @@ export const authConfig = {
 	],
 	callbacks: {
 		async jwt({ token, user, account }) {
-			console.log("JWT CALLBACK");
 			// Первичный логин
 			if (user && account) {
 				console.debug('JWT Initial signin');
