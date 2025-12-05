@@ -1,6 +1,7 @@
 'use client';
 
 import { BadgeCheck } from 'lucide-react';
+import { useParams } from 'next/navigation';
 
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { getSidebarData } from '@/components/sidebar/sidebar.data';
@@ -16,13 +17,13 @@ import type { RealEstateTypeLabel } from '@/domains/real-estate/types';
 import { DASHBOARD_URL } from '@/routes';
 
 interface IRealEstateSidebarProps {
-	uuid: string;
 	address: string;
 	area?: number;
 	typeLabel: RealEstateTypeLabel;
 }
 
-export function RealEstateSidebar({ uuid, address, area, typeLabel }: IRealEstateSidebarProps) {
+export function RealEstateSidebar({ address, area, typeLabel }: IRealEstateSidebarProps) {
+	const { uuid } = useParams<{ uuid: string }>();
 	const sidebarMenu = getSidebarData('real-estate', uuid);
 	const isExtended = useSidebarOpen();
 
