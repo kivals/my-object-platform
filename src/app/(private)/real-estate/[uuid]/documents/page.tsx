@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { DocumentsLoader } from '@/components/widgets/documents/DocumentsLoader';
+import { DocumentsPageSkeleton } from '@/components/widgets/documents/PageSkeleton';
 
 export default async function RealEstateItemPage({
 	params
@@ -10,7 +11,7 @@ export default async function RealEstateItemPage({
 	const { uuid } = await params;
 
 	return (
-		<Suspense fallback={<h1 className='text-h2'>LOADING </h1>}>
+		<Suspense fallback={<DocumentsPageSkeleton />}>
 			<DocumentsLoader uuid={uuid} />
 		</Suspense>
 	);
