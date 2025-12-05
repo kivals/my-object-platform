@@ -17,7 +17,7 @@ export function DocumentForm({ file, isActive = true }: IDocumentFormProps) {
 
 	return (
 		<form className='flex flex-col gap-y-6' action=''>
-			<FileField accept={ALLOW_DOCUMENT_TYPES} value={file} label='Файл' filename={file.name} />
+			<FileField accept={ALLOW_DOCUMENT_TYPES} label='Файл' filename={file.name} />
 			<TextField
 				className='truncate'
 				type='text'
