@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { DialogModal } from '@/components/dialog/DialogModal';
-import { DocumentEditForm } from '@/components/widgets/documents/upload/DocumentEditForm';
+import { DocumentEditForm } from '@/components/widgets/documents/upload/EditForm';
 
 import { Icon } from '@/ui/Icon';
 import { SectionCard } from '@/ui/SectionCard';

@@ -1,5 +1,5 @@
 import { DashboardSectionHeader } from '@/components/DashboardSectionHeader';
-import { DocumentsGroup } from '@/components/widgets/documents/DocumentsGroup';
+import { DocumentsGroup } from '@/components/widgets/documents/Group';
 
 import type { DocumentsByRealEstateData, DocumentsType } from '@/domains/documents/api/schema';
 

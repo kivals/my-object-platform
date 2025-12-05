@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { DocumentsByRealEstateLoader } from '@/components/widgets/documents/DocumentsByRealEstateLoader';
+import { DocumentsLoader } from '@/components/widgets/documents/DocumentsLoader';
 
 export default async function RealEstateItemPage({
 	params
@@ -11,7 +11,7 @@ export default async function RealEstateItemPage({
 
 	return (
 		<Suspense fallback={<h1 className='text-h2'>LOADING </h1>}>
-			<DocumentsByRealEstateLoader uuid={uuid} />
+			<DocumentsLoader uuid={uuid} />
 		</Suspense>
 	);
 }

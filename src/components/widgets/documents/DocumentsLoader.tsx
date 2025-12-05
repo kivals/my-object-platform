@@ -1,5 +1,5 @@
 import { RealEstateSidebar } from '@/components/sidebar/real-estate-sidebar/RealEstateSidebar';
-import { DocumentsListWidget } from '@/components/widgets/documents/DocumentsListWidget';
+import { DocumentsListWidget } from '@/components/widgets/documents/ListWidget';
 
 import { getDocumentsByRealEstate } from '@/domains/documents/api/api.server';
 import { getRealEstateByUuid } from '@/domains/real-estate/api/api.server';
@@ -10,7 +10,7 @@ interface IDocumentsByRealEstateLoaderProps {
 	uuid: Uuid;
 }
 
-export async function DocumentsByRealEstateLoader({ uuid }: IDocumentsByRealEstateLoaderProps) {
+export async function DocumentsLoader({ uuid }: IDocumentsByRealEstateLoaderProps) {
 	const documents = await getDocumentsByRealEstate(uuid);
 
 	//todo тоже самое делается и в RealEstateItemLoader. или в стор или вынести в компонент RealEstateSidebar

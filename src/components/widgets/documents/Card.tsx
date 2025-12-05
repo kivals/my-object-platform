@@ -25,7 +25,7 @@ interface IDocumentItemProps {
 	documentType: DocumentsType;
 }
 
-export function DocumentItem({
+export function DocumentCard({
 	name,
 	isCompleted,
 	url,

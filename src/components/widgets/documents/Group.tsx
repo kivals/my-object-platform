@@ -1,5 +1,5 @@
-import { DocumentItem } from '@/components/widgets/documents/DocumentItem';
-import { UploadDocumentWizard } from '@/components/widgets/documents/upload/UploadDocumentWizard';
+import { DocumentCard } from '@/components/widgets/documents/Card';
+import { UploadDocumentWizard } from '@/components/widgets/documents/upload/UploadWizard';
 
 import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
@@ -40,7 +40,7 @@ export function DocumentsGroup({
 				<div className='flex flex-wrap gap-3.5'>
 					{docs.length > 0 ? (
 						sortedDocs.map(({ name, type, isCompleted, documentUuid, url }) => (
-							<DocumentItem
+							<DocumentCard
 								documentUuid={documentUuid}
 								documentType={type}
 								key={documentUuid}

@@ -7,14 +7,13 @@ import { cn } from '@/utils/cn';
 
 interface FileFieldProps {
 	label?: string;
-	value?: File | null;
 	filename?: string;
 	onChange?: (file: File | null) => void;
 	className?: string;
 	accept?: string;
 }
 
-export function FileField({ label, value, filename, onChange, className, accept }: FileFieldProps) {
+export function FileField({ label, filename, onChange, className, accept }: FileFieldProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleClick = () => inputRef.current?.click();
