@@ -1,8 +1,5 @@
-import {
-	PRIORITY_COLORS,
-	STATUS_COLOR_CLASSES,
-	STATUS_LABEL
-} from '@/components/widgets/calendar/labels';
+import { PRIORITY_COLORS, STATUS_COLOR_CLASSES } from '@/components/widgets/calendar/labels';
+import { TASK_STATUS_LABEL } from '@/components/widgets/tasks-board/labels';
 
 import { Badge } from '@/ui/Badge';
 import { SectionCard } from '@/ui/SectionCard';
@@ -32,7 +29,7 @@ export function DayEvents({ events }: ICalendarDayEventsProps) {
 							>
 								<span className='text-center'>{title}</span>
 								<Badge classNames={cn('text-primary text-sm', STATUS_COLOR_CLASSES[status])}>
-									{STATUS_LABEL[status]}
+									{TASK_STATUS_LABEL[status]}
 								</Badge>
 							</SectionCard>
 						))}

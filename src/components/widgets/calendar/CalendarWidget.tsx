@@ -14,7 +14,7 @@ interface ICalendarProps {
 	events: TMaintenanceItem[];
 }
 
-export function Calendar({ events }: ICalendarProps) {
+export function CalendarWidget({ events }: ICalendarProps) {
 	const [currentMonth, setCurrentMonth] = useState(new Date());
 	const { days, eventsMap } = useCalendar(events, currentMonth);
 	const [selectedEvents, setSelectedEvents] = useState<TMaintenanceItem[]>(() => {

@@ -1,5 +1,5 @@
+import { DashboardSectionHeader } from '@/components/DashboardSectionHeader';
 import { DocumentsGroup } from '@/components/widgets/documents/DocumentsGroup';
-import { DocumentsHeader } from '@/components/widgets/documents/DocumentsHeader';
 
 import type { DocumentsByRealEstateData, DocumentsType } from '@/domains/documents/api/schema';
 
@@ -18,7 +18,7 @@ export function DocumentsListWidget({ data }: IDocumentsListWidgetProps) {
 
 	return (
 		<section className='flex flex-1 flex-col'>
-			<DocumentsHeader />
+			<DashboardSectionHeader title='Документы' />
 			<div className='flex flex-col gap-y-5'>
 				<DocumentsGroup
 					docs={contracts}

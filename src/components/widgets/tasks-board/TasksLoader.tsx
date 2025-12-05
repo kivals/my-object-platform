@@ -1,16 +1,16 @@
 import { RealEstateSidebar } from '@/components/sidebar/real-estate-sidebar/RealEstateSidebar';
-import { CalendarWidget } from '@/components/widgets/calendar/CalendarWidget';
+import { TasksBoardWidget } from '@/components/widgets/tasks-board/TasksBoardWidget';
 
 import { getAllTasks } from '@/domains/maintenance/api/api.server';
 import { getRealEstateByUuid } from '@/domains/real-estate/api/api.server';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
 import type { Uuid } from '@/types/common';
 
-interface ICalendarEventsLoaderProps {
+interface ITasksLoaderProps {
 	uuid: Uuid;
 }
 
-export async function CalendarEventsLoader({ uuid }: ICalendarEventsLoaderProps) {
+export async function TasksLoader({ uuid }: ITasksLoaderProps) {
 	//todo тоже самое делается и в RealEstateItemLoader. или в стор или вынести в компонент RealEstateSidebar
 	const realEstate = await getRealEstateByUuid(uuid);
 	const addressLine = `${realEstate?.address.street}, ${realEstate?.address.building}, ${realEstate?.address.city}`;
@@ -27,7 +27,7 @@ export async function CalendarEventsLoader({ uuid }: ICalendarEventsLoaderProps)
 				area={realEstate?.area}
 			/>
 			<main className='flex-1 min-w-0'>
-				<CalendarWidget events={realEstateTasks ?? []} />
+				<TasksBoardWidget tasks={realEstateTasks ?? []} />
 			</main>
 		</div>
 	);

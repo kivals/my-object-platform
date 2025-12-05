@@ -1,7 +1,15 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { DashboardSectionHeader } from '@/components/DashboardSectionHeader';
 import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/RealEstateGallery';
 import { RealEstateItemDescription } from '@/components/widgets/real-estate-item/RealEstateItemDescription';
-import { RealEstateItemHeader } from '@/components/widgets/real-estate-item/RealEstateItemHeader';
 import { RealEstateItemInfo } from '@/components/widgets/real-estate-item/RealEstateItemInfo';
+
+import { Button } from '@/ui/Button';
+import { Icon } from '@/ui/Icon';
 
 import type { RealEstate } from '@/domains/real-estate/api/schema';
 
@@ -10,9 +18,18 @@ interface IRealEstateItem {
 }
 
 export function RealEstateItem({ data }: IRealEstateItem) {
+	const pathname = usePathname();
+
 	return (
 		<section>
-			<RealEstateItemHeader />
+			<DashboardSectionHeader title='Описание объекта'>
+				<Button asChild variant='default'>
+					<Link href={`${pathname}/edit`}>
+						<Icon icon='Pencil' size={19} />
+						Редактировать
+					</Link>
+				</Button>
+			</DashboardSectionHeader>
 
 			<RealEstateGallery
 				classNames='mb-8'

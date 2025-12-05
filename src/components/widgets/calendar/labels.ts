@@ -6,12 +6,6 @@ export const PRIORITY_COLORS: Record<TMaintenancePriority, string> = {
 	3: 'bg-green-500 text-white'
 };
 
-export const STATUS_LABEL: Record<TMaintenanceStatus, string> = {
-	open: 'Отрыта',
-	in_progress: 'В работе',
-	ready: 'Готова'
-};
-
 export const STATUS_COLOR_CLASSES: Record<TMaintenanceStatus, string> = {
 	open: 'bg-sky-600 text-white',
 	in_progress: 'bg-indigo-500 text-white',

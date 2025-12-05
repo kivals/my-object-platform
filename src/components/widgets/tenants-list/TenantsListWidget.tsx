@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 
+import { DashboardSectionHeader } from '@/components/DashboardSectionHeader';
 import { TenantAdd } from '@/components/widgets/tenants-list/TenantAdd';
-import { TenantsHeader } from '@/components/widgets/tenants-list/TenantsHeader';
 import { TenantsList } from '@/components/widgets/tenants-list/TenantsList';
+
+import { Button } from '@/ui/Button';
 
 import { cn } from '@/utils/cn';
 
@@ -24,7 +26,11 @@ export function TenantsListWidget({ data }: ITenantsListWidgetProps) {
 
 	return (
 		<section className='flex flex-1 flex-col'>
-			<TenantsHeader onAdd={handleAddNewTenant} />
+			<DashboardSectionHeader title='Арендаторы'>
+				<Button onClick={handleAddNewTenant} variant='default'>
+					Добавить
+				</Button>
+			</DashboardSectionHeader>
 			<div className={cn('flex-1 flex items-start', !isTenantsExists && 'items-center')}>
 				{isTenantsExists ? (
 					<TenantsList data={data} />
