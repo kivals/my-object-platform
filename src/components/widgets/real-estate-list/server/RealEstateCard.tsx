@@ -23,12 +23,12 @@ export function RealEstateCard({ data, size = 'lg' }: IPropertyCardProps) {
 	return (
 		<Card variant='xl' className='px-8 py-7 drop-shadow-lg min-h-[320px]'>
 			<div className='text-h3 flex gap-x-3.5'>
-				<div className='basis-1/2 font-medium flex flex-col gap-y-7 '>
+				<div className='w-1/2 grow-0 font-medium flex flex-col gap-y-7 '>
 					<div className='flex flex-col gap-y-3'>
 						<div className={cn('font-bold', size === 'xs' ? 'text-h2' : 'text-[46px] ')}>
 							{data.name}
 						</div>
-						<div className='text-small font-bold text-xs text-[#868686]'>{street}</div>
+						<div className='truncate text-small font-bold text-xs text-[#868686]'>{street}</div>
 					</div>
 
 					<div className='flex gap-x-1.5'>
@@ -52,7 +52,7 @@ export function RealEstateCard({ data, size = 'lg' }: IPropertyCardProps) {
 						</p>
 					</div>
 				</div>
-				<div className='basis-1/2 flex justify-center items-center'>
+				<div className='w-1/2 flex justify-center items-center'>
 					<LoadingImage
 						imageClassName='w-full rounded-[20px] max-h-[300px]'
 						containerClassName='w-full'
