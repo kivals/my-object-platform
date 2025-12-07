@@ -26,6 +26,7 @@ interface IBadgeProps extends IClassNames {
 	Icon?: LucideIcon;
 }
 
+//todo classNames -> className
 export function Badge({
 	children,
 	Icon,

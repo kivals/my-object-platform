@@ -20,7 +20,8 @@
   --font-sans: var(--font-jura), ui-sans-serif, system-ui;
 
   /* TODO вынести размеры в css переменные */
-  --text-h1: 4rem;         /* 64px */
+  --text-big: 4rem;        /* 64px */
+  --text-h1: 3rem;         /* 48px */
   --text-logo: 2.36rem;    /* 38px */
   --text-h2: 2rem;         /* 32px */
   --text-h3: 1.5rem;       /* 24px */
@@ -72,9 +73,9 @@ body {
 
 /* Прятать скролл, но оставлять прокрутку */
 .scrollbar-none {
-  scrollbar-width: none;          /* Firefox */
+  scrollbar-width: none; /* Firefox */
 }
 
 .scrollbar-none::-webkit-scrollbar {
-  display: none;                  /* Chrome / Safari / Edge */
+  display: none; /* Chrome / Safari / Edge */
 }

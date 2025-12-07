@@ -8,6 +8,7 @@ interface IRealEstateSidebarLoaderProps {
 	uuid: Uuid;
 }
 
+//todo в рамках одного объекта, часто делает запрос на бек. Посмотреть кеширование запросов.
 export async function RealEstateSidebarLoader({ uuid }: IRealEstateSidebarLoaderProps) {
 	const realEstate = await getRealEstateByUuid(uuid);
 	const addressLine = `${realEstate?.address.street}, ${realEstate?.address.building}, ${realEstate?.address.city}`;
