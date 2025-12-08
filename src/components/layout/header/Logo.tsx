@@ -18,7 +18,7 @@ export function Logo({ classNames, iconSize = 28 }: ILogoProps) {
 		>
 			<Building2 className='text-primary' size={iconSize} />
 			<p className='font-semibold'>
-				Мой <span className='text-primary'>Объект</span>
+				Мой<span className='text-primary'>Объект</span>
 			</p>
 		</Link>
 	);

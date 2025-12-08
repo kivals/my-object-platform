@@ -20,9 +20,7 @@ const OBJECTS_SIDEBAR_DATA: ISidebarDataItem[] = [
 	{ id: 'calendar', title: 'Календарь', icon: 'Calendar1', link: 'calendar', isWork: true },
 	{ id: 'tasks', title: 'Задачи', icon: 'SquareCheckBig', link: 'tasks-board', isWork: true },
 	{ id: 'finance', title: 'Финансы', icon: 'Coins', link: 'finance', isWork: true },
-	{ id: 'cases', title: 'Судебные дела', icon: 'Shield', link: '#', isWork: false },
-	{ id: 'video', title: 'Видеопросмотр', icon: 'Eye', link: '#', isWork: false },
-	{ id: 'satellite', title: 'Спутник', icon: 'Globe', link: '#', isWork: false }
+	{ id: 'court-cases', title: 'Судебные дела', icon: 'Shield', link: 'court-cases', isWork: true }
 ];
 
 function getAdminSidebarData(): ISidebarDataItem[] {

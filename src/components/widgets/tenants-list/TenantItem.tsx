@@ -1,13 +1,13 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
 import { Badge } from '@/ui/Badge';
 import { Button } from '@/ui/Button';
+import { DropdownSection } from '@/ui/DropdownSection';
 import { Icon } from '@/ui/Icon';
-import { SectionCard } from '@/ui/SectionCard';
 import { Separator } from '@/ui/Separator';
 import { Spinner } from '@/ui/Spinner';
 
@@ -47,8 +47,6 @@ export function TenantItem({
 	status,
 	isActive
 }: ITenantItemProps) {
-	const [isOpen, setIsOpen] = useState(false);
-	const contentRef = useRef<HTMLDivElement>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
@@ -69,91 +67,66 @@ export function TenantItem({
 			toast.error('Ошибка открепления арендателя');
 		} finally {
 			setIsLoading(false);
-			setIsOpen(false);
 		}
 	}
-
-	useEffect(() => {
-		if (contentRef.current) {
-			const h = contentRef.current.scrollHeight;
-			contentRef.current.parentElement?.style.setProperty('--target-height', `${h}px`);
-		}
-	}, [isOpen]);
 
 	const fullName = middleName
 		? `${lastName} ${firstName.charAt(0)}. ${middleName.charAt(0)}.`
 		: `${lastName} ${firstName.charAt(0)}.`;
 
 	return (
-		<SectionCard classNames='px-0 py-0'>
-			<div>
-				<SectionCard classNames='shadow-xs'>
-					<div
-						className='cursor-pointer flex gap-x-3.5 justify-between items-center'
-						onClick={() => setIsOpen(o => !o)}
-					>
-						<div className='flex flex-1 gap-x-3.5 items-center justify-between'>
-							<div className='flex-1 flex gap-x-3.5 items-center'>
-								<div className='font-medium text-h3'>
-									{TenantStatusLabels[status]} {fullName}
-								</div>
-								<div className='h-6'>
-									<Separator orientation='vertical' />
-								</div>
-								<span className='text-black/20 font-medium text-h3'>ИНН {inn}</span>
+		<DropdownSection
+			visibleContent={
+				<>
+					<div className='flex flex-1 gap-x-3.5 items-center justify-between'>
+						<div className='flex-1 flex gap-x-3.5 items-center'>
+							<div className='font-medium text-h3'>
+								{TenantStatusLabels[status]} {fullName}
 							</div>
-							<Badge variant={isActive ? 'success' : 'muted'}>
-								{isActive ? 'Действующий' : 'Не активен'}
-							</Badge>
+							<div className='h-6'>
+								<Separator orientation='vertical' />
+							</div>
+							<span className='text-black/20 font-medium text-h3'>ИНН {inn}</span>
 						</div>
-						<div>
-							<Icon
-								classNames={cn('rotate-0 transition', isOpen && 'rotate-180')}
-								icon='ChevronDown'
-								size={24}
-							/>
+						<Badge variant={isActive ? 'success' : 'muted'}>
+							{isActive ? 'Действующий' : 'Не активен'}
+						</Badge>
+					</div>
+				</>
+			}
+			dropdownContent={
+				<>
+					<div className='flex gap-x-7'>
+						<div className='flex flex-col gap-y-2.5 text-h3'>
+							<span className='text-black/50 font-normal'>Контактный телефон</span>
+							<span className='font-medium'>
+								<a href='tel:+7 (954) 123-45-67'>+7 (954) 123-45-67</a>
+							</span>
+						</div>
+						<div className='flex flex-col gap-y-2.5 text-h3'>
+							<span className='text-black/50 font-normal'>Почта</span>
+							<span className='font-medium'>
+								<a href='mailto:sidorov@mail.ru'>sidorov@mail.ru</a>
+							</span>
 						</div>
 					</div>
-				</SectionCard>
-				<SectionCard
-					classNames={cn(
-						'overflow-hidden transition-all duration-500 ease-in-out py-0 shadow-none bg-transparent',
-						isOpen ? 'animate-expand' : 'animate-collapse'
-					)}
-				>
-					<div ref={contentRef} className='flex justify-between gap-x-7 py-5 bg-transparent'>
-						<div className='flex gap-x-7'>
-							<div className='flex flex-col gap-y-2.5 text-h3'>
-								<span className='text-black/50 font-normal'>Контактный телефон</span>
-								<span className='font-medium'>
-									<a href='tel:+7 (954) 123-45-67'>+7 (954) 123-45-67</a>
-								</span>
-							</div>
-							<div className='flex flex-col gap-y-2.5 text-h3'>
-								<span className='text-black/50 font-normal'>Почта</span>
-								<span className='font-medium'>
-									<a href='mailto:sidorov@mail.ru'>sidorov@mail.ru</a>
-								</span>
-							</div>
-						</div>
 
-						{isActive && (
-							<Button
-								className={cn(
-									'py-1 px-5 text-sm flex justify-between cursor-pointer',
-									isLoading && 'pointer-events-none'
-								)}
-								onClick={handleDelete}
-								variant='attention'
-								disabled={isLoading}
-							>
-								Открепить арендателя
-								{isLoading ? <Spinner className='size-5' /> : <Icon icon='Trash2' size={20} />}
-							</Button>
-						)}
-					</div>
-				</SectionCard>
-			</div>
-		</SectionCard>
+					{isActive && (
+						<Button
+							className={cn(
+								'py-1 px-5 text-sm flex justify-between cursor-pointer',
+								isLoading && 'pointer-events-none'
+							)}
+							onClick={handleDelete}
+							variant='attention'
+							disabled={isLoading}
+						>
+							Открепить арендателя
+							{isLoading ? <Spinner className='size-5' /> : <Icon icon='Trash2' size={20} />}
+						</Button>
+					)}
+				</>
+			}
+		/>
 	);
 }

@@ -14,8 +14,8 @@ const jura = Jura({
 
 export const metadata: Metadata = {
 	title: {
-		default: 'Мой объект',
-		template: 'Мой объект | %s'
+		default: 'Мойобъект',
+		template: 'Мойобъект | %s'
 	},
 	description: ''
 };
