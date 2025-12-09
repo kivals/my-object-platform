@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const documentTypeSchema = z.enum(['contracts', 'invoices', 'acts']);
+export const documentTypeSchema = z.enum(['contracts', 'invoices', 'acts', 'court']);
 
 export const realEstateDocumentSchema = z.object({
 	documentUuid: z.uuid(),

@@ -111,12 +111,12 @@ export function DocumentEditForm({
 				name='documentType'
 				control={control}
 				render={({ field }) => (
-					<OptionGroup
+					<OptionGroup<Exclude<DocumentsType, 'court'>>
 						id={'documentType'}
 						title='Тип документа'
 						classNames='self-start'
 						options={DOCUMENT_TYPE_LABEL}
-						value={field.value}
+						value={field.value as Exclude<DocumentsType, 'court'>}
 						onChange={field.onChange}
 					/>
 				)}

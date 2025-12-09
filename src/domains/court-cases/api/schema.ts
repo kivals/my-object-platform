@@ -63,3 +63,4 @@ export type TCourtCaseDetailsResponse = z.infer<typeof courtCaseDetailsResponseS
 export type TCourtCaseDetails = z.infer<typeof courtCaseDetailsSchema>;
 export type TStateCourtCase = z.infer<typeof stateCourtCaseSchema>;
 export type TCaseParty = z.infer<typeof casePartySchema>;
+export type TCourtCaseDocument = z.infer<typeof courtCaseDocumentSchema>;

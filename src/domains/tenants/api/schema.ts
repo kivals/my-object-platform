@@ -20,7 +20,7 @@ const tenantSchema = z.object({
 
 export const tenantsByRealEstateDataSchema = z.object({
 	activeTenants: z.array(tenantSchema),
-	inactiveTenants: z.array(tenantSchema) // TODO структура та же, только isActive=false ? надо проверить
+	inactiveTenants: z.array(tenantSchema)
 });
 
 export const tenantsByRealEstateResponseSchema = z.object({

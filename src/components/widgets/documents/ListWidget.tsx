@@ -7,7 +7,7 @@ interface IDocumentsListWidgetProps {
 	data: DocumentsByRealEstateData;
 }
 
-const DocumentsStatusLabels: Record<DocumentsType, string> = {
+const DocumentsStatusLabels: Record<Exclude<DocumentsType, 'court'>, string> = {
 	contracts: 'Договора',
 	invoices: 'Счета',
 	acts: 'Акты'

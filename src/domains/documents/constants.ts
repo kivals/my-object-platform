@@ -6,7 +6,7 @@ export const DOCUMENT_STATUS_LABEL: Record<TDocumentStatus, string> = {
 	completed: 'Завершенный'
 } as const;
 
-export const DOCUMENT_TYPE_LABEL: Record<DocumentsType, string> = {
+export const DOCUMENT_TYPE_LABEL: Record<Exclude<DocumentsType, 'court'>, string> = {
 	contracts: 'Договор',
 	invoices: 'Счет',
 	acts: 'Акт'
