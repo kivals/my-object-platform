@@ -1,11 +1,16 @@
-import type { TCourtCaseStatus } from '@/domains/court-cases/api/schema';
+import type { TCourtCaseRole, TCourtCaseStatus } from '@/domains/court-cases/api/schema';
 
 export const COURT_CASE_STATUS_LABELS: Record<TCourtCaseStatus, string> = {
 	won: 'Выиграно',
 	lost: 'Проиграно',
 	in_progress: 'В процессе',
-	stayed: 'Приостановлено'
+	stayed: 'без движения'
 };
+
+export const COURT_CASE_ROLE_LABELS: Record<TCourtCaseRole, string> = {
+	applicant: 'Истец',
+	respondent: 'Ответчик'
+} as const;
 
 export const COURT_CASE_STATUS_COLORS: Record<TCourtCaseStatus, string> = {
 	won: 'bg-emerald-100 text-emerald-800 border border-emerald-200',

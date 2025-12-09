@@ -61,10 +61,10 @@ export function TenantItem({
 
 			//TODO hack, нужно выяснить почему не сработал router.refresh();
 			router.push(`${REAL_ESTATE_URL}/${uuid}/tenants`);
-			toast.success('Арендатель успешно откреплен');
+			toast.success('Арендатор успешно откреплен');
 		} catch (err) {
 			console.error('[handleDelete] Failed:', err);
-			toast.error('Ошибка открепления арендателя');
+			toast.error('Ошибка открепления арендатора');
 		} finally {
 			setIsLoading(false);
 		}
@@ -121,7 +121,7 @@ export function TenantItem({
 							variant='attention'
 							disabled={isLoading}
 						>
-							Открепить арендателя
+							Открепить арендатора
 							{isLoading ? <Spinner className='size-5' /> : <Icon icon='Trash2' size={20} />}
 						</Button>
 					)}
