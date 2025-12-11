@@ -34,7 +34,7 @@ export function OptionGroup<T extends string>({
 	};
 
 	return (
-		<div className='flex flex-col gap-y-2.5'>
+		<div className='flex flex-col gap-y-3.5'>
 			{title && <span className='font-medium text-h3'>{title}</span>}
 			<ToggleGroup.Root
 				type='single'
