@@ -3,15 +3,12 @@
 import { ru } from 'date-fns/locale/ru';
 import * as React from 'react';
 
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
 import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
 import { Input } from '@/ui/Input';
 import { Label } from '@/ui/Label';
-
-import { cn } from '@/utils/cn';
+import { Calendar } from '@/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover';
 
 function formatDate(date: Date | undefined) {
 	if (!date) {
@@ -47,11 +44,7 @@ export function CalendarSelector({ label }: ICalendarSelectorProps) {
 
 	return (
 		<div className='flex flex-col gap-3'>
-			{label && (
-				<Label htmlFor='date' className={cn('mb-2.5')}>
-					{label}
-				</Label>
-			)}
+			{label && <Label htmlFor='date'>{label}</Label>}
 			<div className='relative flex gap-2'>
 				<Input
 					id='date'
