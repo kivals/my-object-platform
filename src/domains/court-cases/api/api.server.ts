@@ -2,10 +2,12 @@ import { unstable_rethrow } from 'next/navigation';
 
 import {
 	type TCourtCasesResponse,
+	type TCreateCourtCaseBody,
+	type TCreateCourtCaseResponse,
 	courtCasesResponseSchema
 } from '@/domains/court-cases/api/schema';
 import { COURT_CASES } from '@/domains/court-cases/endpoints/external';
-import { apiFetchValidated } from '@/lib/api/api-fetch.server';
+import { apiFetch, apiFetchValidated } from '@/lib/api/api-fetch.server';
 import type { Uuid } from '@/types/common';
 
 export async function getCourtCasesByRealEstate(uuid: Uuid): Promise<TCourtCasesResponse | null> {
@@ -21,5 +23,22 @@ export async function getCourtCasesByRealEstate(uuid: Uuid): Promise<TCourtCases
 		unstable_rethrow(e);
 		console.error('[get court case by real-estate]', e);
 		return null;
+	}
+}
+
+export async function createCourtCaseByUuid(
+	uuid: string,
+	sendData: TCreateCourtCaseBody
+): Promise<TCreateCourtCaseResponse | null> {
+	if (!uuid) return null;
+	try {
+		return await apiFetch(COURT_CASES.POST_CREATE_CASE_BY_REAL_ESTATE_UUID(uuid), {
+			method: 'POST',
+			body: JSON.stringify(sendData)
+		});
+	} catch (e) {
+		unstable_rethrow(e);
+		console.error('[createCourtCaseByUuid]', e);
+		throw e;
 	}
 }

@@ -2,9 +2,15 @@ import { z } from 'zod';
 
 import { courtCaseStatusSchema } from '@/domains/court-cases/api/schema';
 
+const FIO_FORMAT_REGEX = /^[A-Za-zА-ЯЁа-яё-]+\s+[A-ZА-ЯЁ]\.([A-ZА-ЯЁ]\.)?$/;
+
 export const casePartySchema = z.object({
 	role: z.enum(['applicant', 'respondent']),
-	fio: z.string().min(5, 'Минимум 5 символов').max(50, 'Максимум 50 символов')
+	fio: z
+		.string()
+		.min(5, 'Минимум 5 символов')
+		.max(50, 'Максимум 50 символов')
+		.regex(FIO_FORMAT_REGEX, "ФИО: формат 'Иванов И.И.' или 'Иванов И.'")
 });
 
 export const courtCaseSchema = z.object({
@@ -12,11 +18,15 @@ export const courtCaseSchema = z.object({
 
 	instance: z.string().min(3, 'Минимум 3 символа').max(50, 'Максимум 50 символов'),
 
-	nextHearingDate: z.string().optional(),
+	nextHearingDate: z.string().nullable(),
 
 	status: courtCaseStatusSchema,
 
-	judgeFio: z.string().min(5, 'Минимум 5 символов').max(50, 'Максимум 50 символов'),
+	judgeFio: z
+		.string()
+		.min(5, 'Минимум 5 символов')
+		.max(50, 'Максимум 50 символов')
+		.regex(FIO_FORMAT_REGEX, "ФИО: формат 'Иванов И.И.' или 'Иванов И.'"),
 
 	email: z.email('Некорректный email'),
 

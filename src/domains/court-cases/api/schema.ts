@@ -54,6 +54,36 @@ export const courtCasesResponseSchema = z.object({
 	})
 });
 
+export const createCourtCaseBodySchema = z.object({
+	courtCase: z.object({
+		name: z.string(),
+		instance: z.string(),
+		status: courtCaseStatusSchema,
+		judgeFio: z.string(),
+		email: z.email(),
+		phone: z.string(),
+		nextHearingDate: z.string().nullable()
+	}),
+	caseParties: z.array(casePartySchema.omit({ casePartyId: true }))
+});
+
+export const createCourtCaseResponseSchema = z.object({
+	data: z.object({
+		courtCase: z.object({
+			courtCaseId: z.uuid(),
+			name: z.string(),
+			instance: z.string(),
+			status: courtCaseStatusSchema,
+			judgeFio: z.string(),
+			email: z.email(),
+			phone: z.string(),
+			nextHearingDate: z.string().nullable()
+		}),
+		caseParties: z.array(casePartySchema),
+		statesCourtCase: z.array(stateCourtCaseSchema)
+	})
+});
+
 export type TCourtCase = z.infer<typeof courtCaseSchema>;
 export type TCourtCaseStatus = z.infer<typeof courtCaseStatusSchema>;
 export type TCourtCaseRole = z.infer<typeof courtCaseRoleSchema>;
@@ -64,3 +94,5 @@ export type TCourtCaseDetails = z.infer<typeof courtCaseDetailsSchema>;
 export type TStateCourtCase = z.infer<typeof stateCourtCaseSchema>;
 export type TCaseParty = z.infer<typeof casePartySchema>;
 export type TCourtCaseDocument = z.infer<typeof courtCaseDocumentSchema>;
+export type TCreateCourtCaseBody = z.infer<typeof createCourtCaseBodySchema>;
+export type TCreateCourtCaseResponse = z.infer<typeof createCourtCaseResponseSchema>;

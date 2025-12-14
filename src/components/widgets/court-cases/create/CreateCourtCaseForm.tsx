@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import React, { startTransition, useActionState, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { ContactsSection } from '@/components/widgets/court-cases/create/sections/ContactsSection';
 import { InfoSection } from '@/components/widgets/court-cases/create/sections/InfoSection';
@@ -13,7 +15,16 @@ import {
 
 import { SectionCard } from '@/ui/SectionCard';
 
+import { createCourtCaseAction } from '@/actions/create-court-case.action';
+import { REAL_ESTATE_URL } from '@/routes';
+
+const initialState = { error: undefined, success: false };
+
 export function CreateCourtCaseForm() {
+	const [state, action, isPending] = useActionState(createCourtCaseAction, initialState);
+
+	const { uuid } = useParams<{ uuid: string }>();
+	const router = useRouter();
 	const {
 		register,
 		control,
@@ -29,7 +40,7 @@ export function CreateCourtCaseForm() {
 			courtCase: {
 				name: '',
 				instance: '',
-				nextHearingDate: '',
+				nextHearingDate: new Date().toISOString(),
 				status: 'in_progress',
 				judgeFio: '',
 				email: '',
@@ -43,8 +54,27 @@ export function CreateCourtCaseForm() {
 		name: 'caseParties'
 	});
 
-	const onSubmit = (data: TFormCreateCourtCase) => {
-		console.log('SEND → ', data);
+	// возвращаемся на просмотр ПОСЛЕ успешного сохранения
+	useEffect(() => {
+		if (state.success) {
+			toast.success('Данные успешно сохранены');
+			router.push(`${REAL_ESTATE_URL}/${uuid}`);
+		} else if (state.error) {
+			toast.error('Ошибка создания судебного дела. Проверьте дату заседания');
+		}
+	}, [state.success, state.error, router, uuid]);
+
+	const onSubmit = async (submitData: TFormCreateCourtCase) => {
+		startTransition(() => {
+			action({
+				uuid: uuid,
+				courtCase: {
+					...submitData.courtCase
+				},
+				caseParties: [...submitData.caseParties]
+			});
+			state.error = '';
+		});
 	};
 
 	return (
@@ -73,10 +103,11 @@ export function CreateCourtCaseForm() {
 				/>
 				<div className='pt-4'>
 					<button
+						disabled={isPending}
 						type='submit'
 						className='bg-[#8D77FF] text-white px-6 py-3 rounded-xl font-medium hover:opacity-90 transition'
 					>
-						Создать дело
+						{isPending ? 'Ожидайте' : 'Создать дело'}
 					</button>
 				</div>
 			</SectionCard>

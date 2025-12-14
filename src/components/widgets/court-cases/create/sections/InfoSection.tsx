@@ -33,7 +33,17 @@ export function InfoSection({ register, errors, control }: IInfoSectionProps) {
 				error={errors.courtCase?.instance?.message}
 			/>
 
-			<CalendarSelector label='Ближайшая дата заседания' />
+			<Controller
+				name='courtCase.nextHearingDate'
+				control={control}
+				render={({ field }) => (
+					<CalendarSelector
+						label='Ближайшая дата заседания'
+						value={field.value}
+						onChange={field.onChange}
+					/>
+				)}
+			/>
 
 			<Controller
 				name='courtCase.status'
