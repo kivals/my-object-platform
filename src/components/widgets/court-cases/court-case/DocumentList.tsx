@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { FileCard } from '@/components/widgets/documents/FileCard';
 
 import { cn } from '@/utils/cn';
@@ -6,9 +8,10 @@ import type { TCourtCaseDocument } from '@/domains/court-cases/api/schema';
 
 interface IDocumentListProps {
 	documents: TCourtCaseDocument[];
+	uploadFileCard: ReactNode;
 }
 
-export function DocumentList({ documents }: IDocumentListProps) {
+export function DocumentList({ documents, uploadFileCard }: IDocumentListProps) {
 	return (
 		<div>
 			<h3 className='text-h3 font-semibold mb-3.5'>Связанные документы</h3>
@@ -27,6 +30,8 @@ export function DocumentList({ documents }: IDocumentListProps) {
 						/>
 					);
 				})}
+
+				{uploadFileCard}
 			</div>
 		</div>
 	);

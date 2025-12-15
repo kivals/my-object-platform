@@ -19,6 +19,7 @@ import type { Uuid } from '@/types/common';
  * @param endpoint - Полный URL эндпоинта для загрузки.
  * @returns Ответ сервера в формате JSON.
  * @throws Ошибка, если запрос завершился неудачно.
+ * TODO вынести есть повторение в судебных делах
  */
 async function uploadFile(file: File, endpoint: string) {
 	const form = new FormData();

@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
+import type { ReactNode } from 'react';
 
-import { DocumentList } from '@/components/widgets/court-cases/court-case/DocumentList';
 import { CasePartiesTable } from '@/components/widgets/court-cases/court-case/tables/CasePartyTable';
 import { SateCourtCaseTable } from '@/components/widgets/court-cases/court-case/tables/SateCourtCaseTable';
 
@@ -8,9 +8,10 @@ import type { TCourtCaseDetails } from '@/domains/court-cases/api/schema';
 
 interface IDetailCourtCaseProps {
 	details: TCourtCaseDetails;
+	documentList: ReactNode;
 }
 
-export function DetailCourtCase({ details }: IDetailCourtCaseProps) {
+export function DetailCourtCase({ details, documentList }: IDetailCourtCaseProps) {
 	return (
 		<div className='py-5'>
 			<div className='grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] gap-y-6 gap-x-6 mb-8'>
@@ -49,9 +50,7 @@ export function DetailCourtCase({ details }: IDetailCourtCaseProps) {
 				<SateCourtCaseTable data={details.statesCourtCase} />
 			</div>
 
-			{details.documents && details.documents.length > 0 && (
-				<DocumentList documents={details.documents} />
-			)}
+			{documentList}
 		</div>
 	);
 }

@@ -1,10 +1,11 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 import { toast } from 'sonner';
 
 import { DetailCourtCase } from '@/components/widgets/court-cases/court-case/DetailCourtCase';
+import { DocumentList } from '@/components/widgets/court-cases/court-case/DocumentList';
 import {
 	COURT_CASE_STATUS_COLORS,
 	COURT_CASE_STATUS_LABELS
@@ -13,10 +14,12 @@ import {
 import { Badge } from '@/ui/Badge';
 import { DropdownSection } from '@/ui/DropdownSection';
 import { Spinner } from '@/ui/Spinner';
+import { UploadFileCard } from '@/ui/UploadFileCard';
 
 import { cn } from '@/utils/cn';
+import { ACCEPT_DOCUMENTS } from '@/utils/file-formats';
 
-import { getCourtCaseDetails } from '@/domains/court-cases/api/api.client';
+import { getCourtCaseDetails, uploadDocument } from '@/domains/court-cases/api/api.client';
 import type { TCourtCase, TCourtCaseDetails } from '@/domains/court-cases/api/schema';
 
 interface ICourtCaseProps {
@@ -24,7 +27,8 @@ interface ICourtCaseProps {
 }
 
 export function CourtCase({ courtCase }: ICourtCaseProps) {
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+	const [isUploading, setIsUploading] = useState(false);
 	const { uuid } = useParams<{ uuid: string }>();
 	const [courtDetails, setCourtDetails] = useState<TCourtCaseDetails | null>(null);
 	const [isError, setIsError] = useState(false);
@@ -34,7 +38,7 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 
 		try {
 			setIsError(false);
-			setIsLoading(true);
+			setIsLoadingDetails(true);
 			const response = await getCourtCaseDetails(uuid, courtCase.courtCaseId);
 			setCourtDetails(response?.data);
 		} catch (err) {
@@ -42,7 +46,32 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 			console.error('[handleGet] Failed:', err);
 			toast.error('Ошибка загрузки деталей судебного дела');
 		} finally {
-			setIsLoading(false);
+			setIsLoadingDetails(false);
+		}
+	}
+
+	async function handleUpload(e: ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files?.[0];
+		e.target.value = '';
+
+		if (!file) return;
+
+		try {
+			setIsUploading(true);
+			const json = await uploadDocument(uuid, courtCase.courtCaseId, file);
+			const newDoc = json.documents?.[0];
+			setCourtDetails(prev => {
+				if (!prev) return prev;
+				return {
+					...prev,
+					documents: [...(prev.documents ?? []), newDoc]
+				};
+			});
+		} catch (error) {
+			console.error('[Court Case] upload error', error);
+			// todo тут можно дернуть toast
+		} finally {
+			setIsUploading(false);
 		}
 	}
 
@@ -51,7 +80,10 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 			needToClose={isError}
 			onDropdownClick={handleExtendDetails}
 			visibleContent={
-				<div className='grid w-full grid-cols-[minmax(0,1fr)_250px] items-center gap-x-3.5'>
+				<div
+					id={courtCase.courtCaseId}
+					className='grid w-full grid-cols-[minmax(0,1fr)_250px] items-center gap-x-3.5'
+				>
 					<span className='font-medium text-h3 truncate'>{courtCase.name}</span>
 
 					<Badge classNames={cn('justify-center', COURT_CASE_STATUS_COLORS[courtCase.status])}>
@@ -60,12 +92,29 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 				</div>
 			}
 			dropdownContent={
-				isLoading ? (
+				isLoadingDetails ? (
 					<div className='flex gap-x-3.5 items-center text-primary text-h3'>
 						Загрузка <Spinner className='size-8' />
 					</div>
 				) : (
-					courtDetails && <DetailCourtCase details={courtDetails} />
+					courtDetails && (
+						<DetailCourtCase
+							details={courtDetails}
+							documentList={
+								<DocumentList
+									documents={courtDetails.documents}
+									uploadFileCard={
+										<UploadFileCard
+											isLoading={isUploading}
+											classNames='border-2 border-primary/40 bg-[#F4F2FF] border-dashed flex w-[200px] h-[256px] rounded-[15px]'
+											onChange={handleUpload}
+											acceptFileFormat={ACCEPT_DOCUMENTS}
+										/>
+									}
+								/>
+							}
+						/>
+					)
 				)
 			}
 		/>

@@ -23,3 +23,27 @@ export async function getCourtCaseDetails(
 		throw err;
 	}
 }
+
+export async function uploadDocument(realEstateUuid: Uuid, courtCaseId: Uuid, file: File) {
+	const form = new FormData();
+	form.append('files', file);
+
+	const endpoint = COURT_CASES_API_ROUTES.UPLOAD_DOCUMENT(
+		realEstateUuid,
+		'documents',
+		'court',
+		courtCaseId
+	);
+
+	const res = await fetch(endpoint, {
+		method: 'POST',
+		body: form,
+		cache: 'no-cache'
+	});
+
+	if (!res.ok) {
+		throw new Error(await res.text());
+	}
+
+	return res.json();
+}

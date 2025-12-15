@@ -4,11 +4,13 @@ import { type ChangeEvent, useEffect, useState } from 'react';
 
 import { MediaPreview } from '@/components/widgets/real-estate-gallery/MediaPreview';
 import { MediaThumbnail } from '@/components/widgets/real-estate-gallery/MediaThumbnail';
-import { UploadImage } from '@/components/widgets/real-estate-gallery/UploadImage';
 import type { IMedia } from '@/components/widgets/real-estate-gallery/types';
+
+import { UploadFileCard } from '@/ui/UploadFileCard';
 
 import { cn } from '@/utils/cn';
 import { DEFAULT_IMAGE_PLACEHOLDER } from '@/utils/constants';
+import { ACCEPT_PHOTOS } from '@/utils/file-formats';
 
 import type { Uuid } from '@/types/common';
 import type { IClassNames } from '@/types/components/classname.types';
@@ -79,9 +81,10 @@ export function RealEstateGallery({
 			{/*список всех картинок*/}
 			<div className='flex justify-center gap-x-1.5'>
 				{isEdit && (
-					<UploadImage
+					<UploadFileCard
 						classNames={cn(isLoading && 'opacity-0 pointer-events-none')}
 						onChange={handleUpload}
+						acceptFileFormat={ACCEPT_PHOTOS}
 					/>
 				)}
 				{activeMedia &&

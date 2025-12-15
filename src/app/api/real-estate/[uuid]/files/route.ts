@@ -4,6 +4,7 @@ import type { DocumentsType } from '@/domains/documents/api/schema';
 import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints/external';
 import type { RealEstateDocumentsType } from '@/domains/real-estate/types';
 import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
+import type { Uuid } from '@/types/common';
 
 //todo проверить работу когда протухнет access token
 export async function POST(req: NextRequest, { params }: { params: Promise<{ uuid: string }> }) {
@@ -13,11 +14,19 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uui
 
 		const fileType = req.nextUrl.searchParams.get('type') as RealEstateDocumentsType | undefined;
 		const documentType = req.nextUrl.searchParams.get('documentType') as DocumentsType | undefined;
+		const tenantId = req.nextUrl.searchParams.get('tenantId') as Uuid | undefined;
+		const courtCaseId = req.nextUrl.searchParams.get('courtCaseId') as Uuid | undefined;
 
 		if (!tokens) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 		if (!fileType) return NextResponse.json({ error: 'Bad request' }, { status: 400 });
 
-		const endpoint = REAL_ESTATE_ENDPOINTS.POST_FILE(uuid, fileType, documentType);
+		const endpoint = REAL_ESTATE_ENDPOINTS.POST_FILE(
+			uuid,
+			fileType,
+			documentType,
+			tenantId,
+			courtCaseId
+		);
 
 		const formData = await req.formData();
 
