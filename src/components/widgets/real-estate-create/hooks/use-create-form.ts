@@ -29,17 +29,16 @@ export function useCreateForm() {
 	const form = useForm<TCreateRealEstateForm>({
 		resolver: zodResolver(createRealEstateFormSchema),
 		defaultValues: {
-			name: 'Складской комплекс на МКАД',
+			name: '',
 			type: 'house',
-			area: 1200,
-			rentalValue: 450000,
-			description:
-				'Современный складской комплекс класса B+. Удобный подъезд для грузового транспорта, охраняемая территория, потолки 9 метров, электричество 100 кВт.',
-			manager: '3fa85f64-5717-4562-b3fc-2c963f66af88',
+			area: null,
+			rentalValue: null,
+			description: '',
+			manager: '3fa85f64-5717-4562-b3fc-2c963f66af88', // TODO
 			address: {
-				city: 'Москва',
-				street: 'Новорязанское шоссе',
-				building: '12к1'
+				city: '',
+				street: '',
+				building: ''
 			}
 		}
 	});
