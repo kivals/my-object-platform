@@ -9,6 +9,8 @@ export const REAL_ESTATE_API_ROUTES = {
 	DELETE_FILE: (realEstateUuid: Uuid, fileUuid: Uuid, fileType: RealEstateDocumentsType) =>
 		`/api/real-estate/${realEstateUuid}/files/${fileUuid}?type=${fileType}`,
 
+	DELETE_REAL_ESTATE: (realEstateUuid: Uuid) => `/api/real-estate/${realEstateUuid}`,
+
 	UPLOAD_DOCUMENT: (
 		realEstateUuid: Uuid,
 		fileType: RealEstateDocumentsType,

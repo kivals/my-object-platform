@@ -91,3 +91,26 @@ export async function deleteFile(
 
 	return true;
 }
+
+/**
+ * Удаляет объект недвижимости.
+ *
+ * Выполняет запрос DELETE к эндпоинту удаления объекта недвижимости.
+ * Используется на клиенте.
+ *
+ * @param realEstateUuid UUID объекта недвижимости, который требуется удалить.
+ * @returns `true`, если удаление выполнено успешно.
+ * @throws {Error} Если сервер вернул неуспешный статус (`res.ok === false`).
+ */
+export async function deleteRealEstate(realEstateUuid: Uuid) {
+	const res = await fetch(REAL_ESTATE_API_ROUTES.DELETE_REAL_ESTATE(realEstateUuid), {
+		method: 'DELETE',
+		cache: 'no-cache'
+	});
+
+	if (!res.ok) {
+		throw new Error(await res.text());
+	}
+
+	return true;
+}

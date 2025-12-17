@@ -5,6 +5,9 @@ import type { Uuid } from '@/types/common';
 export const REAL_ESTATE_ENDPOINTS = {
 	GET_ALL: `${process.env.SERVER_REAL_ESTATE_URL}/real-estate-properties`,
 
+	DELETE_REAL_ESTATE: (realEstateUuid: string) =>
+		`${process.env.SERVER_REAL_ESTATE_URL}/real-estate-properties/${realEstateUuid}`,
+
 	CREATE_REAL_ESTATE: `${process.env.SERVER_REAL_ESTATE_URL}/real-estate-properties`,
 
 	GET_BY_UUID: (uuid: Uuid) =>
