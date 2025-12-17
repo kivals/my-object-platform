@@ -41,7 +41,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
 						{label}
 					</Label>
 				)}
-				<div className='flex gap-x-4 items-center'>
+				<div className=' flex-1 flex gap-x-4 items-center'>
 					{multiline ? (
 						<Textarea
 							className={cn(inputClassName)}
