@@ -13,7 +13,7 @@ export const addressSchema = z.object({
 		.max(20, 'Номер дома — не более 20 символов')
 });
 
-export const CreateRealEstateFormSchema = z.object({
+export const createRealEstateFormSchema = z.object({
 	name: z
 		.string()
 		.min(5, 'Название — минимум 5 символов')
@@ -43,4 +43,4 @@ export const CreateRealEstateFormSchema = z.object({
 	address: addressSchema
 });
 
-export type TCreateRealEstateForm = z.infer<typeof CreateRealEstateFormSchema>;
+export type TCreateRealEstateForm = z.infer<typeof createRealEstateFormSchema>;

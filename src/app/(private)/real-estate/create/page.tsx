@@ -12,7 +12,7 @@ export default function RealEstateCreatePage() {
 					backUrl={`${DASHBOARD_URL}`}
 					classNames='absolute inset-x-0 left-[15px] top-[50%] -translate-y-1/2 z-10'
 				/>
-				<h2 className='font-medium text-h2'>Создание объекта2</h2>
+				<h2 className='font-medium text-h2'>Создание объекта</h2>
 			</header>
 			<RealEstateCreateForm />
 		</section>

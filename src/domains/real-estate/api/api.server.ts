@@ -1,9 +1,13 @@
 import { unstable_rethrow } from 'next/navigation';
 
+import type { TCreateRealEstateForm } from '@/components/widgets/real-estate-create/validate/create.schema';
+
 import {
 	type RealEstate,
 	type RealEstateType,
 	type RealEstateUpdate,
+	type TRealEstateCreateResponse,
+	realEstateCreateResponseSchema,
 	realEstateItemSchema,
 	realEstateListSchema
 } from '@/domains/real-estate/api/schema';
@@ -82,5 +86,29 @@ export async function editRealEstateByUuid(
 		unstable_rethrow(e);
 		console.error('[getRealEstateItem]', e);
 		return null;
+	}
+}
+
+/**
+ * Создаёт объект недвижимости.
+ * @param sendData Данные для создания объекта недвижимости.
+ * @returns Ответ сервера, прошедший валидацию схемой.
+ */
+export async function createRealEstate(
+	sendData: TCreateRealEstateForm
+): Promise<TRealEstateCreateResponse> {
+	try {
+		return await apiFetchValidated(
+			REAL_ESTATE_ENDPOINTS.CREATE_REAL_ESTATE,
+			realEstateCreateResponseSchema,
+			{
+				method: 'POST',
+				body: JSON.stringify(sendData)
+			}
+		);
+	} catch (e) {
+		unstable_rethrow(e);
+		console.error('[createRealEstate]', e);
+		throw e;
 	}
 }

@@ -56,6 +56,12 @@ export const realEstateItemSchema = z.object({
 	data: realEstateSchema
 });
 
+export const realEstateCreateResponseSchema = z.object({
+	data: z.object({
+		realEstateUuid: z.string()
+	})
+});
+
 // типы
 export type RealEstateType = z.infer<typeof realEstateTypeSchema>;
 export type RealEstateAddress = z.infer<typeof addressSchema>;
@@ -64,3 +70,4 @@ export type RealEstateDocument = z.infer<typeof documentSchema>;
 export type RealEstate = z.infer<typeof realEstateSchema>;
 export type RealEstateList = z.infer<typeof realEstateListSchema>;
 export type RealEstateUpdate = z.infer<typeof realEstateUpdateSchema>;
+export type TRealEstateCreateResponse = z.infer<typeof realEstateCreateResponseSchema>;

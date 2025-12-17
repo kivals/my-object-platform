@@ -20,7 +20,8 @@ export function RealEstateCreateForm() {
 			control,
 			formState: { errors }
 		},
-		onSubmit
+		onSubmit,
+		isPending
 	} = useCreateForm();
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -130,7 +131,13 @@ export function RealEstateCreateForm() {
 						/>
 					</SectionCard>
 					<SectionCard>
-						<Button>Создать объект недвижимости</Button>
+						<Button
+							disabled={isPending}
+							type='submit'
+							className='bg-[#8D77FF] text-white px-6 py-3 rounded-xl font-medium hover:opacity-90 transition'
+						>
+							{isPending ? 'Ожидайте' : 'Создать объект недвижимости'}
+						</Button>
 					</SectionCard>
 				</div>
 			</div>
