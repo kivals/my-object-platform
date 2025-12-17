@@ -44,12 +44,7 @@ export function Header({ session }: IHeaderProps) {
 	}, []);
 
 	return (
-		<header
-			className={cn(
-				'transition-all py-6 sticky top-0 z-30',
-				header && 'bg-white shadow-lg py-2'
-			)}
-		>
+		<header className={cn('transition-all py-4 sticky top-0 z-30', header && 'bg-white shadow-lg')}>
 			<Container>
 				<div className='flex z-30 justify-between items-center'>
 					<div className='flex items-center gap-x-8'>

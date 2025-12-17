@@ -49,7 +49,7 @@ export function RealEstateSidebar({ address, area, typeLabel }: IRealEstateSideb
 						<Badge Icon={BadgeCheck} variant='success'>
 							{'нет данных'}
 						</Badge>
-						<Badge> {area} м²</Badge>
+						<Badge classNames='whitespace-nowrap'>{area} м²</Badge>
 					</div>
 				</div>
 			)}

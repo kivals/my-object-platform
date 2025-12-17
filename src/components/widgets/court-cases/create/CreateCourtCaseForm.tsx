@@ -58,7 +58,7 @@ export function CreateCourtCaseForm() {
 	useEffect(() => {
 		if (state.success) {
 			toast.success('Данные успешно сохранены');
-			router.push(`${REAL_ESTATE_URL}/${uuid}`);
+			router.push(`${REAL_ESTATE_URL}/${uuid}/court-cases`);
 		} else if (state.error) {
 			toast.error('Ошибка создания судебного дела. Проверьте дату заседания');
 		}
