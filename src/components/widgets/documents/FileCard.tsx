@@ -35,7 +35,7 @@ export function FileCard({
 			<div className='flex items-center justify-between'>
 				{badge && badge}
 				{url && (
-					<Link className='ml-auto' href={url}>
+					<Link onClick={e => e.stopPropagation()} className='ml-auto' href={url}>
 						<Icon classNames='text-[#868686]' icon='Download' size={25} />
 					</Link>
 				)}
