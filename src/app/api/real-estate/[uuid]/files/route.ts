@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { attachDocument } from '@/domains/court-cases/api/api.server';
 import type { DocumentsType } from '@/domains/documents/api/schema';
-import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints/external';
+import { attachPhoto } from '@/domains/real-estate/api/api.server';
 import type { RealEstateDocumentsType } from '@/domains/real-estate/types';
 import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
 import type { Uuid } from '@/types/common';
@@ -11,40 +12,28 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uui
 	try {
 		const { uuid } = await params;
 		const tokens = await getAuthTokens();
+		const formData = await req.formData();
 
 		const fileType = req.nextUrl.searchParams.get('type') as RealEstateDocumentsType | undefined;
 		const documentType = req.nextUrl.searchParams.get('documentType') as DocumentsType | undefined;
-		const tenantId = req.nextUrl.searchParams.get('tenantId') as Uuid | undefined;
 		const courtCaseId = req.nextUrl.searchParams.get('courtCaseId') as Uuid | undefined;
 
 		if (!tokens) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 		if (!fileType) return NextResponse.json({ error: 'Bad request' }, { status: 400 });
 
-		const endpoint = REAL_ESTATE_ENDPOINTS.POST_FILE(
-			uuid,
-			fileType,
-			documentType,
-			tenantId,
-			courtCaseId
-		);
+		let response = null;
 
-		const formData = await req.formData();
-
-		const res = await fetch(endpoint, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`
-			},
-			body: formData
-		});
-
-		if (!res.ok) {
-			const errText = await res.text();
-			return NextResponse.json({ error: errText }, { status: res.status });
+		if (fileType === 'photos') {
+			response = await attachPhoto(uuid, formData);
 		}
 
-		const { data } = await res.json();
-		return NextResponse.json(data);
+		if (fileType === 'documents' && documentType === 'court') {
+			if (!courtCaseId) return NextResponse.json({ error: 'Bad request' }, { status: 400 });
+
+			response = await attachDocument(uuid, courtCaseId, formData);
+		}
+
+		return NextResponse.json(response);
 	} catch (err) {
 		console.error('[FILE UPLOAD ERROR]', err);
 		return NextResponse.json({ error: 'Upload failed' }, { status: 500 });

@@ -8,6 +8,7 @@
  * Используются FormData и прямые запросы к REST-эндпоинтам.
  */
 import type { DocumentsType } from '@/domains/documents/api/schema';
+import type { TRealEstateUploadPhotoDataResponse } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_API_ROUTES } from '@/domains/real-estate/endpoints/internal';
 import type { RealEstateDocumentsType } from '@/domains/real-estate/types';
 import type { Uuid } from '@/types/common';
@@ -46,7 +47,10 @@ async function uploadFile(file: File, endpoint: string) {
  * @returns Ответ сервера в формате JSON.
  * @throws Ошибка при неудачном запросе.
  */
-export async function uploadPhoto(realEstateUuid: string, file: File) {
+export async function uploadPhoto(
+	realEstateUuid: string,
+	file: File
+): Promise<TRealEstateUploadPhotoDataResponse> {
 	return uploadFile(file, REAL_ESTATE_API_ROUTES.UPLOAD_PHOTO(realEstateUuid, 'photos'));
 }
 

@@ -58,8 +58,8 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 
 		try {
 			setIsUploading(true);
-			const json = await uploadDocument(uuid, courtCase.courtCaseId, file);
-			const newDoc = json.documents?.[0];
+			const response = await uploadDocument(uuid, courtCase.courtCaseId, file);
+			const newDoc = response.documents[0];
 			setCourtDetails(prev => {
 				if (!prev) return prev;
 				return {
@@ -67,9 +67,10 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 					documents: [...(prev.documents ?? []), newDoc]
 				};
 			});
+			toast.success('Документ успешно добавлен');
 		} catch (error) {
 			console.error('[Court Case] upload error', error);
-			// todo тут можно дернуть toast
+			toast.error('Ошибка добавления документа');
 		} finally {
 			setIsUploading(false);
 		}

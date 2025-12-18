@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { AUTH_ENDPOINTS } from '@/domains/auth/endpoints/external';
+import { apiFetch } from '@/lib/api/api-fetch.server';
 import { signOut } from '@/lib/auth';
 import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
 
@@ -10,17 +11,12 @@ export async function DELETE() {
 
 		if (!tokens) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-		const res = await fetch(AUTH_ENDPOINTS.LOGOUT, {
+		await apiFetch(AUTH_ENDPOINTS.LOGOUT, {
 			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${tokens.accessToken}`
 			}
 		});
-
-		if (!res.ok) {
-			const errText = await res.text();
-			return NextResponse.json({ error: errText }, { status: res.status });
-		}
 
 		await signOut();
 

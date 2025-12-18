@@ -1,9 +1,11 @@
 import { unstable_rethrow } from 'next/navigation';
 
 import {
+	type TCourtCaseUploadDocResponse,
 	type TCourtCasesResponse,
 	type TCreateCourtCaseBody,
 	type TCreateCourtCaseResponse,
+	courtCaseUploadDocResponseSchema,
 	courtCasesResponseSchema
 } from '@/domains/court-cases/api/schema';
 import { COURT_CASES } from '@/domains/court-cases/endpoints/external';
@@ -39,6 +41,25 @@ export async function createCourtCaseByUuid(
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[createCourtCaseByUuid]', e);
+		throw e;
+	}
+}
+
+export async function attachDocument(
+	realEstateUuid: Uuid,
+	courtCaseUuid: Uuid,
+	formData: FormData
+): Promise<TCourtCaseUploadDocResponse> {
+	const endpoint = COURT_CASES.POST_DOCUMENT(realEstateUuid, courtCaseUuid);
+	try {
+		const res = await apiFetchValidated(endpoint, courtCaseUploadDocResponseSchema, {
+			method: 'POST',
+			body: formData
+		});
+		return res.data;
+	} catch (e) {
+		unstable_rethrow(e);
+		console.error('[court case attachDocument]', e);
 		throw e;
 	}
 }

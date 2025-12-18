@@ -7,12 +7,15 @@ import {
 	type RealEstateType,
 	type RealEstateUpdate,
 	type TRealEstateCreateResponse,
+	type TRealEstateUploadPhotoDataResponse,
 	realEstateCreateResponseSchema,
 	realEstateItemSchema,
-	realEstateListSchema
+	realEstateListSchema,
+	realEstateUploadPhotoResponseSchema
 } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints/external';
 import { apiFetchValidated } from '@/lib/api/api-fetch.server';
+import type { Uuid } from '@/types/common';
 
 /**
  * Запрашивает список объектов недвижимости.
@@ -109,6 +112,26 @@ export async function createRealEstate(
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[createRealEstate]', e);
+		throw e;
+	}
+}
+
+export async function attachPhoto(
+	uuid: Uuid,
+	formData: FormData
+): Promise<TRealEstateUploadPhotoDataResponse> {
+	const endpoint = REAL_ESTATE_ENDPOINTS.POST_PHOTO(uuid);
+
+	try {
+		const res = await apiFetchValidated(endpoint, realEstateUploadPhotoResponseSchema, {
+			method: 'POST',
+			body: formData
+		});
+
+		return res.data;
+	} catch (e) {
+		unstable_rethrow(e);
+		console.error('[attachPhotoRealEstate]', e);
 		throw e;
 	}
 }

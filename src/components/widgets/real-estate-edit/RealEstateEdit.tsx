@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 import { RealEstateEditForm } from '@/components/widgets/real-estate-edit/RealEstateEditForm';
 import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/RealEstateGallery';
@@ -22,15 +23,19 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 	const [photos, setPhotos] = useState<RealEstatePhoto[]>(data.photos);
 	const [isLoading, setIsLoading] = useState(false);
 
+	//todo useOptimistic чтобы не ждать ответ от сервера
 	async function handleUpload(file: File) {
 		try {
 			setIsLoading(true);
+
 			const json = await uploadPhoto(data.realEstateUuid, file);
-			const newPhoto = json.photos?.[0];
+			const newPhoto = json.photos[0];
+
 			setPhotos(prev => [...prev, newPhoto]);
+			toast.success('Фотография успешно добавлена!');
 		} catch (err) {
-			// показать тост/ошибку
 			console.error('[handleUpload] Failed:', err);
+			toast.error('Ошибка загрузки фотографии');
 		} finally {
 			setIsLoading(false);
 		}
@@ -43,7 +48,7 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 			await deleteFile(data.realEstateUuid, uuid, 'photos');
 			setPhotos(prev => prev.filter(p => p.photoUuid !== uuid));
 		} catch (err) {
-			// показать тост/ошибку
+			toast.error('Ошибка удаления фотографии');
 			console.error('[handleDelete] Failed:', err);
 		} finally {
 			setIsLoading(false);

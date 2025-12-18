@@ -56,18 +56,25 @@ export const realEstateItemSchema = z.object({
 	data: realEstateSchema
 });
 
+// Responses
 export const realEstateCreateResponseSchema = z.object({
 	data: z.object({
 		realEstateUuid: z.string()
 	})
 });
 
+export const realEstateUploadPhotoResponseSchema = z.object({
+	data: z.object({
+		photos: z.array(photoSchema)
+	})
+});
+
+type TRealEstateUploadPhotoApiResponse = z.infer<typeof realEstateUploadPhotoResponseSchema>;
+
 // типы
 export type RealEstateType = z.infer<typeof realEstateTypeSchema>;
-export type RealEstateAddress = z.infer<typeof addressSchema>;
 export type RealEstatePhoto = z.infer<typeof photoSchema>;
-export type RealEstateDocument = z.infer<typeof documentSchema>;
 export type RealEstate = z.infer<typeof realEstateSchema>;
-export type RealEstateList = z.infer<typeof realEstateListSchema>;
 export type RealEstateUpdate = z.infer<typeof realEstateUpdateSchema>;
 export type TRealEstateCreateResponse = z.infer<typeof realEstateCreateResponseSchema>;
+export type TRealEstateUploadPhotoDataResponse = TRealEstateUploadPhotoApiResponse['data'];

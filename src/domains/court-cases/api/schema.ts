@@ -84,6 +84,13 @@ export const createCourtCaseResponseSchema = z.object({
 	})
 });
 
+export const courtCaseUploadDocResponseSchema = z.object({
+	data: z.object({
+		documents: z.array(courtCaseDocumentSchema)
+	})
+});
+type TCourtCaseUploadDocApiResponse = z.infer<typeof courtCaseUploadDocResponseSchema>;
+
 export type TCourtCase = z.infer<typeof courtCaseSchema>;
 export type TCourtCaseStatus = z.infer<typeof courtCaseStatusSchema>;
 export type TCourtCaseRole = z.infer<typeof courtCaseRoleSchema>;
@@ -96,3 +103,4 @@ export type TCaseParty = z.infer<typeof casePartySchema>;
 export type TCourtCaseDocument = z.infer<typeof courtCaseDocumentSchema>;
 export type TCreateCourtCaseBody = z.infer<typeof createCourtCaseBodySchema>;
 export type TCreateCourtCaseResponse = z.infer<typeof createCourtCaseResponseSchema>;
+export type TCourtCaseUploadDocResponse = TCourtCaseUploadDocApiResponse['data'];

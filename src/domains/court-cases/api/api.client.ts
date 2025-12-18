@@ -1,4 +1,7 @@
-import type { TCourtCaseDetailsResponse } from '@/domains/court-cases/api/schema';
+import type {
+	TCourtCaseDetailsResponse,
+	TCourtCaseUploadDocResponse
+} from '@/domains/court-cases/api/schema';
 import { COURT_CASES_API_ROUTES } from '@/domains/court-cases/endpoints/internal';
 import type { Uuid } from '@/types/common';
 
@@ -24,16 +27,15 @@ export async function getCourtCaseDetails(
 	}
 }
 
-export async function uploadDocument(realEstateUuid: Uuid, courtCaseId: Uuid, file: File) {
+export async function uploadDocument(
+	realEstateUuid: Uuid,
+	courtCaseId: Uuid,
+	file: File
+): Promise<TCourtCaseUploadDocResponse> {
 	const form = new FormData();
 	form.append('files', file);
 
-	const endpoint = COURT_CASES_API_ROUTES.UPLOAD_DOCUMENT(
-		realEstateUuid,
-		'documents',
-		'court',
-		courtCaseId
-	);
+	const endpoint = COURT_CASES_API_ROUTES.UPLOAD_DOCUMENT(realEstateUuid, courtCaseId);
 
 	const res = await fetch(endpoint, {
 		method: 'POST',
