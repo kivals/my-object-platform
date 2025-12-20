@@ -1,21 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
+import { patchTask } from '@/domains/maintenance/api/api.server';
 import type { TMaintenanceItem } from '@/domains/maintenance/api/schema';
 import { MAINTENANCE } from '@/domains/maintenance/endpoints/external';
 import { apiFetch } from '@/lib/api/api-fetch.server';
-import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
+import { badRequest, handleRouteError, ok } from '@/lib/api/route-utils';
 
-//todo проверить работу когда протухнет access token
+//Смена статуса задачи
 export async function PATCH(
 	req: NextRequest,
 	{ params }: { params: Promise<{ taskUuid: string }> }
 ) {
 	try {
 		const { taskUuid } = await params;
-		const tokens = await getAuthTokens();
 
-		if (!tokens || !taskUuid) {
-			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+		if (!taskUuid) {
+			return badRequest();
 		}
 
 		const body = (await req.json()) as Partial<TMaintenanceItem>;
@@ -26,9 +26,10 @@ export async function PATCH(
 			body: JSON.stringify(body)
 		});
 
-		return NextResponse.json({ ok: true });
+		await patchTask(taskUuid, body);
+
+		return ok();
 	} catch (err) {
-		console.error('[PATCH TASK ERROR]', err);
-		return NextResponse.json({ error: 'Update task failed' }, { status: 500 });
+		return handleRouteError(err, 'Update task failed');
 	}
 }

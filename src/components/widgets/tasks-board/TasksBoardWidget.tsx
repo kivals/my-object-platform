@@ -1,9 +1,9 @@
 'use client';
 
 import { DndContext, DragOverlay, rectIntersection } from '@dnd-kit/core';
-import { toast } from 'sonner';
 
 import { DashboardSectionHeader } from '@/components/DashboardSectionHeader';
+import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 import { Column } from '@/components/widgets/tasks-board/Column';
 import { TaskItem } from '@/components/widgets/tasks-board/TaskItem';
 
@@ -17,18 +17,17 @@ interface ITasksBoardWidgetProps {
 }
 
 export function TasksBoardWidget({ tasks }: ITasksBoardWidgetProps) {
+	const { run: changeStatusAction } = useApiAction({
+		successMessage: 'Статус задачи изменен',
+		errorMessage: 'Ошибка смены статуса задачи'
+	});
+
 	const { state, activeTask, overColumn, handleDragStart, handleDragEnd, handleDragOver } =
 		useTasksBoardState(tasks, {
 			onStatusChange: async ({ taskId, to }) => {
-				try {
+				await changeStatusAction(async () => {
 					await changeTaskStatus(taskId, to);
-					toast.success('Статус задачи изменен');
-				} catch (e) {
-					console.error('[updateTaskStatus] error', e);
-					// TODO тут нужно:
-					// 1) показать тост
-					// 2) откатить локальный стейт (если нужно)
-				}
+				});
 			}
 		});
 
