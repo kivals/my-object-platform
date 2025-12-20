@@ -1,5 +1,5 @@
-interface IActionState {
+interface IActionState<T = unknown> {
 	error?: string;
 	success?: boolean;
-	payload?: unknown;
+	payload?: T;
 }
