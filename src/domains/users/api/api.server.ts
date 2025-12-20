@@ -13,7 +13,7 @@ export async function getTenantUsers(name?: string): Promise<TTenantUsersRespons
 		});
 	} catch (e) {
 		unstable_rethrow(e);
-		console.error('[getTenants real-estate]', e);
-		return null;
+		console.error('[getTenants users real-estate]', e);
+		throw e;
 	}
 }

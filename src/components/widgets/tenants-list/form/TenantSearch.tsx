@@ -1,9 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { toast } from 'sonner';
 
 import { TextField } from '@/components/form/TextField';
+import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 
 import { useDebounce } from '@/hooks/use-debounce';
 
@@ -20,22 +20,19 @@ export function TenantSearch({ onSelect }: Props) {
 	const [search, setSearch] = useState('');
 	const [open, setOpen] = useState(false);
 	const [options, setOptions] = useState<TTenantUser[]>([]);
-	const [isLoading, setIsLoading] = useState(false);
 	const debouncedSearch = useDebounce(search, DEBOUNCE_DELAY_MS);
+
+	const { run: searchTenantsAction, isLoading } = useApiAction({
+		errorMessage: 'Ошибка загрузки арендаторов'
+	});
 
 	const fetchOptions = useCallback(async (query: string) => {
 		if (!query.trim()) return;
 
-		setIsLoading(true);
-		try {
+		await searchTenantsAction(async () => {
 			const result = await getTenantUsers(query);
 			setOptions(result);
-		} catch (err) {
-			console.error(err);
-			toast.error('Ошибка загрузки арендаторов');
-		} finally {
-			setIsLoading(false);
-		}
+		});
 	}, []);
 
 	useEffect(() => {

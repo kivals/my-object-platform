@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 import { getTenantUsers } from '@/domains/users/api/api.server';
+import { handleRouteError, ok } from '@/lib/api/route-utils';
 
+// поиск пользователей с ролью Арендатор по имени
 export async function GET(req: NextRequest) {
 	try {
 		const searchValue = req.nextUrl.searchParams.get('name') ?? undefined;
 		const result = await getTenantUsers(searchValue);
 
-		return NextResponse.json(result);
+		return ok(result);
 	} catch (err) {
-		console.error('[SEARCH TENANT USERS ERROR]', err);
-
-		return NextResponse.json({ error: 'SEARCH TENANT USERS failed' }, { status: 500 });
+		return handleRouteError(err, 'SEARCH TENANT USERS failed');
 	}
 }
