@@ -89,7 +89,7 @@ export const courtCaseUploadDocResponseSchema = z.object({
 		documents: z.array(courtCaseDocumentSchema)
 	})
 });
-type TCourtCaseUploadDocApiResponse = z.infer<typeof courtCaseUploadDocResponseSchema>;
+export type TCourtCaseUploadDocApiResponse = z.infer<typeof courtCaseUploadDocResponseSchema>;
 
 export type TCourtCase = z.infer<typeof courtCaseSchema>;
 export type TCourtCaseStatus = z.infer<typeof courtCaseStatusSchema>;

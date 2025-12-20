@@ -44,3 +44,19 @@ export async function createTenantToRealEstate(
 		throw e;
 	}
 }
+
+export async function deleteTenantToRealEstate(
+	realEstateUuid: Uuid,
+	tenantUuid: Uuid
+): Promise<undefined> {
+	const endpoint = TENANTS_ENDPOINTS.DETACH_TENANT_BY_REAL_ESTATE_UUID(realEstateUuid, tenantUuid);
+
+	try {
+		await apiFetch(endpoint, {
+			method: 'DELETE'
+		});
+	} catch (e) {
+		unstable_rethrow(e);
+		throw e;
+	}
+}

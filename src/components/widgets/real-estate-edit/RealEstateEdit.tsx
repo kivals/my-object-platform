@@ -1,59 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import { toast } from 'sonner';
-
 import { RealEstateEditForm } from '@/components/widgets/real-estate-edit/RealEstateEditForm';
+import { useRealEstatePhotos } from '@/components/widgets/real-estate-edit/hook/useRealEstatePhotos';
 import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/RealEstateGallery';
 
 import { BackButton } from '@/ui/BackButton';
 import { SectionCard } from '@/ui/SectionCard';
 
-import { deleteFile, uploadPhoto } from '@/domains/real-estate/api/api.client';
-import type { RealEstate, RealEstatePhoto } from '@/domains/real-estate/api/schema';
+import type { RealEstate } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
+//todo uuid тут нужно пропсом получать?
 interface IRealEstateEditProps {
 	data: RealEstate;
 	uuid: Uuid;
 }
 
 export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
-	const [photos, setPhotos] = useState<RealEstatePhoto[]>(data.photos);
-	const [isLoading, setIsLoading] = useState(false);
-
-	//todo useOptimistic чтобы не ждать ответ от сервера
-	async function handleUpload(file: File) {
-		try {
-			setIsLoading(true);
-
-			const json = await uploadPhoto(data.realEstateUuid, file);
-			const newPhoto = json.photos[0];
-
-			setPhotos(prev => [...prev, newPhoto]);
-			toast.success('Фотография успешно добавлена!');
-		} catch (err) {
-			console.error('[handleUpload] Failed:', err);
-			toast.error('Ошибка загрузки фотографии');
-		} finally {
-			setIsLoading(false);
-		}
-	}
-
-	//todo useOptimistic чтобы не ждать ответ от сервера
-	async function handleDelete(uuid: Uuid) {
-		try {
-			setIsLoading(true);
-			await deleteFile(data.realEstateUuid, uuid, 'photos');
-			setPhotos(prev => prev.filter(p => p.photoUuid !== uuid));
-		} catch (err) {
-			toast.error('Ошибка удаления фотографии');
-			console.error('[handleDelete] Failed:', err);
-		} finally {
-			setIsLoading(false);
-		}
-	}
+	const { photos, handleUpload, handleDelete, isLoading } = useRealEstatePhotos({
+		photos: data.photos,
+		realEstateUuid: data.realEstateUuid
+	});
 
 	return (
 		<section>

@@ -2,7 +2,6 @@
 
 import { useParams } from 'next/navigation';
 import { type ChangeEvent, useState } from 'react';
-import { toast } from 'sonner';
 
 import { DetailCourtCase } from '@/components/widgets/court-cases/court-case/DetailCourtCase';
 import { DocumentList } from '@/components/widgets/court-cases/court-case/DocumentList';
@@ -10,6 +9,7 @@ import {
 	COURT_CASE_STATUS_COLORS,
 	COURT_CASE_STATUS_LABELS
 } from '@/components/widgets/court-cases/labels';
+import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 
 import { Badge } from '@/ui/Badge';
 import { DropdownSection } from '@/ui/DropdownSection';
@@ -27,39 +27,41 @@ interface ICourtCaseProps {
 }
 
 export function CourtCase({ courtCase }: ICourtCaseProps) {
-	const [isLoadingDetails, setIsLoadingDetails] = useState(false);
-	const [isUploading, setIsUploading] = useState(false);
 	const { uuid } = useParams<{ uuid: string }>();
 	const [courtDetails, setCourtDetails] = useState<TCourtCaseDetails | null>(null);
-	const [isError, setIsError] = useState(false);
+	const {
+		run: getDetailsAction,
+		isLoading: isLoadingDetails,
+		isError: IsErrorDetails
+	} = useApiAction({
+		errorMessage: 'Ошибка загрузки деталей судебного дела'
+	});
+
+	const { run: uploadAction, isLoading: isUploading } = useApiAction({
+		successMessage: 'Документ успешно добавлен',
+		errorMessage: 'Ошибка добавления документа'
+	});
 
 	async function handleExtendDetails() {
 		if (!uuid) return;
 
-		try {
-			setIsError(false);
-			setIsLoadingDetails(true);
-			const response = await getCourtCaseDetails(uuid, courtCase.courtCaseId);
-			setCourtDetails(response?.data);
-		} catch (err) {
-			setIsError(true);
-			console.error('[handleGet] Failed:', err);
-			toast.error('Ошибка загрузки деталей судебного дела');
-		} finally {
-			setIsLoadingDetails(false);
-		}
+		await getDetailsAction(async () => {
+			const details = await getCourtCaseDetails(uuid, courtCase.courtCaseId);
+			setCourtDetails(details);
+		});
 	}
 
+	//todo useOptimistic чтобы не ждать ответ от сервера
 	async function handleUpload(e: ChangeEvent<HTMLInputElement>) {
-		const file = e.target.files?.[0];
-		e.target.value = '';
+		await uploadAction(async () => {
+			const file = e.target.files?.[0];
+			e.target.value = '';
 
-		if (!file) return;
+			if (!file) return;
 
-		try {
-			setIsUploading(true);
 			const response = await uploadDocument(uuid, courtCase.courtCaseId, file);
 			const newDoc = response.documents[0];
+
 			setCourtDetails(prev => {
 				if (!prev) return prev;
 				return {
@@ -67,18 +69,12 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 					documents: [...(prev.documents ?? []), newDoc]
 				};
 			});
-			toast.success('Документ успешно добавлен');
-		} catch (error) {
-			console.error('[Court Case] upload error', error);
-			toast.error('Ошибка добавления документа');
-		} finally {
-			setIsUploading(false);
-		}
+		});
 	}
 
 	return (
 		<DropdownSection
-			needToClose={isError}
+			needToClose={IsErrorDetails}
 			onDropdownClick={handleExtendDetails}
 			visibleContent={
 				<div

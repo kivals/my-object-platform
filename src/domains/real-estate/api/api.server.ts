@@ -14,7 +14,8 @@ import {
 	realEstateUploadPhotoResponseSchema
 } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_ENDPOINTS } from '@/domains/real-estate/endpoints/external';
-import { apiFetchValidated } from '@/lib/api/api-fetch.server';
+import type { RealEstateDocumentsType } from '@/domains/real-estate/types';
+import { apiFetch, apiFetchValidated } from '@/lib/api/api-fetch.server';
 import type { Uuid } from '@/types/common';
 
 /**
@@ -132,6 +133,38 @@ export async function attachPhoto(
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[attachPhotoRealEstate]', e);
+		throw e;
+	}
+}
+
+export async function deleteRealEstate(uuid: Uuid): Promise<undefined> {
+	const endpoint = REAL_ESTATE_ENDPOINTS.DELETE_REAL_ESTATE(uuid);
+
+	try {
+		await apiFetch(endpoint, {
+			method: 'DELETE'
+		});
+	} catch (e) {
+		unstable_rethrow(e);
+		console.error('[deleteRealEstate]', e);
+		throw e;
+	}
+}
+
+export async function deleteFile(
+	uuid: Uuid,
+	fileUuid: Uuid,
+	type: RealEstateDocumentsType
+): Promise<undefined> {
+	const endpoint = REAL_ESTATE_ENDPOINTS.DELETE_FILE(uuid, fileUuid, type);
+
+	try {
+		await apiFetch(endpoint, {
+			method: 'DELETE'
+		});
+	} catch (e) {
+		unstable_rethrow(e);
+		console.error('[delete file by real estate]', e);
 		throw e;
 	}
 }

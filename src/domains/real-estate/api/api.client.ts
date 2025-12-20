@@ -11,6 +11,7 @@ import type { DocumentsType } from '@/domains/documents/api/schema';
 import type { TRealEstateUploadPhotoDataResponse } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_API_ROUTES } from '@/domains/real-estate/endpoints/internal';
 import type { RealEstateDocumentsType } from '@/domains/real-estate/types';
+import { clientApiFetch } from '@/lib/api/client-api-fetch';
 import type { Uuid } from '@/types/common';
 
 /**
@@ -22,21 +23,14 @@ import type { Uuid } from '@/types/common';
  * @throws Ошибка, если запрос завершился неудачно.
  * TODO вынести есть повторение в судебных делах
  */
-async function uploadFile(file: File, endpoint: string) {
+async function uploadFile<T>(file: File, endpoint: string): Promise<T> {
 	const form = new FormData();
 	form.append('files', file);
 
-	const res = await fetch(endpoint, {
+	return clientApiFetch<T>(endpoint, {
 		method: 'POST',
-		body: form,
-		cache: 'no-cache'
+		body: form
 	});
-
-	if (!res.ok) {
-		throw new Error(await res.text());
-	}
-
-	return res.json();
 }
 
 /**
@@ -47,11 +41,11 @@ async function uploadFile(file: File, endpoint: string) {
  * @returns Ответ сервера в формате JSON.
  * @throws Ошибка при неудачном запросе.
  */
-export async function uploadPhoto(
-	realEstateUuid: string,
-	file: File
-): Promise<TRealEstateUploadPhotoDataResponse> {
-	return uploadFile(file, REAL_ESTATE_API_ROUTES.UPLOAD_PHOTO(realEstateUuid, 'photos'));
+export async function uploadPhoto(realEstateUuid: string, file: File) {
+	return uploadFile<TRealEstateUploadPhotoDataResponse>(
+		file,
+		REAL_ESTATE_API_ROUTES.UPLOAD_PHOTO(realEstateUuid, 'photos')
+	);
 }
 
 /**
@@ -64,7 +58,7 @@ export async function uploadPhoto(
  * @throws Ошибка при неудачном запросе.
  */
 export async function uploadDocument(realEstateUuid: string, file: File, docType: DocumentsType) {
-	return uploadFile(
+	return uploadFile<undefined>(
 		file,
 		REAL_ESTATE_API_ROUTES.UPLOAD_DOCUMENT(realEstateUuid, 'documents', docType)
 	);
@@ -84,14 +78,9 @@ export async function deleteFile(
 	fileUuid: Uuid,
 	type: RealEstateDocumentsType
 ) {
-	const res = await fetch(REAL_ESTATE_API_ROUTES.DELETE_FILE(realEstateUuid, fileUuid, type), {
-		method: 'DELETE',
-		cache: 'no-cache'
+	await clientApiFetch(REAL_ESTATE_API_ROUTES.DELETE_FILE(realEstateUuid, fileUuid, type), {
+		method: 'DELETE'
 	});
-
-	if (!res.ok) {
-		throw new Error(await res.text());
-	}
 
 	return true;
 }
@@ -107,14 +96,9 @@ export async function deleteFile(
  * @throws {Error} Если сервер вернул неуспешный статус (`res.ok === false`).
  */
 export async function deleteRealEstate(realEstateUuid: Uuid) {
-	const res = await fetch(REAL_ESTATE_API_ROUTES.DELETE_REAL_ESTATE(realEstateUuid), {
-		method: 'DELETE',
-		cache: 'no-cache'
+	await clientApiFetch(REAL_ESTATE_API_ROUTES.DELETE_REAL_ESTATE(realEstateUuid), {
+		method: 'DELETE'
 	});
-
-	if (!res.ok) {
-		throw new Error(await res.text());
-	}
 
 	return true;
 }

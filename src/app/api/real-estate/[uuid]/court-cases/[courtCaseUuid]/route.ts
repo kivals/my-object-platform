@@ -1,11 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
-import { courtCaseDetailsResponseSchema } from '@/domains/court-cases/api/schema';
-import { COURT_CASES } from '@/domains/court-cases/endpoints/external';
-import { apiFetchValidated } from '@/lib/api/api-fetch.server';
-import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
+import { getCourtCaseDetailsByRealEstate } from '@/domains/court-cases/api/api.server';
+import { badRequest, handleRouteError, ok } from '@/lib/api/route-utils';
 
-//todo проверить работу когда протухнет access token
+// Получение деталей судебного дела
 export async function GET(
 	_: NextRequest,
 	{ params }: { params: Promise<{ uuid: string; courtCaseUuid: string }> }
@@ -13,17 +11,14 @@ export async function GET(
 	try {
 		const { uuid, courtCaseUuid } = await params;
 
-		const tokens = await getAuthTokens();
-		const endpoint = COURT_CASES.GET_COURT_CASE_DETAIL_BY_REAL_ESTATE_UUID(uuid, courtCaseUuid);
+		if (!uuid || !courtCaseUuid) {
+			return badRequest();
+		}
 
-		if (!tokens) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-		const result = await apiFetchValidated(endpoint, courtCaseDetailsResponseSchema, {
-			method: 'GET'
-		});
+		const result = await getCourtCaseDetailsByRealEstate(uuid, courtCaseUuid);
 
-		return NextResponse.json(result);
+		return ok(result);
 	} catch (err) {
-		console.error('[GET COURT CASE ERROR]', err);
-		return NextResponse.json({ error: 'GET COURT CASE failed' }, { status: 500 });
+		return handleRouteError(err, 'GET COURT CASE failed');
 	}
 }

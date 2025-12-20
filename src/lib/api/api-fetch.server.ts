@@ -2,27 +2,8 @@ import camelize from 'camelize-ts';
 import { ZodError, type ZodType, z } from 'zod';
 
 import { authRefresh } from '@/domains/auth/actions';
+import { ApiError, ApiParseError } from '@/lib/api/api-error';
 import { getAuthTokens } from '@/lib/auth/utils/getAuthJwt.server';
-
-export class ApiError extends Error {
-	status: number;
-
-	constructor(message: string, status: number) {
-		super(message);
-		this.name = 'ApiError';
-		this.status = status;
-	}
-}
-
-export class ApiParseError extends Error {
-	constructor(
-		public schemaName: string,
-		public issues: ZodError
-	) {
-		super(`Invalid response format for schema: ${schemaName}`);
-		this.name = 'ApiParseError';
-	}
-}
 
 export async function apiFetch<T>(
 	endpoint: string,
@@ -35,6 +16,9 @@ export async function apiFetch<T>(
 
 	if (isAuth) {
 		tokens = await getAuthTokens();
+		if (!tokens) {
+			throw new ApiError('Unauthorized', 401);
+		}
 	}
 
 	if (opts.query) {

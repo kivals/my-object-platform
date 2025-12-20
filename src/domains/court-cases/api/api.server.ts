@@ -1,10 +1,12 @@
 import { unstable_rethrow } from 'next/navigation';
 
 import {
-	type TCourtCaseUploadDocResponse,
+	type TCourtCaseDetailsResponse,
+	type TCourtCaseUploadDocApiResponse,
 	type TCourtCasesResponse,
 	type TCreateCourtCaseBody,
 	type TCreateCourtCaseResponse,
+	courtCaseDetailsResponseSchema,
 	courtCaseUploadDocResponseSchema,
 	courtCasesResponseSchema
 } from '@/domains/court-cases/api/schema';
@@ -25,6 +27,24 @@ export async function getCourtCasesByRealEstate(uuid: Uuid): Promise<TCourtCases
 		unstable_rethrow(e);
 		console.error('[get court case by real-estate]', e);
 		return null;
+	}
+}
+
+export async function getCourtCaseDetailsByRealEstate(
+	realEstateUuid: Uuid,
+	courtCaseUuid: Uuid
+): Promise<TCourtCaseDetailsResponse | null> {
+	try {
+		return await apiFetchValidated(
+			COURT_CASES.GET_COURT_CASE_DETAIL_BY_REAL_ESTATE_UUID(realEstateUuid, courtCaseUuid),
+			courtCaseDetailsResponseSchema,
+			{
+				method: 'GET'
+			}
+		);
+	} catch (e) {
+		unstable_rethrow(e);
+		throw e;
 	}
 }
 
@@ -49,14 +69,13 @@ export async function attachDocument(
 	realEstateUuid: Uuid,
 	courtCaseUuid: Uuid,
 	formData: FormData
-): Promise<TCourtCaseUploadDocResponse> {
+): Promise<TCourtCaseUploadDocApiResponse> {
 	const endpoint = COURT_CASES.POST_DOCUMENT(realEstateUuid, courtCaseUuid);
 	try {
-		const res = await apiFetchValidated(endpoint, courtCaseUploadDocResponseSchema, {
+		return await apiFetchValidated(endpoint, courtCaseUploadDocResponseSchema, {
 			method: 'POST',
 			body: formData
 		});
-		return res.data;
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[court case attachDocument]', e);

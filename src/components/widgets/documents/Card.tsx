@@ -2,10 +2,10 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 import { DocumentEdit } from '@/components/widgets/documents/DocumentEdit';
 import { FileCard } from '@/components/widgets/documents/FileCard';
+import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 
 import { Badge } from '@/ui/Badge';
 
@@ -31,26 +31,20 @@ export function DocumentCard({
 }: IDocumentItemProps) {
 	const label = isCompleted ? 'Завершенный' : 'Действующий';
 	const [isEdit, setIsEdit] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
+	const { run: deleteAction, isLoading } = useApiAction({
+		successMessage: 'Документ успешно удален',
+		errorMessage: 'Ошибка удаления документа'
+	});
 
-	//todo useOptimistic чтобы не ждать ответ от сервера
 	async function handleDelete() {
 		if (!uuid || !documentUuid) return;
 
-		try {
-			setIsLoading(true);
+		await deleteAction(async () => {
 			await deleteFile(uuid, documentUuid, 'documents');
-
-			//TODO hack, нужно выяснить почему не сработал router.refresh();
 			router.push(`${REAL_ESTATE_URL}/${uuid}/documents`);
-		} catch (err) {
-			console.error('[handleDelete] Failed:', err);
-			toast.error('Ошибка удаления документа');
-		} finally {
-			setIsLoading(false);
-		}
+		});
 	}
 
 	return (
