@@ -35,7 +35,7 @@ export async function getRealEstateList(type: RealEstateType): Promise<RealEstat
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[getRealEstateList]', e);
-		return [];
+		throw e;
 	}
 }
 
@@ -60,7 +60,7 @@ export async function getRealEstateByUuid(uuid: string): Promise<RealEstate | nu
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[getRealEstateItem]', e);
-		return null;
+		throw e;
 	}
 }
 
@@ -70,11 +70,9 @@ export async function getRealEstateByUuid(uuid: string): Promise<RealEstate | nu
  * @param sendData Новые данные
  */
 export async function editRealEstateByUuid(
-	uuid: string,
+	uuid: Uuid,
 	sendData: RealEstateUpdate
-): Promise<RealEstate | null> {
-	if (!uuid) return null;
-
+): Promise<RealEstate> {
 	try {
 		const { data } = await apiFetchValidated(
 			REAL_ESTATE_ENDPOINTS.PUT_BY_UUID(uuid),
@@ -88,8 +86,8 @@ export async function editRealEstateByUuid(
 		return data;
 	} catch (e) {
 		unstable_rethrow(e);
-		console.error('[getRealEstateItem]', e);
-		return null;
+		console.error('[editRealEstateByUuid]', e);
+		throw e;
 	}
 }
 

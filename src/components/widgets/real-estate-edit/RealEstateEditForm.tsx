@@ -1,23 +1,16 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { startTransition, useActionState, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
+import { Controller } from 'react-hook-form';
 
 import { FormError } from '@/components/form/FormError';
 import { TextField } from '@/components/form/TextField';
+import { useEditForm } from '@/components/widgets/real-estate-edit/hook/use-edit-form';
 
 import { Button } from '@/ui/Button';
 import { OptionGroup } from '@/ui/OptionGroup';
 import { SectionCard } from '@/ui/SectionCard';
 import { Separator } from '@/ui/Separator';
 
-import { realEstateEditAction } from '@/actions/real-estate-edit.action';
 import type { RealEstate } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_TYPE_LABELS } from '@/domains/real-estate/constants';
-import { RealEstateFormSchema } from '@/domains/real-estate/validate/edit.schema';
-import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
 interface IRealEstateEditFormProps {
@@ -25,56 +18,20 @@ interface IRealEstateEditFormProps {
 	uuid: Uuid;
 }
 
-const initialState = { error: undefined, success: false };
-
 export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
-	const [state, action, isPending] = useActionState(realEstateEditAction, initialState);
-	const router = useRouter();
 	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-		control,
-		reset
-	} = useForm<z.infer<typeof RealEstateFormSchema>>({
-		resolver: zodResolver(RealEstateFormSchema),
-		defaultValues: {
-			name: data.name,
-			type: data.type,
-			area: data.area || 0,
-			rentalValue: data.rentalValue || 0,
-			description: data.description,
-			address: {
-				city: data.address.city,
-				street: data.address.street,
-				building: data.address.building
-			}
-		}
-	});
+		state,
+		form: {
+			register,
+			handleSubmit,
+			control,
+			formState: { errors },
+			reset
+		},
+		onSubmit,
+		isPending
+	} = useEditForm({ data, uuid });
 
-	// возвращаемся на просмотр ПОСЛЕ успешного сохранения
-	useEffect(() => {
-		if (state.success) {
-			toast.success('Данные успешно сохранены');
-			router.push(`${REAL_ESTATE_URL}/${uuid}`);
-		}
-	}, [state.success, router, uuid]);
-
-	const onSubmit = async (submitData: z.infer<typeof RealEstateFormSchema>) => {
-		startTransition(() => {
-			action({
-				name: submitData.name,
-				type: submitData.type,
-				area: submitData.area,
-				rentalValue: submitData.rentalValue,
-				description: submitData.description,
-				manager: data.manager,
-				uuid: uuid,
-				address: submitData.address
-			});
-			state.error = '';
-		});
-	};
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<SectionCard classNames='gap-y-7 flex-1 px-8'>

@@ -1,19 +1,17 @@
 'use server';
 
-import { isRedirectError } from 'next/dist/client/components/redirect-error';
+import { redirect } from 'next/navigation';
 
 import { editRealEstateByUuid } from '@/domains/real-estate/api/api.server';
 import type { RealEstateUpdate } from '@/domains/real-estate/api/schema';
-
-interface RealEstateEditState {
-	error?: string;
-	success?: boolean;
-}
+import { handleActionError } from '@/lib/actions/handleActionError';
+import { ApiError } from '@/lib/api/api-error';
+import { LOGIN_URL } from '@/routes';
 
 export const realEstateEditAction = async (
-	_prevState: RealEstateEditState,
+	_prevState: IActionState,
 	payload: RealEstateUpdate & { uuid: string }
-): Promise<RealEstateEditState> => {
+): Promise<IActionState> => {
 	if (!payload.uuid) {
 		return { error: 'Ошибка. Не передан идентификатор объекта' };
 	}
@@ -31,9 +29,9 @@ export const realEstateEditAction = async (
 
 		return { success: true };
 	} catch (error) {
-		// https://github.com/nextauthjs/next-auth/discussions/9389
-		if (isRedirectError(error)) throw error;
-
-		return { error: 'Ошибка обновления данных объекта. Попробуйте позже!' };
+		if (error instanceof ApiError && error.status === 401) {
+			redirect(LOGIN_URL);
+		}
+		return handleActionError(error, 'Ошибка обновления данных объекта. Попробуйте позже!');
 	}
 };
