@@ -1,12 +1,8 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import { editRealEstateByUuid } from '@/domains/real-estate/api/api.server';
 import type { RealEstateUpdate } from '@/domains/real-estate/api/schema';
 import { handleActionError } from '@/lib/actions/handleActionError';
-import { ApiError } from '@/lib/api/api-error';
-import { LOGIN_URL } from '@/routes';
 
 export const realEstateEditAction = async (
 	_prevState: IActionState,
@@ -29,9 +25,6 @@ export const realEstateEditAction = async (
 
 		return { success: true };
 	} catch (error) {
-		if (error instanceof ApiError && error.status === 401) {
-			redirect(LOGIN_URL);
-		}
 		return handleActionError(error, 'Ошибка обновления данных объекта. Попробуйте позже!');
 	}
 };

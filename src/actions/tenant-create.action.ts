@@ -1,25 +1,23 @@
 'use server';
 
-import { isRedirectError } from 'next/dist/client/components/redirect-error';
-
 import { createTenantToRealEstate } from '@/domains/tenants/api/api.server';
 import type { TAttachTenantByRealEstateRequest } from '@/domains/tenants/api/schema';
-
-interface ITenantCreateState {
-	error?: string;
-	success?: boolean;
-}
+import { handleActionError } from '@/lib/actions/handleActionError';
 
 export const tenantCreateAction = async (
-	_prevState: ITenantCreateState,
+	_prevState: IActionState,
 	payload: TAttachTenantByRealEstateRequest & { uuid: string }
-): Promise<ITenantCreateState> => {
+): Promise<IActionState> => {
+	if (!payload.uuid) {
+		return { error: 'Ошибка. Не передан идентификатор объекта' };
+	}
 	try {
 		await createTenantToRealEstate(payload.uuid, payload);
 		return { success: true };
 	} catch (error) {
-		// https://github.com/nextauthjs/next-auth/discussions/9389
-		if (isRedirectError(error)) throw error;
-		return { error: 'Ошибка добавления арендатора! Возможно арендатор уже привязан к объекту' };
+		return handleActionError(
+			error,
+			'Ошибка добавления арендатора! Возможно арендатор уже привязан к объекту'
+		);
 	}
 };

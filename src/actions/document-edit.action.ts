@@ -1,20 +1,14 @@
 'use server';
 
-import { isRedirectError } from 'next/dist/client/components/redirect-error';
-
 import { editDocumentByUuid } from '@/domains/documents/api/api.server';
 import type { DocumentEditByRealEstateBodyRequest } from '@/domains/documents/api/schema';
+import { handleActionError } from '@/lib/actions/handleActionError';
 import type { Uuid } from '@/types/common';
 
-interface DocumentEditState {
-	error?: string;
-	success?: boolean;
-}
-
 export const documentEditAction = async (
-	_prevState: DocumentEditState,
+	_prevState: IActionState,
 	payload: DocumentEditByRealEstateBodyRequest & { uuid: Uuid; documentUuid: Uuid }
-): Promise<DocumentEditState> => {
+): Promise<IActionState> => {
 	if (!payload.uuid || !payload.documentUuid) {
 		return { error: 'Ошибка. Не передан идентификатор' };
 	}
@@ -27,8 +21,6 @@ export const documentEditAction = async (
 
 		return { success: true };
 	} catch (error) {
-		// https://github.com/nextauthjs/next-auth/discussions/9389
-		if (isRedirectError(error)) throw error;
-		return { error: 'Ошибка обновления данных объекта. Попробуйте позже!' };
+		return handleActionError(error, 'Ошибка обновления документа. Попробуйте позже!');
 	}
 };

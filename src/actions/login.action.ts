@@ -1,17 +1,12 @@
 'use server';
 
 import { AuthError } from 'next-auth';
-import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
 import { signIn } from '@/auth';
+import { handleActionError } from '@/lib/actions/handleActionError';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
-interface LoginState {
-	error?: string;
-	success?: boolean;
-}
-
-export const loginAction = async (_prevState: LoginState, formData: FormData) => {
+export const loginAction = async (_prevState: IActionState, formData: FormData) => {
 	const email = formData.get('email');
 	const password = formData.get('password');
 
@@ -23,9 +18,6 @@ export const loginAction = async (_prevState: LoginState, formData: FormData) =>
 		});
 		return { success: true };
 	} catch (error) {
-		// https://github.com/nextauthjs/next-auth/discussions/9389
-		if (isRedirectError(error)) throw error;
-
 		if (error instanceof AuthError) {
 			switch (error.type) {
 				case 'CredentialsSignin':
@@ -35,6 +27,6 @@ export const loginAction = async (_prevState: LoginState, formData: FormData) =>
 				}
 			}
 		}
-		return { error: 'Ошибка авторизации. Попробуйте позже!' };
+		return handleActionError(error, 'Ошибка авторизации. Попробуйте позже!');
 	}
 };

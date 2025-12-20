@@ -26,7 +26,7 @@ export async function getCourtCasesByRealEstate(uuid: Uuid): Promise<TCourtCases
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[get court case by real-estate]', e);
-		return null;
+		throw e;
 	}
 }
 
@@ -52,7 +52,6 @@ export async function createCourtCaseByUuid(
 	uuid: string,
 	sendData: TCreateCourtCaseBody
 ): Promise<TCreateCourtCaseResponse | null> {
-	if (!uuid) return null;
 	try {
 		return await apiFetch(COURT_CASES.POST_CREATE_CASE_BY_REAL_ESTATE_UUID(uuid), {
 			method: 'POST',

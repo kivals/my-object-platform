@@ -24,7 +24,7 @@ export async function getDocumentsByRealEstate(
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[getDocuments real-estate]', e);
-		return null;
+		throw e;
 	}
 }
 
@@ -33,8 +33,6 @@ export async function editDocumentByUuid(
 	documentUuid: Uuid,
 	sendData: { type: DocumentsType; isCompleted: boolean }
 ) {
-	if (!realEstateUuid || !documentUuid) return null;
-
 	try {
 		const { data } = await apiFetchValidated(
 			DOCUMENTS_ENDPOINTS.PATCH_DOCUMENT_BY_REAL_ESTATE_UUID(realEstateUuid, documentUuid),
@@ -49,6 +47,6 @@ export async function editDocumentByUuid(
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[getRealEstateItem]', e);
-		return null;
+		throw e;
 	}
 }

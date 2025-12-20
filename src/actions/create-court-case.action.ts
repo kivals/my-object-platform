@@ -1,19 +1,13 @@
 'use server';
 
-import { isRedirectError } from 'next/dist/client/components/redirect-error';
-
 import { createCourtCaseByUuid } from '@/domains/court-cases/api/api.server';
 import type { TCreateCourtCaseBody } from '@/domains/court-cases/api/schema';
-
-interface CreateCourtCaseState {
-	error?: string;
-	success?: boolean;
-}
+import { handleActionError } from '@/lib/actions/handleActionError';
 
 export const createCourtCaseAction = async (
-	_: CreateCourtCaseState,
+	_: IActionState,
 	payload: TCreateCourtCaseBody & { uuid: string }
-): Promise<CreateCourtCaseState> => {
+): Promise<IActionState> => {
 	if (!payload.uuid) {
 		return { error: 'Ошибка. Не передан идентификатор объекта' };
 	}
@@ -28,9 +22,6 @@ export const createCourtCaseAction = async (
 
 		return { success: true };
 	} catch (error) {
-		// https://github.com/nextauthjs/next-auth/discussions/9389
-		if (isRedirectError(error)) throw error;
-
-		return { error: 'Ошибка создания судебного дела. Попробуйте позже!' };
+		return handleActionError(error, 'Ошибка создания судебного дела. Попробуйте позже!');
 	}
 };

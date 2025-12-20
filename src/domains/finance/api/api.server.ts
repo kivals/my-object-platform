@@ -17,7 +17,7 @@ export async function getPaymentsByRealEstate(_: Uuid): Promise<TPaymentsRespons
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[get payments real-estate]', e);
-		return null;
+		throw e;
 	}
 }
 
@@ -33,6 +33,6 @@ export async function getPaymentsSummaryByRealEstate(
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[get payments summary by real-estate]', e);
-		return null;
+		throw e;
 	}
 }

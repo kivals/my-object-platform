@@ -23,7 +23,7 @@ export async function getTenantsByRealEstate(
 	} catch (e) {
 		unstable_rethrow(e);
 		console.error('[getTenants real-estate]', e);
-		return null;
+		throw e;
 	}
 }
 
