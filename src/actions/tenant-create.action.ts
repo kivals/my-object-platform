@@ -3,6 +3,7 @@
 import { createTenantToRealEstate } from '@/domains/tenants/api/api.server';
 import type { TAttachTenantByRealEstateRequest } from '@/domains/tenants/api/schema';
 import { handleActionError } from '@/lib/actions/handleActionError';
+import type { IActionState } from '@/lib/actions/types';
 
 export const tenantCreateAction = async (
 	_prevState: IActionState,

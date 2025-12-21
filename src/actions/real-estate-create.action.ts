@@ -7,6 +7,7 @@ import type { TCreateRealEstateForm } from '@/components/widgets/real-estate-cre
 import { createRealEstate } from '@/domains/real-estate/api/api.server';
 import type { TRealEstateCreateResponse } from '@/domains/real-estate/api/schema';
 import { handleActionError } from '@/lib/actions/handleActionError';
+import type { IActionState } from '@/lib/actions/types';
 import { ApiError } from '@/lib/api/api-error';
 import { LOGIN_URL } from '@/routes';
 

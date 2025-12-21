@@ -36,7 +36,6 @@ export function LoginForm() {
 		formData.append('password', data.password);
 		startTransition(() => {
 			action(formData);
-			state.error = '';
 		});
 	};
 

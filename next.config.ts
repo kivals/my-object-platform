@@ -10,6 +10,9 @@ const protocol = storage.protocol.replace(':', '') as 'http' | 'https';
 const basePath = storage.pathname.replace(/\/$/, '');
 
 const nextConfig: NextConfig = {
+	experimental: {
+		globalNotFound: true
+	},
 	reactStrictMode: true,
 	poweredByHeader: false,
 	logging: {

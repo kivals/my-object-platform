@@ -18,7 +18,7 @@ export default async function Layout({
 	const session = await auth();
 
 	return (
-		<div className='flex flex-col min-h-screen'>
+		<div className='flex flex-col min-h-screen pb-28'>
 			<Header session={session} />
 			<Container>{children}</Container>
 		</div>

@@ -3,6 +3,7 @@
 import { createCourtCaseByUuid } from '@/domains/court-cases/api/api.server';
 import type { TCreateCourtCaseBody } from '@/domains/court-cases/api/schema';
 import { handleActionError } from '@/lib/actions/handleActionError';
+import type { IActionState } from '@/lib/actions/types';
 
 export const createCourtCaseAction = async (
 	_: IActionState,

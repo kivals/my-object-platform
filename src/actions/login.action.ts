@@ -4,9 +4,13 @@ import { AuthError } from 'next-auth';
 
 import { signIn } from '@/auth';
 import { handleActionError } from '@/lib/actions/handleActionError';
+import type { IActionState } from '@/lib/actions/types';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
-export const loginAction = async (_prevState: IActionState, formData: FormData) => {
+export const loginAction = async (
+	_prevState: IActionState,
+	formData: FormData
+): Promise<IActionState> => {
 	const email = formData.get('email');
 	const password = formData.get('password');
 

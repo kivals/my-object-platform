@@ -3,6 +3,7 @@
 import { editRealEstateByUuid } from '@/domains/real-estate/api/api.server';
 import type { RealEstateUpdate } from '@/domains/real-estate/api/schema';
 import { handleActionError } from '@/lib/actions/handleActionError';
+import type { IActionState } from '@/lib/actions/types';
 
 export const realEstateEditAction = async (
 	_prevState: IActionState,

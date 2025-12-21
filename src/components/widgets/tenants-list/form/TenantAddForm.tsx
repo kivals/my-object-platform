@@ -96,7 +96,6 @@ export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 					beneficiaryBank: submitData.requisites.beneficiaryBank
 				}
 			});
-			state.error = '';
 		});
 	};
 

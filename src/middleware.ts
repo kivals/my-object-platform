@@ -1,12 +1,23 @@
+import { match } from 'path-to-regexp';
+
 import { auth } from '@/auth';
-import { DASHBOARD_URL, LOGIN_URL, authRoutes, privateRoutes } from '@/routes';
+import { DASHBOARD_URL, LOGIN_URL, REAL_ESTATE_URL, authRoutes } from '@/routes';
+
+const privateRouteMatchers = [
+	match(`${DASHBOARD_URL}{/*rest}`),
+	match(`${REAL_ESTATE_URL}/:uuid{/*rest}`)
+];
+
+export function isPrivate(pathname: string): boolean {
+	return privateRouteMatchers.some(m => m(pathname));
+}
 
 export default auth(req => {
 	const { nextUrl } = req;
 	const session = req.auth;
 
 	const isLoggedIn = !!session;
-	const isPrivateRoute = privateRoutes.includes(nextUrl.pathname);
+	const isPrivateRoute = isPrivate(nextUrl.pathname);
 	const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 	const isApiRoute = nextUrl.pathname.includes('/api/auth');
 

@@ -32,8 +32,6 @@ export default function RootLayout({
 			>
 				<Toaster />
 				{children}
-				{/*//todo надо тут что-то отрисовать */}
-				<footer className='h-48'></footer>
 			</body>
 		</html>
 	);

@@ -73,7 +73,6 @@ export function DocumentEditForm({
 				uuid: uuid,
 				documentUuid: documentUuid
 			});
-			state.error = '';
 		});
 	};
 

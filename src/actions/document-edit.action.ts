@@ -3,6 +3,7 @@
 import { editDocumentByUuid } from '@/domains/documents/api/api.server';
 import type { DocumentEditByRealEstateBodyRequest } from '@/domains/documents/api/schema';
 import { handleActionError } from '@/lib/actions/handleActionError';
+import type { IActionState } from '@/lib/actions/types';
 import type { Uuid } from '@/types/common';
 
 export const documentEditAction = async (
