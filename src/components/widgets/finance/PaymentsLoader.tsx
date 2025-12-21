@@ -11,13 +11,21 @@ interface IPaymentsLoaderProps {
 	uuid: Uuid;
 }
 
-//todo Promise.allsettle
 export async function PaymentsLoader({ uuid }: IPaymentsLoaderProps) {
-	const paymentsResponse = await getPaymentsByRealEstate(uuid);
-	const summaryResponse = await getPaymentsSummaryByRealEstate(uuid);
+	const [paymentsResponse, summaryResponse] = await Promise.allSettled([
+		getPaymentsByRealEstate(uuid),
+		getPaymentsSummaryByRealEstate(uuid)
+	]);
 
-	const payments = paymentsResponse?.data.payments ?? [];
-	const summary = summaryResponse?.data;
+	const payments =
+		paymentsResponse.status === 'fulfilled' && paymentsResponse.value
+			? paymentsResponse.value.data.payments
+			: [];
+
+	const summary =
+		summaryResponse.status === 'fulfilled' && summaryResponse.value
+			? summaryResponse.value.data
+			: null;
 
 	return (
 		<div className='flex gap-x-8 min-w-0'>

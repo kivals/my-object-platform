@@ -7,7 +7,7 @@ import type { TPayment, TPaymentsSummary } from '@/domains/finance/api/schema';
 
 interface IPaymentsPageProps {
 	payments: TPayment[];
-	summary?: TPaymentsSummary;
+	summary: TPaymentsSummary | null;
 }
 
 export function PaymentsPage({ payments, summary }: IPaymentsPageProps) {
