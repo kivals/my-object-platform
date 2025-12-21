@@ -17,10 +17,9 @@ import { SectionCard } from '@/ui/SectionCard';
 import { tenantCreateAction } from '@/actions/tenant-create.action';
 import { createFormSchema } from '@/domains/tenants/validate/create-form.schema';
 import type { TTenantUser } from '@/domains/users/api/schema';
+import { ACTION_INITIAL_STATE } from '@/lib/actions/initialState';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
-
-const initialState = { error: undefined, success: false };
 
 interface ITenantAddFormProps {
 	onClose: () => void;
@@ -28,7 +27,7 @@ interface ITenantAddFormProps {
 
 export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 	const [selectedTenant, setSelectedTenant] = useState<TTenantUser | null>(null);
-	const [state, action, isPending] = useActionState(tenantCreateAction, initialState);
+	const [state, action, isPending] = useActionState(tenantCreateAction, ACTION_INITIAL_STATE);
 	const [tenantError, setTenantError] = useState<string | null>(null);
 	const { uuid } = useParams<{ uuid: Uuid }>();
 	const router = useRouter();

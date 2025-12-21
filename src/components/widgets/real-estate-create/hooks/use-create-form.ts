@@ -12,18 +12,12 @@ import {
 } from '@/components/widgets/real-estate-create/validate/create.schema';
 
 import { realEstateCreateAction } from '@/actions/real-estate-create.action';
-import type { TRealEstateCreateResponse } from '@/domains/real-estate/api/schema';
+import { ACTION_INITIAL_STATE } from '@/lib/actions/initialState';
 import { REAL_ESTATE_URL } from '@/routes';
-
-const initialState: {
-	error?: string;
-	success?: boolean;
-	payload?: TRealEstateCreateResponse['data'];
-} = { error: undefined, success: false, payload: undefined };
 
 //TODO возможно стоит использовать этот хук для всех запросов на экшен
 export function useCreateForm() {
-	const [state, action, isPending] = useActionState(realEstateCreateAction, initialState);
+	const [state, action, isPending] = useActionState(realEstateCreateAction, ACTION_INITIAL_STATE);
 	const router = useRouter();
 
 	const form = useForm<TCreateRealEstateForm>({

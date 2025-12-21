@@ -10,17 +10,16 @@ import {
 } from '@/components/widgets/court-cases/create/validate/schema';
 
 import { createCourtCaseAction } from '@/actions/create-court-case.action';
+import { ACTION_INITIAL_STATE } from '@/lib/actions/initialState';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
-
-const initialState = { error: undefined, success: false };
 
 interface IUseCreateCourtOptions {
 	uuid: Uuid;
 }
 
 export function useCreateCourt({ uuid }: IUseCreateCourtOptions) {
-	const [state, action, isPending] = useActionState(createCourtCaseAction, initialState);
+	const [state, action, isPending] = useActionState(createCourtCaseAction, ACTION_INITIAL_STATE);
 
 	const router = useRouter();
 

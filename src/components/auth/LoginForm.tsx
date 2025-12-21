@@ -11,12 +11,11 @@ import { TextField } from '@/components/form/TextField';
 import { Button } from '@/ui/Button';
 
 import { loginAction } from '@/actions/login.action';
+import { ACTION_INITIAL_STATE } from '@/lib/actions/initialState';
 import { LoginSchema } from '@/lib/auth/login.schema';
 
-const initialState = { error: undefined, success: false };
-
 export function LoginForm() {
-	const [state, action, isPending] = useActionState(loginAction, initialState);
+	const [state, action, isPending] = useActionState(loginAction, ACTION_INITIAL_STATE);
 
 	const {
 		register,

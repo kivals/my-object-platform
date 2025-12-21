@@ -18,6 +18,7 @@ import type { DocumentsType } from '@/domains/documents/api/schema';
 import { DOCUMENT_STATUS_LABEL, DOCUMENT_TYPE_LABEL } from '@/domains/documents/constants';
 import type { TDocumentStatus } from '@/domains/documents/types';
 import { DocumentEditFormSchema } from '@/domains/documents/validate/edit.schema';
+import { ACTION_INITIAL_STATE } from '@/lib/actions/initialState';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
@@ -31,9 +32,6 @@ interface IDocumentEditFormProps {
 	documentUuid: Uuid;
 }
 
-//todo дублируется логика при работе с экшенами
-const initialState = { error: undefined, success: false };
-
 export function DocumentEditForm({
 	status,
 	name,
@@ -43,7 +41,7 @@ export function DocumentEditForm({
 	documentUuid,
 	isLoading = false
 }: IDocumentEditFormProps) {
-	const [state, action, isPending] = useActionState(documentEditAction, initialState);
+	const [state, action, isPending] = useActionState(documentEditAction, ACTION_INITIAL_STATE);
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
 

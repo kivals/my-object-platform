@@ -10,10 +10,9 @@ import { z } from 'zod';
 import { realEstateEditAction } from '@/actions/real-estate-edit.action';
 import type { RealEstate } from '@/domains/real-estate/api/schema';
 import { RealEstateFormSchema } from '@/domains/real-estate/validate/edit.schema';
+import { ACTION_INITIAL_STATE } from '@/lib/actions/initialState';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
-
-const initialState = { error: undefined, success: false };
 
 interface IUseEditFormOptions {
 	data: RealEstate;
@@ -21,7 +20,7 @@ interface IUseEditFormOptions {
 }
 
 export function useEditForm({ data, uuid }: IUseEditFormOptions) {
-	const [state, action, isPending] = useActionState(realEstateEditAction, initialState);
+	const [state, action, isPending] = useActionState(realEstateEditAction, ACTION_INITIAL_STATE);
 	const router = useRouter();
 
 	const form = useForm<z.infer<typeof RealEstateFormSchema>>({
