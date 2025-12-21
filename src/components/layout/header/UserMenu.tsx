@@ -11,9 +11,9 @@ interface IUserMenuProps extends IClassNames {
 	onLogout: () => void;
 }
 
-export function UserMenu({ name, onLogout, classNames }: IUserMenuProps) {
+export function UserMenu({ name, onLogout, className }: IUserMenuProps) {
 	return (
-		<Menubar.Root className={cn(classNames)}>
+		<Menubar.Root className={cn(className)}>
 			<Menubar.Menu>
 				<Menubar.Trigger className='group h-full flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition cursor-pointer'>
 					<span className='group-hover:text-primary text-h3 text-[#666666] font-bold'>{name}</span>
@@ -28,7 +28,7 @@ export function UserMenu({ name, onLogout, classNames }: IUserMenuProps) {
 						onClick={onLogout}
 					>
 						Выйти
-						<Icon classNames='group-hover:text-primary ' icon='LogOut' size={20} />
+						<Icon className='group-hover:text-primary ' icon='LogOut' size={20} />
 					</Menubar.Item>
 				</Menubar.Content>
 			</Menubar.Menu>

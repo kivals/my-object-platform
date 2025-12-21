@@ -10,11 +10,11 @@ interface ILogoProps extends IClassNames {
 	iconSize?: number;
 }
 
-export function Logo({ classNames, iconSize = 28 }: ILogoProps) {
+export function Logo({ className, iconSize = 28 }: ILogoProps) {
 	return (
 		<Link
 			href={ROOT_URL}
-			className={cn('text-logo select-none flex gap-x-3 items-center leading-none', classNames)}
+			className={cn('text-logo select-none flex gap-x-3 items-center leading-none', className)}
 		>
 			<Building2 className='text-primary' size={iconSize} />
 			<p className='font-semibold'>

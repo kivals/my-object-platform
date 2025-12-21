@@ -103,7 +103,7 @@ export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 		<form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
 			<TenantSearch onSelect={setSelectedTenant} />
 			{tenantError && <p className='text-sm text-red-600 mt-2'>{tenantError}</p>}
-			<SectionCard classNames='px-6 py-5 space-y-4'>
+			<SectionCard className='px-6 py-5 space-y-4'>
 				<div className='flex items-center justify-between gap-4'>
 					<h3 className='text-lg font-semibold text-black'>Арендатор</h3>
 
@@ -121,7 +121,7 @@ export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 				</div>
 			</SectionCard>
 
-			<SectionCard classNames='px-6 py-5 space-y-4'>
+			<SectionCard className='px-6 py-5 space-y-4'>
 				<div>
 					<h3 className='mb-2 text-body font-medium'>Тип объекта</h3>
 					<Controller
@@ -129,7 +129,7 @@ export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 						control={control}
 						render={({ field }) => (
 							<OptionGroup
-								classNames='self-start'
+								className='self-start'
 								options={TenantStatusLabels}
 								value={field.value}
 								onChange={field.onChange}
@@ -146,7 +146,7 @@ export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 				</div>
 			</SectionCard>
 
-			<SectionCard classNames='px-6 py-5 space-y-4'>
+			<SectionCard className='px-6 py-5 space-y-4'>
 				<h3 className='text-lg font-semibold text-black'>Реквизиты</h3>
 
 				<div className='grid grid-cols-3 gap-4'>
@@ -186,7 +186,7 @@ export function TenantAddForm({ onClose }: ITenantAddFormProps) {
 						error={errors.requisites?.kpp?.message}
 					/>
 				</div>
-				<FormError classNames='mb-10' message={state.error} />
+				<FormError className='mb-10' message={state.error} />
 				<div className='flex flex-col gap-y-7 cursor-pointer'>
 					<Button disabled={isPending} type='submit'>
 						{isPending ? 'Ожидайте' : 'Сохранить изменения'}

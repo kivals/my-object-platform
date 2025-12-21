@@ -28,7 +28,7 @@ export function RealEstateCreateForm() {
 			<div className='flex gap-x-6'>
 				<div className='w-1/2 flex-1 flex flex-col'>
 					<h2 className='mb-4 font-bold text-h3'>Характеристики объекта</h2>
-					<SectionCard classNames='gap-y-7 flex-1 px-8 py-6'>
+					<SectionCard className='gap-y-7 flex-1 px-8 py-6'>
 						<TextField
 							type='text'
 							label='Название объекта'
@@ -46,7 +46,7 @@ export function RealEstateCreateForm() {
 								control={control}
 								render={({ field }) => (
 									<OptionGroup
-										classNames='self-start'
+										className='self-start'
 										options={REAL_ESTATE_TYPE_LABELS}
 										value={field.value}
 										onChange={field.onChange}
@@ -88,7 +88,7 @@ export function RealEstateCreateForm() {
 								placeholder='Введите город'
 								inputClassName='placeholder:text-body'
 								labelClassName='text-body font-medium'
-								classNames='flex-1'
+								className='flex-1'
 								error={errors.address?.city?.message}
 								{...register('address.city')}
 							/>
@@ -99,7 +99,7 @@ export function RealEstateCreateForm() {
 								placeholder='Введите номер дома'
 								inputClassName='placeholder:text-body'
 								labelClassName='text-body font-medium'
-								classNames='flex-1'
+								className='flex-1'
 								error={errors.address?.building?.message}
 								{...register('address.building')}
 							/>
@@ -118,11 +118,11 @@ export function RealEstateCreateForm() {
 				</div>
 				<div className='w-1/2 flex-1 flex flex-col gap-y-4'>
 					<h2 className='font-bold text-h3'>Описание объекта</h2>
-					<SectionCard classNames='flex-1 px-8 py-6'>
+					<SectionCard className='flex-1 px-8 py-6'>
 						<TextField
 							label='Описание объекта'
 							placeholder='Введите oписание'
-							classNames='flex-1 flex flex-col'
+							className='flex-1 flex flex-col'
 							inputClassName='placeholder:text-body h-full'
 							labelClassName='text-body font-medium'
 							multiline

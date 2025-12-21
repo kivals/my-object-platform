@@ -44,7 +44,7 @@ export function PartyRow({ index, register, fields, errors, remove, control }: I
 					className='text-red-500 text-sm p-1'
 					onClick={() => remove(index)}
 				>
-					<Icon icon='Trash2' classNames='text-red-500 h-full' size={26} />
+					<Icon icon='Trash2' className='text-red-500 h-full' size={26} />
 				</Button>
 			)}
 		</div>

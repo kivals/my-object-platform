@@ -21,7 +21,7 @@ function generateTitle(type: DocumentsType) {
 
 export function StepTwoForm({ file, type, isActive }: IStepTwoFormProps) {
 	return (
-		<SectionCard classNames='py-12 w-[80vw]'>
+		<SectionCard className='py-12 w-[80vw]'>
 			<div className='flex justify-between items-center'>
 				<Dialog.Title asChild>
 					<h2 className='mb-7 font-semibold text-h2'>{generateTitle(type)}</h2>

@@ -28,7 +28,7 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 			<header className='mb-12 flex justify-center items-center relative bg-white rounded-full h-[85px]'>
 				<BackButton
 					backUrl={`${REAL_ESTATE_URL}/${uuid}`}
-					classNames='absolute inset-x-0 left-[15px] top-[50%] -translate-y-1/2 z-10'
+					className='absolute inset-x-0 left-[15px] top-[50%] -translate-y-1/2 z-10'
 				/>
 				<h2 className='font-medium text-h2'>Редактирование объекта</h2>
 			</header>
@@ -40,7 +40,7 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 				</div>
 				<div className='w-1/2 flex-1'>
 					<h2 className='mb-4 font-bold text-h3'>Фотографии объекта</h2>
-					<SectionCard classNames='pt-0 px-0'>
+					<SectionCard className='pt-0 px-0'>
 						<RealEstateGallery
 							onUpload={handleUpload}
 							onDelete={handleDelete}

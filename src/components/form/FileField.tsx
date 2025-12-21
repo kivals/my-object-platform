@@ -29,7 +29,7 @@ export function FileField({ label, filename, onChange, className, accept }: File
 
 			<div className='flex gap-x-3.5 pr-0 items-center justify-between rounded-xl h-16 bg-white px-5 shadow-[0_0_8px_0_rgb(0_0_0_/_22%)]'>
 				<div className='flex items-center gap-x-2.5 text-primary overflow-hidden'>
-					<Icon classNames='shrink-0' icon='Paperclip' size={24} />
+					<Icon className='shrink-0' icon='Paperclip' size={24} />
 					<span className='truncate '>{filename || 'Файл не выбран'}</span>
 				</div>
 

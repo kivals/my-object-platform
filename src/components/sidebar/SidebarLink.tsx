@@ -28,7 +28,7 @@ export function SidebarLink({ link, icon, title, isActive, isWork }: ISidebarPro
 			)}
 		>
 			<Icon
-				classNames={cn('group-hover:text-primary transition group-hover:rotate-6 min-w-6', {
+				className={cn('group-hover:text-primary transition group-hover:rotate-6 min-w-6', {
 					'text-primary': isActive && !isExtended
 				})}
 				icon={icon}

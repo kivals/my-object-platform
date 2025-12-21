@@ -34,7 +34,7 @@ export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<SectionCard classNames='gap-y-7 flex-1 px-8'>
+			<SectionCard className='gap-y-7 flex-1 px-8'>
 				<TextField
 					type='text'
 					label='Название объекта'
@@ -52,7 +52,7 @@ export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 						control={control}
 						render={({ field }) => (
 							<OptionGroup
-								classNames='self-start'
+								className='self-start'
 								options={REAL_ESTATE_TYPE_LABELS}
 								value={field.value}
 								onChange={field.onChange}
@@ -131,7 +131,7 @@ export function RealEstateEditForm({ data, uuid }: IRealEstateEditFormProps) {
 					multiline
 				/>
 
-				<FormError classNames='mb-10' message={state.error} />
+				<FormError className='mb-10' message={state.error} />
 
 				<Separator orientation='horizontal' />
 

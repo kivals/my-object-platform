@@ -57,7 +57,7 @@ export function DocumentCard({
 				url={url}
 				badge={
 					<Badge
-						classNames='self-start rounded-[8px] px-3 py-1.5 text-[12px]'
+						className='self-start rounded-[8px] px-3 py-1.5 text-[12px]'
 						variant={isCompleted ? 'muted' : 'success'}
 					>
 						{label}

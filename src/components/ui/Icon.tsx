@@ -13,9 +13,9 @@ interface IconProps extends IClassNames {
 	strokeWidth?: number;
 }
 
-export function Icon({ icon, size, classNames, strokeWidth }: IconProps) {
+export function Icon({ icon, size, className, strokeWidth }: IconProps) {
 	const Icon: LucideIcon = LUCIDE_ICONS[icon];
 	if (!Icon) return;
 
-	return <Icon className={cn(classNames)} size={size} strokeWidth={strokeWidth} />;
+	return <Icon className={cn(className)} size={size} strokeWidth={strokeWidth} />;
 }

@@ -32,7 +32,7 @@ const defaultMedia: IMedia = {
 export function RealEstateGallery({
 	media,
 	active,
-	classNames,
+	className,
 	isEdit = false,
 	onUpload,
 	onDelete,
@@ -72,7 +72,7 @@ export function RealEstateGallery({
 	}
 
 	return (
-		<div className={cn(classNames, isEdit && 'bg-white')}>
+		<div className={cn(className, isEdit && 'bg-white')}>
 			{/*Основное окно просмотра*/}
 			<MediaPreview isLoading={isLoading} url={activeMedia?.url ?? DEFAULT_IMAGE_PLACEHOLDER} />
 
@@ -82,7 +82,7 @@ export function RealEstateGallery({
 			<div className='flex justify-center gap-x-1.5'>
 				{isEdit && (
 					<UploadFileCard
-						classNames={cn(isLoading && 'opacity-0 pointer-events-none')}
+						className={cn(isLoading && 'opacity-0 pointer-events-none')}
 						onChange={handleUpload}
 						acceptFileFormat={ACCEPT_PHOTOS}
 					/>

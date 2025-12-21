@@ -19,7 +19,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 	});
 
 	return (
-		<SectionCard classNames='py-4 px-3 drop-shadow-xl overflow-hidden'>
+		<SectionCard className='py-4 px-3 drop-shadow-xl overflow-hidden'>
 			<Table className='border-0'>
 				<TableHeader>
 					{table.getHeaderGroups().map(headerGroup => (

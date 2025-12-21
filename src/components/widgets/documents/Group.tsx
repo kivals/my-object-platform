@@ -36,7 +36,7 @@ export function DocumentsGroup({
 					</Button>
 				</UploadDocumentWizard>
 			</div>
-			<SectionCard classNames='px-5 py-6'>
+			<SectionCard className='px-5 py-6'>
 				<div className='flex flex-wrap gap-3.5'>
 					{docs.length > 0 ? (
 						sortedDocs.map(({ name, type, isCompleted, documentUuid, url }) => (

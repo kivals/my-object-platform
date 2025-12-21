@@ -14,7 +14,7 @@ interface ICalendarDayEventsProps {
 
 export function DayEvents({ events }: ICalendarDayEventsProps) {
 	return (
-		<SectionCard classNames='p-2 min-h-[300px]'>
+		<SectionCard className='p-2 min-h-[300px]'>
 			<h3 className='font-medium text-h3'>Задачи на выбранный день</h3>
 			<div className='flex flex-1 flex-col justify-center'>
 				{events.length > 0 ? (
@@ -22,13 +22,13 @@ export function DayEvents({ events }: ICalendarDayEventsProps) {
 						{events.map(({ id, status, priority, title }: TMaintenanceItem) => (
 							<SectionCard
 								key={id}
-								classNames={cn(
+								className={cn(
 									'p-3 justify-center flex flex-col justify-between items-center aspect-square w-[200px] shadow-none',
 									PRIORITY_COLORS[priority]
 								)}
 							>
 								<span className='text-center'>{title}</span>
-								<Badge classNames={cn('text-primary text-sm', STATUS_COLOR_CLASSES[status])}>
+								<Badge className={cn('text-primary text-sm', STATUS_COLOR_CLASSES[status])}>
 									{TASK_STATUS_LABEL[status]}
 								</Badge>
 							</SectionCard>

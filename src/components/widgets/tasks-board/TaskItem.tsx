@@ -42,11 +42,11 @@ export function TaskItem({ task, column }: ITaskItemProps) {
 			className={'bg-white rounded-xl shadow p-3 border border-black/5 transition '}
 		>
 			<div className='flex justify-between mb-2'>
-				<Badge classNames={`p-2 ${PRIORITY_CLASSES[task.priority]}`}>
+				<Badge className={`p-2 ${PRIORITY_CLASSES[task.priority]}`}>
 					{PRIORITY_LABELS[task.priority]}
 				</Badge>
 
-				<Badge variant='muted' classNames='p-2'>
+				<Badge variant='muted' className='p-2'>
 					от {format(task.deadline, 'dd.MM.yyyy')}
 				</Badge>
 			</div>

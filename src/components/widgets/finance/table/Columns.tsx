@@ -60,7 +60,7 @@ export const columns: ColumnDef<TPayment>[] = [
 
 			return (
 				<div className='flex justify-center'>
-					<Badge variant='success' classNames={cn('w-[180px] justify-center', classes)}>
+					<Badge variant='success' className={cn('w-[180px] justify-center', classes)}>
 						{PAYMENT_STATE_LABELS[state]}
 					</Badge>
 				</div>

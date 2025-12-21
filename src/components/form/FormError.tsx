@@ -9,12 +9,12 @@ interface IFormErrorProps extends IClassNames {
 	message?: string;
 }
 
-export function FormError({ message, classNames }: IFormErrorProps) {
+export function FormError({ message, className }: IFormErrorProps) {
 	if (!message) return null;
 
 	return (
 		<div
-			className={cn('p-3 rounded-md flex items-center gap-x-2 text-h3', classNames)}
+			className={cn('p-3 rounded-md flex items-center gap-x-2 text-h3', className)}
 		>
 			<OctagonAlert className='text-red-600 h-8 w-8' />
 			<p className="text-red-600 font-medium">{message}</p>

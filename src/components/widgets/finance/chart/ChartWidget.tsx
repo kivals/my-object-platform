@@ -25,7 +25,7 @@ export function PaymentsChartWidget({ payments }: IChartWidgetProps) {
 	const preparedChartData = buildMonthlyPaymentsChartData(payments);
 
 	return (
-		<SectionCard classNames='p-2'>
+		<SectionCard className='p-2'>
 			<ChartContainer config={chartConfig} className='h-[300px] w-full'>
 				<BarChart accessibilityLayer data={preparedChartData}>
 					<CartesianGrid vertical={false} />

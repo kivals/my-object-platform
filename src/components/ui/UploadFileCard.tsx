@@ -15,7 +15,7 @@ interface IUploadImageProps extends IClassNames {
 
 export function UploadFileCard({
 	onChange,
-	classNames,
+	className,
 	acceptFileFormat,
 	isLoading = false
 }: IUploadImageProps) {
@@ -23,7 +23,7 @@ export function UploadFileCard({
 		<div
 			className={cn(
 				'opacity-100 pointer-events-auto',
-				classNames,
+				className,
 				isLoading && 'opacity-50 pointer-events-none'
 			)}
 		>
@@ -40,7 +40,7 @@ export function UploadFileCard({
 					{isLoading ? (
 						<Spinner className='size-12 text-[#868686]' />
 					) : (
-						<Icon icon='Upload' size={24} classNames='text-[#868686]' />
+						<Icon icon='Upload' size={24} className='text-[#868686]' />
 					)}
 				</div>
 			</label>

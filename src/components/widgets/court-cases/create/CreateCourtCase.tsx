@@ -17,7 +17,7 @@ export function CreateCourtCase() {
 			<header className='mb-6 flex justify-center items-center relative bg-white rounded-full h-[85px]'>
 				<BackButton
 					backUrl={`${REAL_ESTATE_URL}/${uuid}`}
-					classNames='absolute inset-x-0 left-[15px] top-[50%] -translate-y-1/2 z-10'
+					className='absolute inset-x-0 left-[15px] top-[50%] -translate-y-1/2 z-10'
 				/>
 				<h2 className='font-medium text-h2'>Создание судебного дела</h2>
 			</header>

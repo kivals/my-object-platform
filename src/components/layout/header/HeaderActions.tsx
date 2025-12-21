@@ -13,14 +13,14 @@ interface IHeaderActions extends IClassNames {
 	userName?: string;
 }
 
-export function HeaderActions({ classNames, userName }: IHeaderActions) {
+export function HeaderActions({ className, userName }: IHeaderActions) {
 	const router = useRouter();
 
 	return (
-		<div className={cn('flex items-center gap-x-4', classNames)}>
+		<div className={cn('flex items-center gap-x-4', className)}>
 			<NotificationButton />
 			<UserMenu
-				classNames='h-12'
+				className='h-12'
 				name={userName || 'Неизвестный пользователь'}
 				onLogout={async () => {
 					await fetch(AUTH_ENDPOINTS_API_ROUTES.LOGOUT, { method: 'DELETE' });

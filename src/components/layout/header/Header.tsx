@@ -50,13 +50,13 @@ export function Header({ session }: IHeaderProps) {
 					<div className='flex items-center gap-x-8'>
 						{shouldShowSidebarToggle(pathname) && (
 							<div onClick={toggleSidebar} className='cursor-pointer'>
-								<Icon classNames='text-primary' icon='Menu' size={32} />
+								<Icon className='text-primary' icon='Menu' size={32} />
 							</div>
 						)}
 						<Logo />
 					</div>
 					{session ? (
-						<HeaderActions userName={session.user.fn} classNames='flex-1 justify-end ' />
+						<HeaderActions userName={session.user.fn} className='flex-1 justify-end ' />
 					) : (
 						<LogIn />
 					)}

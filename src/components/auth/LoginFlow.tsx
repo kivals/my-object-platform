@@ -12,7 +12,7 @@ export function LoginFlow() {
 				</div>
 			</div>
 			<div className={'flex-1 flex items-center flex-col gap-y-28 basis-0'}>
-				<Logo classNames='text-h1' iconSize={64} />
+				<Logo className='text-h1' iconSize={64} />
 				<div className={'flex flex-col items-center py-14 px-20 bg-white rounded-xl max-w-[830px]'}>
 					<LoginForm />
 				</div>

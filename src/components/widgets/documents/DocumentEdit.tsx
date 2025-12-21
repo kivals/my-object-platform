@@ -43,7 +43,7 @@ export function DocumentEdit({
 
 	return (
 		<DialogModal onClose={onClose} isOpen={isOpen}>
-			<SectionCard classNames='py-12 w-[50vw]'>
+			<SectionCard className='py-12 w-[50vw]'>
 				<div className='flex justify-between items-center mb-7'>
 					<Dialog.Title asChild>
 						<h2 className='font-semibold text-h2'>{getFormTitle(documentType)}</h2>

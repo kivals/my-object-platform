@@ -47,7 +47,7 @@ export function LoginForm() {
 				type='email'
 				label='Логин'
 				placeholder='Введите логин'
-				classNames='mb-7'
+				className='mb-7'
 				error={errors.email?.message}
 				{...register('email')}
 			/>
@@ -56,12 +56,12 @@ export function LoginForm() {
 				type='password'
 				label='Пароль'
 				placeholder='Введите пароль'
-				classNames='mb-7'
+				className='mb-7'
 				error={errors.password?.message}
 				{...register('password')}
 			/>
 
-			<FormError classNames='mb-10' message={state.error} />
+			<FormError className='mb-10' message={state.error} />
 
 			<div className='flex flex-col gap-y-7'>
 				<Button disabled={isPending} type='submit'>

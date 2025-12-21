@@ -25,7 +25,7 @@ export function CalendarHeader({ currentMonth, onPrev, onNext }: ICalendarHeader
 				</Button>
 
 				<Button onClick={onNext} className='py-2 px-4 cursor-pointer'>
-					<Icon classNames='rotate-180' icon='ChevronLeft' size={20} />
+					<Icon className='rotate-180' icon='ChevronLeft' size={20} />
 				</Button>
 			</div>
 		</div>

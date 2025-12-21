@@ -41,9 +41,9 @@ export function DropdownSection({
 	};
 
 	return (
-		<SectionCard classNames='px-0 py-0'>
+		<SectionCard className='px-0 py-0'>
 			<div>
-				<SectionCard classNames='shadow-xs'>
+				<SectionCard className='shadow-xs'>
 					<div
 						className='cursor-pointer flex gap-x-3.5 justify-between items-center'
 						onClick={handeDropdown}
@@ -51,7 +51,7 @@ export function DropdownSection({
 						{visibleContent}
 						<div>
 							<Icon
-								classNames={cn('rotate-0 transition', isDropdown && 'rotate-180')}
+								className={cn('rotate-0 transition', isDropdown && 'rotate-180')}
 								icon='ChevronDown'
 								size={24}
 							/>
@@ -59,7 +59,7 @@ export function DropdownSection({
 					</div>
 				</SectionCard>
 				<SectionCard
-					classNames={cn(
+					className={cn(
 						'overflow-hidden transition-all duration-500 ease-in-out py-0 shadow-none bg-transparent',
 						isDropdown ? 'animate-expand' : 'animate-collapse'
 					)}

@@ -28,14 +28,14 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
 			inputClassName,
 			labelClassName,
 			error,
-			classNames,
+			className,
 			type = 'text',
 			...props
 		},
 		ref
 	) => {
 		return (
-			<div className={classNames}>
+			<div className={className}>
 				{label && (
 					<Label className={cn('mb-2.5', labelClassName)} htmlFor={props.id || props.name}>
 						{label}

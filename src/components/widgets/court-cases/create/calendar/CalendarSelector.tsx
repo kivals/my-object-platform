@@ -50,7 +50,7 @@ export function CalendarSelector({ label, value, onChange }: ICalendarSelectorPr
 							className='cursor-pointer p-4 bg-primary/10 absolute right-2 top-2 bottom-2'
 						>
 							<>
-								<Icon icon='Calendar1' classNames='text-primary' size={36} />
+								<Icon icon='Calendar1' className='text-primary' size={36} />
 								<span className='sr-only'>Select date</span>
 							</>
 						</Button>

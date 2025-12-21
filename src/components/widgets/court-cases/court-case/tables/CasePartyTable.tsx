@@ -16,7 +16,7 @@ export function CasePartiesTable({ data }: ICasePartiesTableProps) {
 	return (
 		<div className='flex flex-col'>
 			<h3 className='text-h3 font-semibold mb-3.5'>Стороны</h3>
-			<SectionCard classNames='flex-1 px-1 shadow-none drop-shadow'>
+			<SectionCard className='flex-1 px-1 shadow-none drop-shadow'>
 				<div className='grid grid-cols-2 gap-y-4 '>
 					<div className='font-medium text-h3 text-center'>Роль</div>
 					<div className='font-medium text-h3 text-center'>ФИО</div>

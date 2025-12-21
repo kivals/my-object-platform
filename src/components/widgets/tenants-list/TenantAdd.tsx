@@ -15,7 +15,7 @@ interface ITenantAddProps {
 export function TenantAdd({ isOpen, onClose, title }: ITenantAddProps) {
 	return (
 		<DialogModal onClose={onClose} isOpen={isOpen}>
-			<SectionCard classNames='py-12 w-[85vw] max-h-[90vh] overflow-y-auto'>
+			<SectionCard className='py-12 w-[85vw] max-h-[90vh] overflow-y-auto'>
 				<div className='flex justify-between items-center mb-7'>
 					<Dialog.Title asChild>
 						<h2 className='font-semibold text-h2'>{title}</h2>

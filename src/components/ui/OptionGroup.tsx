@@ -20,7 +20,7 @@ export function OptionGroup<T extends string>({
 	options,
 	value,
 	areaLabel,
-	classNames,
+	className,
 	onChange,
 	title,
 	id = String(Date.now())
@@ -42,7 +42,7 @@ export function OptionGroup<T extends string>({
 				onValueChange={handleValueChange}
 				className={cn(
 					'relative inline-flex items-center gap-x-3 px-3 py-2 bg-[#DFDAFF] rounded-[20px] shadow-lg',
-					classNames
+					className
 				)}
 				aria-label={areaLabel}
 			>

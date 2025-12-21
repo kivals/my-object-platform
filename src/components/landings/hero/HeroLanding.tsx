@@ -12,9 +12,9 @@ import { cn } from '@/utils/cn';
 import { ABOUT_URL, LOGIN_URL } from '@/routes';
 import type { IClassNames } from '@/types/components/classname.types';
 
-export function HeroLanding({ classNames }: IClassNames) {
+export function HeroLanding({ className }: IClassNames) {
 	return (
-		<section className={cn('flex items-center gap-y-7 gap-x-10', classNames)}>
+		<section className={cn('flex items-center gap-y-7 gap-x-10', className)}>
 			<div className='basis-1/2 flex flex-col gap-y-7'>
 				<HeroHeading>Контролируйте сдачу Ваших объектов онлайн</HeroHeading>
 				<HeroChecklist items={CheckListData} />

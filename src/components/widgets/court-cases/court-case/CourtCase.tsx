@@ -83,7 +83,7 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 				>
 					<span className='font-medium text-h3 truncate'>{courtCase.name}</span>
 
-					<Badge classNames={cn('justify-center', COURT_CASE_STATUS_COLORS[courtCase.status])}>
+					<Badge className={cn('justify-center', COURT_CASE_STATUS_COLORS[courtCase.status])}>
 						{COURT_CASE_STATUS_LABELS[courtCase.status]}
 					</Badge>
 				</div>
@@ -103,7 +103,7 @@ export function CourtCase({ courtCase }: ICourtCaseProps) {
 									uploadFileCard={
 										<UploadFileCard
 											isLoading={isUploading}
-											classNames='border-2 border-primary/40 bg-[#F4F2FF] border-dashed flex w-[200px] h-[256px] rounded-[15px]'
+											className='border-2 border-primary/40 bg-[#F4F2FF] border-dashed flex w-[200px] h-[256px] rounded-[15px]'
 											onChange={handleUpload}
 											acceptFileFormat={ACCEPT_DOCUMENTS}
 										/>

@@ -55,7 +55,7 @@ export function InfoSection({ register, errors, control }: IInfoSectionProps) {
 						value={field.value as TCourtCaseStatus}
 						options={COURT_CASE_STATUS_LABELS}
 						onChange={field.onChange}
-						classNames='py-4'
+						className='py-4'
 					/>
 				)}
 			/>

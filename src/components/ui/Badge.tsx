@@ -26,15 +26,14 @@ interface IBadgeProps extends IClassNames {
 	Icon?: LucideIcon;
 }
 
-//todo classNames -> className
 export function Badge({
 	children,
 	Icon,
 	variant,
-	classNames
+	className
 }: PropsWithChildren<IBadgeProps & VariantProps<typeof badgeVariants>>) {
 	return (
-		<div className={cn(badgeVariants({ variant }), classNames)}>
+		<div className={cn(badgeVariants({ variant }), className)}>
 			{Icon && <Icon size={20} />}
 			{children}
 		</div>

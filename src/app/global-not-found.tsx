@@ -34,7 +34,7 @@ export default function GlobalNotFound() {
 							</div>
 						</div>
 						<div className={'flex-1 flex items-center flex-col gap-y-28 basis-0'}>
-							<Logo classNames='text-h1' iconSize={64} />
+							<Logo className='text-h1' iconSize={64} />
 							<div className={'flex flex-col items-center py-14 bg-white rounded-xl max-w-[830px]'}>
 								<div className='w-full max-w-xl text-center'>
 									<p className='text-body text-muted-foreground'>Ошибка</p>

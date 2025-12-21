@@ -60,7 +60,7 @@ export function RealEstateItem({ data }: IRealEstateItem) {
 			</DashboardSectionHeader>
 
 			<RealEstateGallery
-				classNames='mb-8'
+				className='mb-8'
 				media={data.photos.map(p => ({
 					uuid: p.photoUuid,
 					url: p.url

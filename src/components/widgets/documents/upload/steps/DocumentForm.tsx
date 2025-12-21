@@ -28,7 +28,7 @@ export function DocumentForm({ file, isActive = true }: IDocumentFormProps) {
 			/>
 			<OptionGroup
 				title='Статус договора'
-				classNames='self-start'
+				className='self-start'
 				options={DOCUMENT_STATUS_LABEL}
 				value={status}
 			/>

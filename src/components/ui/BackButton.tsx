@@ -12,7 +12,7 @@ interface IBackButtonProps extends IClassNames {
 	backUrl: string;
 }
 
-export function BackButton({ classNames, backUrl }: IBackButtonProps) {
+export function BackButton({ className, backUrl }: IBackButtonProps) {
 	const router = useRouter();
 
 	return (
@@ -20,10 +20,10 @@ export function BackButton({ classNames, backUrl }: IBackButtonProps) {
 			onClick={() => router.push(backUrl)}
 			className={cn(
 				'cursor-pointer flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2]',
-				classNames
+				className
 			)}
 		>
-			<Icon classNames='text-[#868686]' icon='ChevronLeft' size={32} />
+			<Icon className='text-[#868686]' icon='ChevronLeft' size={32} />
 		</button>
 	);
 }

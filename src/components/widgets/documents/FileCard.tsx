@@ -36,13 +36,13 @@ export function FileCard({
 				{badge && badge}
 				{url && (
 					<Link onClick={e => e.stopPropagation()} className='ml-auto' href={url}>
-						<Icon classNames='text-[#868686]' icon='Download' size={25} />
+						<Icon className='text-[#868686]' icon='Download' size={25} />
 					</Link>
 				)}
 			</div>
 
 			<Icon
-				classNames={cn(
+				className={cn(
 					'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
 					classNameIcon
 				)}

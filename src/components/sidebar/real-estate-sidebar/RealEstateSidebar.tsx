@@ -35,7 +35,7 @@ export function RealEstateSidebar({ address, area, typeLabel }: IRealEstateSideb
 					!isExtended && 'flex items-center justify-center p-0 w-auto bg-background shadow-none'
 				)}
 			>
-				<BackButton backUrl={DASHBOARD_URL} classNames='shrink-0' />
+				<BackButton backUrl={DASHBOARD_URL} className='shrink-0' />
 				{isExtended && (
 					<div className='flex flex-col gap-y-2 items-center'>
 						<p className='font-medium text-h2 '>{`${typeLabel}, ${area} м²`}</p>
@@ -49,7 +49,7 @@ export function RealEstateSidebar({ address, area, typeLabel }: IRealEstateSideb
 						<Badge Icon={BadgeCheck} variant='success'>
 							{'нет данных'}
 						</Badge>
-						<Badge classNames='whitespace-nowrap'>{area} м²</Badge>
+						<Badge className='whitespace-nowrap'>{area} м²</Badge>
 					</div>
 				</div>
 			)}

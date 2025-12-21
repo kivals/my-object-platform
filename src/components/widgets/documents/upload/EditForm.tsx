@@ -85,7 +85,7 @@ export function DocumentEditForm({
 			)}
 		>
 			<div className='flex gap-x-3.5'>
-				<TextField classNames='flex-1' type='text' disabled value={name} />
+				<TextField className='flex-1' type='text' disabled value={name} />
 				<Button onClick={onDelete} variant='attention' className='cursor-pointer'>
 					{isLoading ? <Spinner className='size-6' /> : <Icon icon='Trash2' size={25} />}
 				</Button>
@@ -98,7 +98,7 @@ export function DocumentEditForm({
 					<OptionGroup
 						id={'status'}
 						title='Статус документа'
-						classNames='self-start'
+						className='self-start'
 						options={DOCUMENT_STATUS_LABEL}
 						value={field.value}
 						onChange={field.onChange}
@@ -113,7 +113,7 @@ export function DocumentEditForm({
 					<OptionGroup<Exclude<DocumentsType, 'court'>>
 						id={'documentType'}
 						title='Тип документа'
-						classNames='self-start'
+						className='self-start'
 						options={DOCUMENT_TYPE_LABEL}
 						value={field.value as Exclude<DocumentsType, 'court'>}
 						onChange={field.onChange}
