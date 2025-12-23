@@ -1,8 +1,5 @@
-'use client';
-
 import { RealEstateEditForm } from '@/components/widgets/real-estate-edit/RealEstateEditForm';
-import { useRealEstatePhotos } from '@/components/widgets/real-estate-edit/hook/useRealEstatePhotos';
-import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/RealEstateGallery';
+import { type IMedia, RealEstateGallery } from '@/components/widgets/real-estate-gallery';
 
 import { BackButton } from '@/ui/BackButton';
 import { SectionCard } from '@/ui/SectionCard';
@@ -11,17 +8,16 @@ import type { RealEstate } from '@/domains/real-estate/api/schema';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
 
-//todo uuid тут нужно пропсом получать?
 interface IRealEstateEditProps {
 	data: RealEstate;
 	uuid: Uuid;
 }
 
 export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
-	const { photos, handleUpload, handleDelete, isLoading } = useRealEstatePhotos({
-		photos: data.photos,
-		realEstateUuid: data.realEstateUuid
-	});
+	const preparedPhotos: IMedia[] = data.photos.map(m => ({
+		uuid: m.photoUuid,
+		url: m.url
+	}));
 
 	return (
 		<section>
@@ -41,16 +37,7 @@ export function RealEstateEdit({ data, uuid }: IRealEstateEditProps) {
 				<div className='w-1/2 flex-1'>
 					<h2 className='mb-4 font-bold text-h3'>Фотографии объекта</h2>
 					<SectionCard className='pt-0 px-0'>
-						<RealEstateGallery
-							onUpload={handleUpload}
-							onDelete={handleDelete}
-							media={photos.map(m => ({
-								uuid: m.photoUuid,
-								url: m.url
-							}))}
-							isEdit={true}
-							isLoading={isLoading}
-						/>
+						<RealEstateGallery media={preparedPhotos} isEdit={true} />
 					</SectionCard>
 				</div>
 			</div>

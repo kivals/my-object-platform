@@ -1,50 +1,53 @@
-import { useState } from 'react';
-
 import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 
 import { deleteFile, uploadPhoto } from '@/domains/real-estate/api/api.client';
-import type { RealEstatePhoto } from '@/domains/real-estate/api/schema';
 import type { Uuid } from '@/types/common';
+import { useGalleryStoreApi } from '@/components/widgets/real-estate-gallery';
 
-interface TUseRealEstatePhotosParams {
-	realEstateUuid: Uuid;
-	photos: RealEstatePhoto[];
-}
+export function useRealEstatePhotos(realEstateUuid: Uuid) {
+	const store = useGalleryStoreApi();
 
-export function useRealEstatePhotos({ photos, realEstateUuid }: TUseRealEstatePhotosParams) {
-	const [localPhotos, setLocalPhotos] = useState<RealEstatePhoto[]>(photos);
-
-	const { run: deleteAction, isLoading: deleteIsLoading } = useApiAction({
+	const { run: deleteAction } = useApiAction({
 		successMessage: 'Фотография успешно удалена',
 		errorMessage: 'Ошибка удаления фотографии'
 	});
 
-	const { run: uploadAction, isLoading: uploadIsLoading } = useApiAction({
+	const { run: uploadAction } = useApiAction({
 		successMessage: 'Фотография успешно добавлена!',
 		errorMessage: 'Ошибка загрузки фотографии'
 	});
 
-	//todo useOptimistic чтобы не ждать ответ от сервера
+	const { setLoading, addPhoto, removePhoto } = store.getState();
+
 	async function handleUpload(file: File) {
 		await uploadAction(async () => {
-			const json = await uploadPhoto(realEstateUuid, file);
-			const newPhoto = json.photos[0];
-			setLocalPhotos(prev => [...prev, newPhoto]);
+			setLoading(true);
+			try {
+				const json = await uploadPhoto(realEstateUuid, file);
+				addPhoto({
+					url: json.photos[0].url,
+					uuid: json.photos[0].photoUuid
+				});
+			} finally {
+				setLoading(false);
+			}
 		});
 	}
 
-	//todo useOptimistic чтобы не ждать ответ от сервера
 	async function handleDelete(uuid: Uuid) {
 		await deleteAction(async () => {
-			await deleteFile(realEstateUuid, uuid, 'photos');
-			setLocalPhotos(prev => prev.filter(p => p.photoUuid !== uuid));
+			setLoading(true);
+			try {
+				await deleteFile(realEstateUuid, uuid, 'photos');
+				removePhoto(uuid);
+			} finally {
+				setLoading(false);
+			}
 		});
 	}
 
 	return {
-		photos: localPhotos,
 		handleUpload,
-		handleDelete,
-		isLoading: deleteIsLoading || uploadIsLoading
+		handleDelete
 	};
 }

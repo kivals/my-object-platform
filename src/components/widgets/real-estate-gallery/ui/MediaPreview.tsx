@@ -1,12 +1,14 @@
+import { useGalleryStore } from '@/components/widgets/real-estate-gallery/model/useGalleryStore';
+
 import { LoadingImage } from '@/ui/LoadingImage';
 import { Spinner } from '@/ui/Spinner';
 
-interface IMediaPreviewProps {
-	url: string;
-	isLoading?: boolean;
-}
+import { DEFAULT_IMAGE_PLACEHOLDER } from '@/utils/constants';
 
-export function MediaPreview({ url, isLoading = false }: IMediaPreviewProps) {
+export function MediaPreview() {
+	const url = useGalleryStore(s => s.active?.url);
+	const isLoading = useGalleryStore(s => s.isLoading);
+
 	return (
 		<div className='mb-2 w-full h-[500px] flex items-center justify-center'>
 			{isLoading ? (
@@ -15,7 +17,7 @@ export function MediaPreview({ url, isLoading = false }: IMediaPreviewProps) {
 				<LoadingImage
 					containerClassName='h-full w-full h-[500px]'
 					imageClassName='w-full'
-					src={url}
+					src={url ?? DEFAULT_IMAGE_PLACEHOLDER}
 					fill
 					alt=''
 				/>

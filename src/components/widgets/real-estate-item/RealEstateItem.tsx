@@ -5,7 +5,7 @@ import { useParams, usePathname, useRouter } from 'next/navigation';
 
 import { DashboardSectionHeader } from '@/components/DashboardSectionHeader';
 import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
-import { RealEstateGallery } from '@/components/widgets/real-estate-gallery/RealEstateGallery';
+import { RealEstateGallery } from '@/components/widgets/real-estate-gallery';
 import { RealEstateItemDescription } from '@/components/widgets/real-estate-item/RealEstateItemDescription';
 import { RealEstateItemInfo } from '@/components/widgets/real-estate-item/RealEstateItemInfo';
 
@@ -22,10 +22,16 @@ interface IRealEstateItem {
 	data: RealEstate;
 }
 
+//todo ущербное название компонента
 export function RealEstateItem({ data }: IRealEstateItem) {
 	const pathname = usePathname();
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
+
+	const preparedPhotos = data.photos.map(p => ({
+		uuid: p.photoUuid,
+		url: p.url
+	}));
 
 	const { run: deleteAction, isLoading: isDeleting } = useApiAction({
 		successMessage: 'Карточка объекта успешно удалена',
@@ -59,13 +65,7 @@ export function RealEstateItem({ data }: IRealEstateItem) {
 				</Button>
 			</DashboardSectionHeader>
 
-			<RealEstateGallery
-				className='mb-8'
-				media={data.photos.map(p => ({
-					uuid: p.photoUuid,
-					url: p.url
-				}))}
-			/>
+			<RealEstateGallery className='mb-8' media={preparedPhotos} />
 
 			<RealEstateItemInfo type={data.type} rent={data.rentalValue} area={data.area} />
 

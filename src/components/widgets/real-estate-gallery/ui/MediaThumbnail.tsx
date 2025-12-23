@@ -1,4 +1,5 @@
-import type { IMedia } from '@/components/widgets/real-estate-gallery/types';
+import type { IMedia } from '@/components/widgets/real-estate-gallery/model/types';
+import { useGalleryStore } from '@/components/widgets/real-estate-gallery/model/useGalleryStore';
 
 import { Icon } from '@/ui/Icon';
 import { LoadingImage } from '@/ui/LoadingImage';
@@ -19,9 +20,10 @@ export function MediaThumbnail({
 	selected,
 	onSelect,
 	onDelete,
-	isEdit,
-	isLoading = false
+	isEdit
 }: IMediaThumbnailProps) {
+	const isLoading = useGalleryStore(s => s.isLoading);
+
 	return (
 		<div
 			onClick={onSelect}
