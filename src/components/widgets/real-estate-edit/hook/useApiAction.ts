@@ -18,11 +18,15 @@ export function useApiAction(options?: TUseApiActionOptions) {
 	const router = useRouter();
 
 	const run = useCallback(
-		async (action: () => Promise<void>) => {
+		async (action: () => Promise<boolean | void>) => {
 			try {
 				setIsError(false);
 				setIsLoading(true);
-				await action();
+
+				const result = await action();
+				console.log("result", result);
+				if (result === false) return;
+
 				if (successMessage) {
 					toast.success(successMessage);
 				}

@@ -3,6 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { useConfirm } from '@/components/confirm';
 import { DocumentEdit } from '@/components/widgets/documents/DocumentEdit';
 import { FileCard } from '@/components/widgets/documents/FileCard';
 import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 
 import { DashboardSectionHeader } from '@/components/DashboardSectionHeader';
+import { useConfirm } from '@/components/confirm';
 import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 import { RealEstateGallery } from '@/components/widgets/real-estate-gallery';
 import { RealEstateItemDescription } from '@/components/widgets/real-estate-item/RealEstateItemDescription';
@@ -27,6 +28,7 @@ export function RealEstateItem({ data }: IRealEstateItem) {
 	const pathname = usePathname();
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
+	const confirm = useConfirm();
 
 	const preparedPhotos = data.photos.map(p => ({
 		uuid: p.photoUuid,
@@ -40,6 +42,14 @@ export function RealEstateItem({ data }: IRealEstateItem) {
 
 	async function handleDelete() {
 		await deleteAction(async () => {
+			const ok = await confirm({
+				title: 'Удалить объект?',
+				description: 'Это действие нельзя отменить',
+				confirmText: 'Удалить',
+				cancelText: 'Отмена'
+			});
+
+			if (!ok) return false;
 			await deleteRealEstate(uuid);
 			router.push(`${DASHBOARD_URL}`);
 		});

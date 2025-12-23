@@ -50,7 +50,7 @@ export function TenantItem({
 	const [isLoading, setIsLoading] = useState(false);
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
-
+	//todo использовать useApiAction
 	//todo useOptimistic чтобы не ждать ответ от сервера
 	async function handleDelete() {
 		if (!uuid) return;

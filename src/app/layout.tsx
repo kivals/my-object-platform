@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Jura } from 'next/font/google';
+import type { ReactNode } from 'react';
+
+import { ConfirmProvider } from '@/components/confirm/ConfirmProvider';
 
 import { Toaster } from '@/ui/Sonner';
 
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
 	children
 }: Readonly<{
-	children: React.ReactNode;
+	children: ReactNode;
 }>) {
 	return (
 		<html lang='en'>
@@ -31,7 +34,7 @@ export default function RootLayout({
 				className={`${jura.variable} font-jura antialiased text-body text-text bg-background leading-none`}
 			>
 				<Toaster />
-				{children}
+				<ConfirmProvider>{children}</ConfirmProvider>
 			</body>
 		</html>
 	);
