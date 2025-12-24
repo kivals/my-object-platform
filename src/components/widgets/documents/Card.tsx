@@ -6,11 +6,13 @@ import { useState } from 'react';
 import { useConfirm } from '@/components/confirm';
 import { DocumentEdit } from '@/components/widgets/documents/DocumentEdit';
 import { FileCard } from '@/components/widgets/documents/FileCard';
+import { DocumentEditForm } from '@/components/widgets/documents/upload/EditForm';
 import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 
 import { Badge } from '@/ui/Badge';
 
 import type { DocumentsType } from '@/domains/documents/api/schema';
+import type { TDocumentStatus } from '@/domains/documents/types';
 import { deleteFile } from '@/domains/real-estate/api/api.client';
 import { REAL_ESTATE_URL } from '@/routes';
 import type { Uuid } from '@/types/common';
@@ -31,9 +33,13 @@ export function DocumentCard({
 	documentUuid
 }: IDocumentItemProps) {
 	const label = isCompleted ? 'Завершенный' : 'Действующий';
-	const [isEdit, setIsEdit] = useState(false);
+	const status: TDocumentStatus = !isCompleted ? 'active' : 'completed';
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
+	const confirm = useConfirm();
+
+	const [isEdit, setIsEdit] = useState(false);
+
 	const { run: deleteAction, isLoading } = useApiAction({
 		successMessage: 'Документ успешно удален',
 		errorMessage: 'Ошибка удаления документа'
@@ -43,6 +49,15 @@ export function DocumentCard({
 		if (!uuid || !documentUuid) return;
 
 		await deleteAction(async () => {
+			const ok = await confirm({
+				title: 'Удалить документ?',
+				description: 'Это действие нельзя отменить',
+				confirmText: 'Удалить',
+				cancelText: 'Отмена'
+			});
+
+			if (!ok) return false;
+
 			await deleteFile(uuid, documentUuid, 'documents');
 			router.push(`${REAL_ESTATE_URL}/${uuid}/documents`);
 		});
@@ -67,16 +82,24 @@ export function DocumentCard({
 			/>
 			{isEdit && (
 				<DocumentEdit
-					documentUuid={documentUuid}
-					name={name}
 					onClose={() => {
 						setIsEdit(false);
 					}}
 					isOpen={isEdit}
-					isCompleted={isCompleted}
 					documentType={documentType}
-					onDelete={handleDelete}
-					isLoading={isLoading}
+					formBodyComp={
+						<DocumentEditForm
+							name={name}
+							documentType={documentType}
+							status={status}
+							onClose={() => {
+								setIsEdit(false);
+							}}
+							onDelete={handleDelete}
+							isLoading={isLoading}
+							documentUuid={documentUuid}
+						/>
+					}
 				/>
 			)}
 		</>

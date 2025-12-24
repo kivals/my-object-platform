@@ -1,11 +1,13 @@
+import { useConfirm } from '@/components/confirm';
 import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
+import { useGalleryStoreApi } from '@/components/widgets/real-estate-gallery';
 
 import { deleteFile, uploadPhoto } from '@/domains/real-estate/api/api.client';
 import type { Uuid } from '@/types/common';
-import { useGalleryStoreApi } from '@/components/widgets/real-estate-gallery';
 
 export function useRealEstatePhotos(realEstateUuid: Uuid) {
 	const store = useGalleryStoreApi();
+	const confirm = useConfirm();
 
 	const { run: deleteAction } = useApiAction({
 		successMessage: 'Фотография успешно удалена',
@@ -38,6 +40,14 @@ export function useRealEstatePhotos(realEstateUuid: Uuid) {
 		await deleteAction(async () => {
 			setLoading(true);
 			try {
+				const ok = await confirm({
+					title: 'Удалить фотографию объекта?',
+					description: 'Это действие нельзя отменить',
+					confirmText: 'Удалить',
+					cancelText: 'Отмена'
+				});
+				if (!ok) return false;
+
 				await deleteFile(realEstateUuid, uuid, 'photos');
 				removePhoto(uuid);
 			} finally {

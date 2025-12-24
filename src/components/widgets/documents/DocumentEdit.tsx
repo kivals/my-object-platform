@@ -1,24 +1,18 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import type { ReactNode } from 'react';
 
 import { DialogModal } from '@/components/dialog/DialogModal';
-import { DocumentEditForm } from '@/components/widgets/documents/upload/EditForm';
 
 import { Icon } from '@/ui/Icon';
 import { SectionCard } from '@/ui/SectionCard';
 
 import { type DocumentsType } from '@/domains/documents/api/schema';
-import type { TDocumentStatus } from '@/domains/documents/types';
-import type { Uuid } from '@/types/common';
 
 interface IDocumentEditProps {
 	isOpen: boolean;
 	documentType: DocumentsType;
-	isCompleted: boolean;
 	onClose: () => void;
-	name: string;
-	onDelete: () => void;
-	isLoading?: boolean;
-	documentUuid: Uuid;
+	formBodyComp: ReactNode;
 }
 
 function getFormTitle(type: DocumentsType) {
@@ -29,18 +23,7 @@ function getFormTitle(type: DocumentsType) {
 			: 'Редактирование акта';
 }
 
-export function DocumentEdit({
-	isOpen,
-	isCompleted,
-	documentType,
-	onClose,
-	name,
-	onDelete,
-	documentUuid,
-	isLoading = false
-}: IDocumentEditProps) {
-	const status: TDocumentStatus = !isCompleted ? 'active' : 'completed';
-
+export function DocumentEdit({ isOpen, documentType, onClose, formBodyComp }: IDocumentEditProps) {
 	return (
 		<DialogModal onClose={onClose} isOpen={isOpen}>
 			<SectionCard className='py-12 w-[50vw]'>
@@ -56,15 +39,7 @@ export function DocumentEdit({
 					</Dialog.Close>
 				</div>
 
-				<DocumentEditForm
-					name={name}
-					documentType={documentType}
-					status={status}
-					onClose={onClose}
-					onDelete={onDelete}
-					isLoading={isLoading}
-					documentUuid={documentUuid}
-				/>
+				{formBodyComp}
 			</SectionCard>
 		</DialogModal>
 	);

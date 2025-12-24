@@ -1,8 +1,9 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { toast } from 'sonner';
+
+import { useConfirm } from '@/components/confirm';
+import { useApiAction } from '@/components/widgets/real-estate-edit/hook/useApiAction';
 
 import { Badge } from '@/ui/Badge';
 import { Button } from '@/ui/Button';
@@ -47,27 +48,28 @@ export function TenantItem({
 	status,
 	isActive
 }: ITenantItemProps) {
-	const [isLoading, setIsLoading] = useState(false);
 	const { uuid } = useParams<{ uuid: string }>();
 	const router = useRouter();
-	//todo использовать useApiAction
+	const confirm = useConfirm();
+	const { run: deleteAction, isLoading } = useApiAction({
+		successMessage: 'Арендатор успешно откреплен',
+		errorMessage: 'Ошибка открепления арендатора'
+	});
+
 	//todo useOptimistic чтобы не ждать ответ от сервера
 	async function handleDelete() {
-		if (!uuid) return;
+		await deleteAction(async () => {
+			const ok = await confirm({
+				title: 'Открепить арендатора от объекта?',
+				description: 'Это действие нельзя отменить',
+				confirmText: 'Удалить',
+				cancelText: 'Отмена'
+			});
 
-		try {
-			setIsLoading(true);
+			if (!ok) return false;
 			await deleteTenant(uuid, tenantUuid);
-
-			//TODO hack, нужно выяснить почему не сработал router.refresh();
 			router.push(`${REAL_ESTATE_URL}/${uuid}/tenants`);
-			toast.success('Арендатор успешно откреплен');
-		} catch (err) {
-			console.error('[handleDelete] Failed:', err);
-			toast.error('Ошибка открепления арендатора');
-		} finally {
-			setIsLoading(false);
-		}
+		});
 	}
 
 	const fullName = middleName

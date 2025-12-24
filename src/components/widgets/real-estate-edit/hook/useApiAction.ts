@@ -24,7 +24,6 @@ export function useApiAction(options?: TUseApiActionOptions) {
 				setIsLoading(true);
 
 				const result = await action();
-				console.log("result", result);
 				if (result === false) return;
 
 				if (successMessage) {

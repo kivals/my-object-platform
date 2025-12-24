@@ -32,7 +32,6 @@ interface IDocumentEditFormProps {
 	documentUuid: Uuid;
 }
 
-//todo использовать useApiAction
 export function DocumentEditForm({
 	status,
 	name,
@@ -85,7 +84,7 @@ export function DocumentEditForm({
 		>
 			<div className='flex gap-x-3.5'>
 				<TextField className='flex-1' type='text' disabled value={name} />
-				<Button onClick={onDelete} variant='attention' className='cursor-pointer'>
+				<Button type='button' onClick={onDelete} variant='attention' className='cursor-pointer'>
 					{isLoading ? <Spinner className='size-6' /> : <Icon icon='Trash2' size={25} />}
 				</Button>
 			</div>
